@@ -1,0 +1,5 @@
+VertexLitGeneric
+{
+$basetexture "models/aperture/reflecto_cube_shell_rusted"
+$nodecal 1
+}

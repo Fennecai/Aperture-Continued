@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models\aperture/Rocket_Sentry_inactive"
+	"envmap" "env_cubemap"
+        //"$selfillum" 1
+
+
+
+
+}

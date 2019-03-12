@@ -1,0 +1,5 @@
+"UnlitGeneric"
+{
+	"$basetexture" "vgui/paint_type_back"
+	"$translucent" 1
+}

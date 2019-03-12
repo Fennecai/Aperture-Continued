@@ -1,0 +1,10 @@
+VertexlitGeneric
+{
+$basetexture "effects/particle_ring_pulled"
+$color "{0 150 255}"
+$additive 1
+$overbrightfactor 2
+$orientation 3
+$depthblend 0
+$translucent 1
+}

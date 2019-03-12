@@ -1,0 +1,8 @@
+VertexLitGeneric
+{
+$basetexture "models/aperture/window_frame_glass"
+$surfaceprop glass
+$translucent 1
+$envmapmask "models/aperture/window_frame_glass_mask"
+$envmap env_cubemap
+}

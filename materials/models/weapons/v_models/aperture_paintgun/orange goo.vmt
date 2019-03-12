@@ -1,0 +1,42 @@
+VertexLitGeneric
+{
+$basetexture "aperture/paint/prop_paint"
+$bumpmap "aperture/paint/blob_surface_normal"
+
+
+
+	"$ssbump" 		"1"
+$alphatestreference		"0.06"
+
+
+	"$envmapmask" "aperture/paint/blob_surface_normal"
+	"$envmapsaturation" "[.02 .02 .02]"
+
+
+
+
+ 	"$phong" "1"
+	"$phongexponent" "16"
+ 	"$phongboost" "1"
+	"$phongfresnelranges"	"[0.5 0.5 0.5]"
+	"$phongalbedotint" "1"
+
+
+
+
+
+//////////////////////////////////////////////////////////////////////
+//// Splinks Y U MAKE GOO SOO SEXXXY!? /////
+//////////////////////////////////////////////////////////////////////
+
+	"Proxies"
+	{
+
+		"TextureScroll"
+		{
+			"textureScrollVar"	"$basetexturetransform"
+			"textureScrollRate"	"0.04"
+			"texturescrollangle" "-100"
+		}
+	}
+}

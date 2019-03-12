@@ -1,0 +1,25 @@
+VertexLitGeneric
+{
+$basetexture "paint\prop_paint"
+$bumpmap "paint\prop_paint_normal"
+$color2 "[.2 .5 1]"
+"$ssbump" 		"1"
+$alphatestreference		"0.06"
+"$envmapmask" "paint\prop_paint_normal"
+"$envmapsaturation" "[.02 .02 .02]"
+"$phong" "1"
+"$phongexponent" "16"
+"$phongboost" "1"
+"$phongfresnelranges"	"[0.5 0.5 0.5]"
+"$phongalbedotint" "1"
+
+"Proxies"
+{
+"TextureScroll"
+{
+	"textureScrollVar"	"$basetexturetransform"
+	"textureScrollRate"	"0.04"
+	"texturescrollangle" "90"
+}
+}
+}

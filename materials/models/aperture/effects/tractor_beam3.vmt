@@ -1,0 +1,44 @@
+VertexlitGeneric
+{
+$basetexture "models/aperture/effects/tractor_beam_core1"
+
+
+
+$surfaceprop glass
+"%keywords" Portal2
+$translucent 1
+$additive 1
+$selfillum 1
+$selfillummask "models/aperture/effects/tractor_beam_core_wipe"
+$model 1
+//$color2 "{100 200 255}" 
+$vertexalpha 1
+$vertexcolor 1
+$nocull 1 
+$scrollrate 1
+Proxies
+{
+TractorBeam
+{
+resultvar $scrollrate
+}
+
+
+
+
+
+
+
+
+
+
+
+
+TextureScroll
+{
+texturescrollvar $basetexturetransform
+texturescrollrate $scrollrate
+texturescrollangle 180
+}
+}
+}

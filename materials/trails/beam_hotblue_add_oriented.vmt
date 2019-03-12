@@ -1,0 +1,12 @@
+UnlitGeneric
+{
+$basetexture "trails/beam_hotblue"
+$nocull 0
+$splinetype 1
+$depthblend 0
+$orientation 3
+$additive 1
+
+$overbrightfactor 0
+$ignorez 0
+}

@@ -1,0 +1,9 @@
+VertexlitGeneric
+{
+$basetexture "models\aperture\arm_64x64_off"
+$bumpmap "models\aperture\arm_64x64_normal"
+$phong 1
+$phongboost 2
+$phongexponent 10
+$phongfresnelranges "[.1 .5 1]"
+}

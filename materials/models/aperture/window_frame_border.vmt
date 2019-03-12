@@ -1,0 +1,4 @@
+VertexLitGeneric
+{
+$baseTexture "models/aperture/window_frame_border"
+}

@@ -1,0 +1,5 @@
+VertexLitGeneric
+{
+$basetexture "models/aperture/Laser_catcher_rusted_on"
+$selfillum 1
+}

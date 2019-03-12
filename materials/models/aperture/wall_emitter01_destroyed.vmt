@@ -1,0 +1,5 @@
+VertexLitGeneric
+{
+$basetexture "models/aperture/wall_emitter01_destroyed"
+$surfaceprop default
+}

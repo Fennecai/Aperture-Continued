@@ -1,0 +1,16 @@
+"Unlitgeneric"
+{
+	$basetexture 	"models/weapons/v_models/aperture_paintgun/Portal_GelGun"
+	$bumpmap 	"models/weapons/v_models/aperture_paintgun/Portal_GelGun_refract"
+	$translucent	"1"
+}
+
+//"Refract"
+//{
+//	"$normalmap" "models/weapons/v_models/aperture_paintgun/Portal_GelGun_refract"
+//	"$model" "1"
+//	"$refractamount" 0.1
+//	"$refracttint" "[1 1 1]"
+//	"$nocull" 1	
+//	"$REFRACTTINTTEXTURE" "models/weapons/v_models/aperture_paintgun/Portal_GelGun"
+//}

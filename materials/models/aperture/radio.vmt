@@ -1,0 +1,5 @@
+VertexLitGeneric
+{
+$baseTexture "models\aperture/radio"
+$selfillum 1
+}

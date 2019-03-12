@@ -1,0 +1,11 @@
+"VertexLitGeneric"
+{
+$basetexture 	"models/weapons/v_models/aperture_paintgun/GelGunMap01"
+$bumpmap 	"models/weapons/v_models/aperture_paintgun/GelGunMap01_normal"
+
+$phong 1
+$phongfresnelranges "[.1 .4 1]"
+$basemapalphaphongmask 1
+$basemapalphaenvmapmask 1
+$phongalbedotint 1
+}

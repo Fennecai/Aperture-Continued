@@ -1,0 +1,8 @@
+VertexlitGeneric
+{
+$basetexture "signage/mgf_overlay_bullseye"
+$selfilum 1
+$translucent 1
+$surfaceprop glass
+"%keywords" portal
+}

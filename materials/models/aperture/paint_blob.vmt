@@ -1,0 +1,15 @@
+VertexLitGeneric
+{
+$basetexture "aperture/paint/paint"
+$envmap env_cubemap
+$envmaptint "[.05 .05 .05]"
+$surfaceprop glass
+"%keywords" Portal2
+$nocull 0
+$additive 0
+$phong 1
+$bumpmap "aperture/paint/water_normal"
+$phongexponent 60
+$phongfresnelranges "[1 2 4]"
+$phongboost 0.5
+}

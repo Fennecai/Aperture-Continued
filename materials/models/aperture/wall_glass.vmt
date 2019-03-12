@@ -1,0 +1,8 @@
+VertexLitGeneric
+{
+$basetexture "models/aperture/wall_glass"
+$surfaceprop default
+$translucent 1
+$additive 1
+$model 1
+}

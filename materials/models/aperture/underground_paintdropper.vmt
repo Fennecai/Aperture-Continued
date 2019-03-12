@@ -1,0 +1,15 @@
+VertexLitGeneric
+{
+	$baseTexture "models/aperture/underground_paintdropper_phong"
+	$detailscale 1
+	$detailblendfactor 1
+	$detailblendmode 2
+
+ 	"$phong" "1"
+	"$phongexponent" "50"
+	"$phongboost"	".2"
+	"$phongfresnelranges"	"[1 2 1]"
+
+	"$blendtintbybasealpha" "1" 
+	"$blendtintcoloroverbase" "0.01"
+}

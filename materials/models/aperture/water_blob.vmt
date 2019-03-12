@@ -1,0 +1,20 @@
+Refract
+{
+$envmap env_cubemap
+$envmaptint "[.5 .5 .5]"
+$model 1
+$normalmap "models/aperture/water_normal"
+$dudvmap "models/aperture/water_dudv"
+$refracttint "[0.85 0.9 1]"
+$refractamount .1
+$bluramount "0"
+//$translucent 1
+//$forcerefract 1
+//$surfaceprop glass
+//"%keywords" Portal2
+$phong 1
+$bumpmap "models/aperture/water_normal"
+$phongexponent 60
+$phongfresnelranges "[1 2 4]"
+$phongboost 0.5
+}

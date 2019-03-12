@@ -1,0 +1,10 @@
+"VertexLitGeneric"
+{
+$basetexture "models/weapons/v_models/aperture_paintgun/Portal_GelGun"
+$bumpmap "models/weapons/v_models/aperture_paintgun/Portal_GelGun_refract"
+$BasemapAlphaPhongMask 1
+$phong 1
+$phongexponent 5
+$phongboost 0.2
+$phongfresnelranges "[1.6 4.7 4]"
+}

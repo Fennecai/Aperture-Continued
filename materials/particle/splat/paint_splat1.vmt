@@ -1,0 +1,7 @@
+UnlitGeneric
+{
+$translucent 1
+$basetexture "particle/splat/paint_splat1"
+$vertexcolor 1
+$vertexalpha 1
+}

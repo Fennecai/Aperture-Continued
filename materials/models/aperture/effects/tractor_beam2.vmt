@@ -1,0 +1,64 @@
+"VertexlitGeneric"
+{
+$basetexture "models/aperture/effects/tractor_beam_core"
+$detail "models/aperture/effects/tractor_beam_core"
+$selfillum 1
+$detailscale 1
+$DETAIL1BLENDMODE 0
+$detail2 "models/aperture/effects/tractor_beam_core_wipe"
+$detail2scale 1
+$DETAIL2BLENDMODE 1
+$surfaceprop glass
+"%keywords" Portal2
+$translucent 1
+$additive 1
+$vertexalpha 1
+//$color2 "{100 200 255}" 
+$vertexcolor 1
+$nocull 1 
+$scrollrate 0.4
+
+$TANGENTTOPACITYRANGES "[1 0.8 20 0.5]"
+$detailscrollfactor 1
+$detailscrollrate 0
+$detail2scrollfactor 1
+$detail2scrollrate 0
+$none 0
+Proxies
+{
+TractorBeam
+{
+resultvar $none
+}
+Multiply
+{
+srcvar1 $detailscrollfactor
+srcvar2 $scrollrate
+resultvar $detailscrollrate
+}
+Multiply
+{
+srcvar1 $detail2scrollfactor
+srcvar2 $scrollrate
+resultvar $detail2scrollrate
+}
+TextureScroll
+{
+texturescrollvar $basetexturetransform
+texturescrollrate 0.3
+texturescrollangle 90
+}
+TextureScroll
+{
+texturescrollvar $detailtexturetransform
+texturescrollrate -0.3
+texturescrollangle 0
+}
+TextureScroll
+{
+texturescrollvar $detail2texturetransform
+texturescrollrate $detail2scrollrate
+texturescrollangle 0
+}
+}
+}

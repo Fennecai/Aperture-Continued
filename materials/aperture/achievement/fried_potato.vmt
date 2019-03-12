@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	$basetexture "aperture/achievement/fried_potato"
+	$translucent 1
+	$vertexcolor 1
+}

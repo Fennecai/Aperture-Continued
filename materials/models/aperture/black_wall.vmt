@@ -1,0 +1,19 @@
+VertexLitGeneric
+{
+$basetexture "models/aperture/black_wall"
+$surfaceprop metal
+$bumpmap "models/aperture/black_wall_normal"
+$reflectivity "[ 0.6 0.6 0.6 ]" 
+$envmap env_cubemap
+$envmaplightscale .6
+
+$normalmapalphaenvmapmask 1
+$envmapcontrast 1
+$envmapsaturation .2
+$envmaptint .2 .2 .2
+"%noportal" 1
+$detail "detail/detail_fractal04c"
+$detailscale 1.25
+$detailblendfactor 1
+$detailblendmode 0
+}
