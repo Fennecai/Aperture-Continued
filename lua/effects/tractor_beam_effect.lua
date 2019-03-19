@@ -3,7 +3,7 @@ function EFFECT:Init(data)
 	local radius = data:GetRadius()
 	local magnitude = data:GetMagnitude()
 	local reversed = tobool(data:GetColor())
-	local color = reversed and LIB_APERTURE.FUNNEL_REVERSE_COLOR or LIB_APERTURE.FUNNEL_COLOR
+	local color = reversed and LIB_APERTURECONTINUED.FUNNEL_REVERSE_COLOR or LIB_APERTURECONTINUED.FUNNEL_COLOR
 	local dir = reversed and -1 or 1
 	
 	if not self.Emitter then
@@ -23,7 +23,7 @@ function EFFECT:Init(data)
 			p:SetEndAlpha(255)
 			p:SetStartSize(math.random(10, 20))
 			p:SetEndSize(0)
-			p:SetVelocity(ent:GetUp() * LIB_APERTURE.FUNNEL_MOVE_SPEED * dir + VectorRand() * 5)
+			p:SetVelocity(ent:GetUp() * LIB_APERTURECONTINUED.FUNNEL_MOVE_SPEED * dir + VectorRand() * 5)
 			p:SetGravity( VectorRand() * 5)
 			p:SetColor(color.r, color.g, color.b)
 			p:SetCollide(true)

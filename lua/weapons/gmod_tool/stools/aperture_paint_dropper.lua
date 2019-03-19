@@ -58,11 +58,11 @@ if SERVER then
 		ent:SetPaintAmount(flowInfo.amount)
 		ent:SetPaintLaunchSpeed(paintLaunchSpeed)
 		
-		local paintInfo = LIB_APERTURE:PaintTypeToInfo(paintType)
+		local paintInfo = LIB_APERTURECONTINUED:PaintTypeToInfo(paintType)
 		if paintInfo.DROPPER_MATERIAL then
 			ent:SetMaterial(paintInfo.DROPPER_MATERIAL)
 		else
-			ent:SetColor(LIB_APERTURE:PaintTypeToColor(paintType))
+			ent:SetColor(LIB_APERTURECONTINUED:PaintTypeToColor(paintType))
 		end
 
 		ent:Spawn()
@@ -153,19 +153,19 @@ function TOOL:Think()
 	local mdl = self:GetClientInfo("model")
 	if not util.IsValidModel(mdl) then self:ReleaseGhostEntity() return end
 
-	if not IsValid(self.GhostEntity) or self.GhostEntity:GetModel() != mdl then
+	if not IsValid(self.GhostEntity) or self.GhostEntity:GetModel() ~= mdl then
 		self:MakeGhostEntity(mdl, Vector(), Angle())
 	end
 	
 	if IsValid(self.GhostEntity) then
 		local alpha = self.GhostEntity:GetColor().a
 		local paintType = self:GetClientNumber("paint_type")
-		local paintInfo = LIB_APERTURE:PaintTypeToInfo(paintType)
+		local paintInfo = LIB_APERTURECONTINUED:PaintTypeToInfo(paintType)
 		if paintInfo.DROPPER_MATERIAL then
 			self.GhostEntity:SetColor(Color(255, 255, 255, alpha))
 			self.GhostEntity:SetMaterial(paintInfo.DROPPER_MATERIAL)
 		else
-			local paintColor = LIB_APERTURE:PaintTypeToColor(paintType)
+			local paintColor = LIB_APERTURECONTINUED:PaintTypeToColor(paintType)
 			local color = Color(paintColor.r, paintColor.g, paintColor.b, alpha)
 			self.GhostEntity:SetColor(color)
 		end
@@ -181,7 +181,7 @@ function TOOL.BuildCPanel( CPanel )
 	CPanel:AddControl("Header", {Description = "#tool.aperture_paint_dropper.desc"})
 
 	local combobox = CPanel:ComboBox( "#tool.aperture_paint_dropper.paintType", "aperture_paint_dropper_paint_type")
-	for k,v in pairs(LIB_APERTURE.PAINT_TYPES) do
+	for k,v in pairs(LIB_APERTURECONTINUED.PAINT_TYPES) do
 		if not v.NAME then break end
 		combobox:AddChoice(v.NAME, k)
 	end

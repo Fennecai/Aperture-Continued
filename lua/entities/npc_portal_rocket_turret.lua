@@ -28,7 +28,7 @@ function ENT:SetupDataTables()
 end
 
 function ENT:Enable(enable)
-	if self:GetEnable() != enable then
+	if self:GetEnable() ~= enable then
 		if enable then
 		else
 		end
@@ -45,7 +45,7 @@ function ENT:EnableEX(enable)
 		return true
 	end
 	
-	if self:GetStartEnabled() then enable = !enable end
+	if self:GetStartEnabled() then enable = not enable end
 	self:Enable(enable)
 end
 
@@ -128,7 +128,7 @@ function ENT:TransfortTurret()
 end
 
 function ENT:Think()
-	if not LIB_APERTURE then return end
+	if not LIB_APERTURECONTINUED then return end
 	self:NextThink(CurTime())
 
 	if CLIENT then
@@ -138,11 +138,11 @@ function ENT:Think()
 	
 	local pos = self:LocalToWorld(Vector(0, 0, 30))
 	local target, center = NULL, Vector()
-	if self:GetEnable() then target, center = LIB_APERTURE:FindClosestAliveInSphereIncludingPortalPassages(pos, 2000) end
+	if self:GetEnable() then target, center = LIB_APERTURECONTINUED:FindClosestAliveInSphereIncludingPortalPassages(pos, 2000) end
 	if IsValid(target) then
 	
-		local _, trace = LIB_APERTURE:GetAllPortalPassages(pos, (center - pos), nil, self)
-		if not IsValid(trace.Entity) or trace.Entity != target then target = nil end
+		local _, trace = LIB_APERTURECONTINUED:GetAllPortalPassages(pos, (center - pos), nil, self)
+		if not IsValid(trace.Entity) or trace.Entity ~= target then target = nil end
 	end
 
 	-- SERVER side
@@ -197,7 +197,7 @@ function ENT:Think()
 			local ang = self:GetTurretAngles()
 			ang = ang + Angle(-2, 90, 0)
 			local wang = self:LocalToWorldAngles(ang)
-			local _, traceBeam = LIB_APERTURE:GetAllPortalPassagesAng(pos, wang, 0, self)
+			local _, traceBeam = LIB_APERTURECONTINUED:GetAllPortalPassagesAng(pos, wang, 0, self)
 			
 			self.TurretLookingPoint = center
 			
@@ -235,7 +235,7 @@ function ENT:Think()
 end
 
 function ENT:Drawing()
-	if not LIB_APERTURE then return end
+	if not LIB_APERTURECONTINUED then return end
 	if not self:GetEnable() then return end
 	local turretState = self:GetTurretState()
 	if turretState == TURRET_STATE_DEPLOY then return end
@@ -244,7 +244,7 @@ function ENT:Drawing()
 	if turretState == TURRET_STATE_DISABLED then return end
 	local laserBeamBone = self:LookupBone("Gun_casing")
 	local pos, ang = self:GetBonePosition(laserBeamBone)
-	local points = LIB_APERTURE:GetAllPortalPassagesAng(pos, ang, 0, self)
+	local points = LIB_APERTURECONTINUED:GetAllPortalPassagesAng(pos, ang, 0, self)
 
 	render.SetMaterial(Material("effects/bluelaser1"))
 	for k,v in pairs(points) do

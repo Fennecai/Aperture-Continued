@@ -52,7 +52,7 @@ function ENT:Think()
 		for k,v in pairs(entities) do
 			local class = v:GetClass() and v:GetClass():lower() or ""
 			if string.find(class, "ammo") then
-				if IsValid(v.Player) then LIB_APERTURE.ACHIEVEMENTS:AchievAchievement(v.Player, "im_not_defective") end
+				if IsValid(v.Player) then LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(v.Player, "im_not_defective") end
 				self.CantShoot = false
 				v:Remove()
 			end

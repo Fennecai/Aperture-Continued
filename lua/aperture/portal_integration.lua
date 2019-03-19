@@ -1,14 +1,14 @@
 AddCSLuaFile()
 
-if not LIB_APERTURE then print("Error: Aperture lib does not exit!!!") return end
+if not LIB_APERTURECONTINUED then print("Error: Aperture lib does not exist or could not be found.") end
 
-LIB_APERTURE.MAX_PASSAGES = 256
+LIB_APERTURECONTINUED.MAX_PASSAGES = 256
 local PORTAL_RADIUS = 50
 
 -- ================================ PORTAL INTEGRATION ============================
 
 -- Fixed Find in cone
-function LIB_APERTURE:FindInCone(startpos, dir, height, degrese)
+function LIB_APERTURECONTINUED:FindInCone(startpos, dir, height, degrese)
 	local tbl = {}
 	local rad = math.rad(degrese)
 	dir:Normalize()
@@ -34,7 +34,7 @@ function LIB_APERTURE:FindInCone(startpos, dir, height, degrese)
 end
 
 -- Rotating vector relative to portals
-function LIB_APERTURE:GetPortalRotateVector(vec, portal, flip)
+function LIB_APERTURECONTINUED:GetPortalRotateVector(vec, portal, flip)
 	if not IsValid(portal) then return end
 	if not portal:IsLinked() then return end
 	local portalOther = portal:GetOther()
@@ -47,7 +47,7 @@ function LIB_APERTURE:GetPortalRotateVector(vec, portal, flip)
 end
 
 -- Transforming pos, ang from enter portal relative to exit portal
-function LIB_APERTURE:GetPortalTransform(pos, ang, portal, flip)
+function LIB_APERTURECONTINUED:GetPortalTransform(pos, ang, portal, flip)
 	if not IsValid(portal) then return end
 	if not portal:IsLinked() then return end
 	local portalOther = portal:GetOther()
@@ -71,7 +71,7 @@ local function MathEntityAndTable(ent, entTable)
 	return false
 end
 
-function LIB_APERTURE:GetAllPortalPassagesAng(pos, angle, maxLength, ignore, ignoreEntities, ignoreAlive)
+function LIB_APERTURECONTINUED:GetAllPortalPassagesAng(pos, angle, maxLength, ignore, ignoreEntities, ignoreAlive)
 	local exitportal
 	local prevPos = pos
 	local prevAng = angle
@@ -85,9 +85,9 @@ function LIB_APERTURE:GetAllPortalPassagesAng(pos, angle, maxLength, ignore, ign
 			start = prevPos,
 			endpos = prevPos + direction * LIB_MATH_TA.HUGE,
 			filter = function(ent)
-				if ent != ignore and not MathEntityAndTable(ent, ignore)
+				if ent ~= ignore and not MathEntityAndTable(ent, ignore)
 					and not ignoreEntities 
-					and ent:GetClass() != "prop_portal"
+					and ent:GetClass() ~= "prop_portal"
 					and (not ignoreAlive or (ent:IsPlayer() or ent:IsNPC())) then return true end
 			end
 		})
@@ -100,7 +100,7 @@ function LIB_APERTURE:GetAllPortalPassagesAng(pos, angle, maxLength, ignore, ign
 		
 		-- Portal loop if trace hit portal
 		for k,v in pairs(ents.FindByClass("prop_portal")) do
-			if v != exitPortal then
+			if v ~= exitPortal then
 				local pos = v:WorldToLocal(trace.HitPos)
 				
 				if pos.x > -30 and pos.x < 10
@@ -126,15 +126,15 @@ function LIB_APERTURE:GetAllPortalPassagesAng(pos, angle, maxLength, ignore, ign
 		end
 		
 		passages = passages + 1
-		if passages >= LIB_APERTURE.MAX_PASSAGES then break end
+		if passages >= LIB_APERTURECONTINUED.MAX_PASSAGES then break end
 	until hitPortal
 	
 	return passagesInfo, trace
 end
 
-function LIB_APERTURE:GetAllPortalPassages(pos, dir, maxLength, ignore, ignoreEntities)
+function LIB_APERTURECONTINUED:GetAllPortalPassages(pos, dir, maxLength, ignore, ignoreEntities)
 	local angle = dir:Angle()
-	return LIB_APERTURE:GetAllPortalPassagesAng(pos, angle, maxLength, ignore, ignoreEntities)
+	return LIB_APERTURECONTINUED:GetAllPortalPassagesAng(pos, angle, maxLength, ignore, ignoreEntities)
 end
 
 --[[
@@ -159,19 +159,19 @@ local function RFindClosestAliveInSphereIncludingPortalPassages(entities, startp
 		
 		local d = pos:Distance(startpos)
 		-- if found portal then do recursive find
-		if v:GetClass() == "prop_portal" and v != portal and v:IsLinked() then
+		if v:GetClass() == "prop_portal" and v ~= portal and v:IsLinked() then
 			local dir1 = (pos - startpos)
 			local portalOther = v:GetOther()
 			dir1:Normalize()
-			local startp = LIB_APERTURE:GetPortalTransform(startpos, nil, v, true)
-			dir1 = LIB_APERTURE:GetPortalRotateVector(dir1, v, true)
+			local startp = LIB_APERTURECONTINUED:GetPortalTransform(startpos, nil, v, true)
+			dir1 = LIB_APERTURECONTINUED:GetPortalRotateVector(dir1, v, true)
 			
 			local h1 = math.sqrt(PORTAL_RADIUS * PORTAL_RADIUS + d * d)
 			local deg = math.deg(math.acos(d / h1))
 			-- Entity(1):SetPos(startp + dir1 * length / 2)
 			if not degrese or deg < degrese then degrese = deg end
 			
-			local entits = LIB_APERTURE:FindInCone(startp, dir1, length, degrese)
+			local entits = LIB_APERTURECONTINUED:FindInCone(startp, dir1, length, degrese)
 			local e, p, d = RFindClosestAliveInSphereIncludingPortalPassages(entits, startp, length, degrese, portalOther, d)
 			
 			if IsValid(e) and (dist == -1 or dist > d) then
@@ -183,7 +183,7 @@ local function RFindClosestAliveInSphereIncludingPortalPassages(entities, startp
 			end
 		end
 		
-		if ((v:IsPlayer() and v:Alive() and not LIB_APERTURE:GetAIIgnorePlayers()) or v:IsNPC() and v:Health() > 0) and (dist == -1 or dist > d) then
+		if ((v:IsPlayer() and v:Alive() and not LIB_APERTURECONTINUED:GetAIIgnorePlayers()) or v:IsNPC() and v:Health() > 0) and (dist == -1 or dist > d) then
 			-- local center = IsValid(v:GetBone) and v:LocalToWorld(v:GetPhysicsObject():GetMassCenter()) or v:GetPos()
 			local center = v:LocalToWorld(v:OBBCenter())
 			point = IsValid(portal) and portal:WorldToLocal(center) or center
@@ -198,7 +198,7 @@ end
 --[[
 	Return closest alive entity in specific radius, even if it seen throw portal
 ]]
-function LIB_APERTURE:FindClosestAliveInSphereIncludingPortalPassages(startpos, radius)
+function LIB_APERTURECONTINUED:FindClosestAliveInSphereIncludingPortalPassages(startpos, radius)
 	local entities = ents.FindInSphere(startpos, radius)
 	return RFindClosestAliveInSphereIncludingPortalPassages(entities, startpos, radius)
 end
@@ -206,8 +206,8 @@ end
 --[[
 	Return closest alive entity in specific cone, even if it seen throw portal
 ]]
-function LIB_APERTURE:FindClosestAliveInConeIncludingPortalPassages(startpos, dir, length, degrese)
-	local entities = LIB_APERTURE:FindInCone(startpos, dir, length, degrese)
+function LIB_APERTURECONTINUED:FindClosestAliveInConeIncludingPortalPassages(startpos, dir, length, degrese)
+	local entities = LIB_APERTURECONTINUED:FindInCone(startpos, dir, length, degrese)
 	return RFindClosestAliveInSphereIncludingPortalPassages(entities, startpos, length, degrese)
 end
 
@@ -262,9 +262,9 @@ function OverridedShootPortal(self, type)
 				local validpos, validnormang = self:IsPosionValid( trace.HitPos, trace.HitNormal, 2, true )
 				local cellPos = LIB_MATH_TA:ConvertToGrid(trace.HitPos, LIB_PAINT.PAINT_INFO_SIZE)
 				local cellInfo = LIB_PAINT:GetCellPaintInfo(cellPos)
-				print(cellInfo)
 				
-				if !trace.HitNoDraw and !trace.HitSky and ( trace.MatType != MAT_METAL and trace.MatType != MAT_GLASS or ( trace.MatType == MAT_CONCRETE or trace.MatType == MAT_DIRT ) ) and validpos and validnormang 
+				
+				if !trace.HitNoDraw and !trace.HitSky and ( trace.MatType ~= MAT_METAL and trace.MatType ~= MAT_GLASS or ( trace.MatType == MAT_CONCRETE or trace.MatType == MAT_DIRT ) ) and validpos and validnormang 
 					or cellInfo and cellInfo.paintType == PORTAL_PAINT_PORTAL or trace.Entity:GetClass() == "env_portal_wall" then
 					  --Wait until our ball lands, if it's enabled.
 					  hitDelay = ((trace.Fraction * 2048 * 1000)-100)/ballSpeed:GetInt()

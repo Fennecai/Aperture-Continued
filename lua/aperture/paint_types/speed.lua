@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-if not LIB_APERTURE then return end
+if not LIB_APERTURECONTINUED then return end
 
 --============= Propulsion Gel ==============
 
@@ -81,4 +81,4 @@ end
 
 end -- SERVER
 
-LIB_APERTURE:CreateNewPaintType(PORTAL_PAINT_SPEED, PAINT_INFO)
+LIB_APERTURECONTINUED:CreateNewPaintType(PORTAL_PAINT_SPEED, PAINT_INFO)

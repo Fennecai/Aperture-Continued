@@ -16,7 +16,7 @@ function ENT:SpawnFunction(ply, trace, className)
 		ply.TA_Counter_CakeSpawned = ply.TA_Counter_CakeSpawned + 1
 		return
 	end
-	if ply.TA_Counter_CakeSpawned == 100 then LIB_APERTURE.ACHIEVEMENTS:AchievAchievement(ply, "cake") end
+	if ply.TA_Counter_CakeSpawned == 100 then LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(ply, "cake") end
 	
 	local ent = ents.Create(className)
 	ent:SetPos(trace.HitPos)

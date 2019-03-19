@@ -1,0 +1,5 @@
+VertexlitGeneric
+{
+$basetexture "models\aperture\box_grate"
+$translucent 1
+}

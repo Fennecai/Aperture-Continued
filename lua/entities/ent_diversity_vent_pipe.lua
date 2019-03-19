@@ -1,6 +1,6 @@
 AddCSLuaFile( )
 
-if not LIB_APERTURE then error("Error: Aperture lib does not exit!!!") end
+if not LIB_APERTURECONTINUED then error("Error: Aperture lib does not exit!!!") end
 
 DEFINE_BASECLASS("base_anim")
 
@@ -16,11 +16,11 @@ end
 local EXIT_MODEL = "models/aperture/vacum_flange_a.mdl"
 
 function ENT:GetModelConnectionData()
-	return LIB_APERTURE:GetModelConnectionData(self)
+	return LIB_APERTURECONTINUED:GetModelConnectionData(self)
 end
 
 function ENT:GetModelFlowData()
-	return LIB_APERTURE:GetModelFlowData(self)
+	return LIB_APERTURECONTINUED:GetModelFlowData(self)
 end
 
 function ENT:Initialize()

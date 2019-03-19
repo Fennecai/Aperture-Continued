@@ -201,7 +201,7 @@ function ENT:Animate(angle, ply)
 	if ply:KeyDown(IN_DUCK) then name = sequences.crouch end
 
 	local sequence = self:LookupSequence(name)
-	if not self.LastSequence or self.LastSequence != sequence then
+	if not self.LastSequence or self.LastSequence ~= sequence then
 		self:ResetSequence(sequence)
 		self:SetPlaybackRate(1)
 		self:SetSequence(sequence)
@@ -221,7 +221,7 @@ function ENT:Animate(angle, ply)
 	if ply:KeyDown(IN_SPEED) then speed = 2 end
 	dir:Normalize()
 	
-	if dir != Vector() then
+	if dir ~= Vector() then
 		if self.walkspeed < 1 then self.walkspeed = self.walkspeed + 5 * FrameTime() end
 	elseif self.walkspeed > 0 then self.walkspeed = self.walkspeed - 5 * FrameTime() else self.walkspeed = 0 end
 	self:WalkAnim(dir, speed * 9, self.walkspeed / 2)
@@ -247,7 +247,7 @@ function ENT:Think()
 		self:SetAngles(worldangle)
 		ply:SetNoDraw(true)
 		
-		if IsValid(ply) and (LocalPlayer() != ply or LocalPlayer():GetViewEntity() != ply) then
+		if IsValid(ply) and (LocalPlayer() ~= ply or LocalPlayer():GetViewEntity() ~= ply) then
 			self:SetNoDraw(false)
 			weaponEnt:SetNoDraw(false)
 		else

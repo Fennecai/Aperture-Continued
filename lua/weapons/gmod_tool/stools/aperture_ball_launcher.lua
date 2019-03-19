@@ -117,7 +117,7 @@ function TOOL:Think()
 	local mdl = LAUNCHER_MODEL
 	if not util.IsValidModel(mdl) then self:ReleaseGhostEntity() return end
 
-	if not IsValid(self.GhostEntity) or self.GhostEntity:GetModel() != mdl then
+	if not IsValid(self.GhostEntity) or self.GhostEntity:GetModel() ~= mdl then
 		self:MakeGhostEntity(mdl, Vector(0, 0, 0), Angle(0, 0, 0))
 	end
 

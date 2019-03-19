@@ -34,7 +34,6 @@ function ENT:Initialize()
 	self:SetMoveType(MOVETYPE_VPHYSICS)
 	self:SetSolid(SOLID_VPHYSICS)
 	self:GetPhysicsObject():Wake()
-	self.Radio_Counter = 0
 	
 	return true
 end
@@ -45,19 +44,18 @@ if CLIENT then return end
 function ENT:Use(activator, caller)
 	if IsValid(caller) and caller:IsPlayer() then
 		if timer.Exists("TA_Radio_Block"..self:EntIndex()) then return end
-		timer.Create( "TA_Radio_Block"..self:EntIndex(), 1, 1, function() end )
+		timer.Create( "TA_Radio_Block"..self:EntIndex(), 0.2, 1, function() end )
 		self:SetEnable(not self:GetEnable())
 		
 		if self:GetEnable() then
-			if math.random(1, 20 - self.Radio_Counter) == 1 then
+			if math.random(0, 20) == 1 then
 				self:EmitSound( "TA:RadioStrangeNoice" )
-				self.Radio_Counter = 0
-				LIB_APERTURE.ACHIEVEMENTS:AchievAchievement(self.Owner, "radio")
+				
+				LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(self.Owner, "radio")
 			else
 				self:EmitSound( "TA:RadioLoop" )
 			end
-			
-			self.Radio_Counter = self.Radio_Counter + 1
+
 		else
 			self:StopSound( "TA:RadioLoop" )
 			self:StopSound( "TA:RadioStrangeNoice" )

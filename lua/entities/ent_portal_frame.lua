@@ -19,7 +19,7 @@ function ENT:SetupDataTables()
 end
 
 function ENT:Enable(enable)
-	if self:GetEnable() != enable then
+	if self:GetEnable() ~= enable then
 		if enable then
 			local portalType = self:GetPortalType()
 			self:OpenPortal(portalType)
@@ -41,7 +41,7 @@ function ENT:EnableEX(enable)
 		return true
 	end
 	
-	if self:GetStartEnabled() then enable = !enable end
+	if self:GetStartEnabled() then enable = not enable end
 	self:Enable(enable)
 end
 
@@ -129,7 +129,7 @@ if CLIENT then return end
 function ENT:TriggerInput(iname, value)
 	if not WireAddon then return end
 	
-	if iname == "Enable" then self:ToggleEnable(tobool(value)) end
+	if iname == "Enable" then self:EnableEX(tobool(value)) end
 end
 
 numpad.Register("PortalFrame_Enable", function(pl, ent, keydown)

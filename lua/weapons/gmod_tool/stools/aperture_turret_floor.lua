@@ -82,7 +82,7 @@ function TOOL:LeftClick(trace)
 	
 	local model = self:GetClientInfo("model")
 	local normal = trace.HitNormal
-	if math.Round(normal.z) != 1 and model != "models/aperture/rocket_sentry.mdl" then
+	if math.Round(normal.z) ~= 1 and model ~= "models/aperture/rocket_sentry.mdl" then
 		PrintMessage(HUD_PRINTCENTER, "Wrong surface! You need to place it on the floor.")
 		return
 	end
@@ -149,7 +149,7 @@ function TOOL:Think()
 	local mdl = self:GetClientInfo("model")
 	if not util.IsValidModel(mdl) then self:ReleaseGhostEntity() return end
 
-	if not IsValid(self.GhostEntity) or self.GhostEntity:GetModel() != mdl then
+	if not IsValid(self.GhostEntity) or self.GhostEntity:GetModel() ~= mdl then
 		self:MakeGhostEntity(mdl, Vector(), Angle())
 	end
 

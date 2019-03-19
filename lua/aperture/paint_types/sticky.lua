@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-if not LIB_APERTURE then return end
+if not LIB_APERTURECONTINUED then return end
 
 --============= Adhesion Gel ==============
 if not PORTAL_PAINT_STICKY then
@@ -24,7 +24,7 @@ function PlayerChangeOrient(ply, orientation, paintHitPos)
 	local orientPlayerHeight = orientation * playerHeight
 	local orientPlayerHeightCrouch = orientation * playerHeight / 2
 	local plyAngle = ply:EyeAngles()
-	if not paintHitPos then _, _, paintHitPos = LIB_APERTURE:GetPaintInfo(plyOrientCenter, -orientPlayerHeight * 1.5) end
+	if not paintHitPos then _, _, paintHitPos = LIB_APERTURECONTINUED:GetPaintInfo(plyOrientCenter, -orientPlayerHeight * 1.5) end
 	
 	-- changing camera orientation
 	ply:SetViewOffset(Vector())
@@ -137,7 +137,7 @@ end
 function PAINT_INFO:OnExit(ply)
 	local playerHeight = 72
 	local orientation = ply:GetNWVector("TA:Orientation")
-	if orienation != ORIENTATION_DEFAULT then
+	if orienation ~= ORIENTATION_DEFAULT then
 		PlayerUnStuck(ply)
 	end
 	
@@ -158,7 +158,7 @@ end
 function PAINT_INFO:OnChangeFrom(ply, newType, normal)
 	local playerHeight = 72
 	local orientation = ply:GetNWVector("TA:Orientation")
-	if orientation != ORIENTATION_DEFAULT then
+	if orientation ~= ORIENTATION_DEFAULT then
 		PlayerUnStuck(ply)
 		PlayerChangeOrient(ply, ORIENTATION_DEFAULT)
 	end
@@ -189,7 +189,7 @@ function PAINT_INFO:Think(ply, normal, orientationMove)
 	ply:SetCurrentViewOffset(orientPlayerHeight)
 
 	-- if player stand on sticky paint
-	if orienationWalk != Vector() and orientation != ORIENTATION_DEFAULT then
+	if orienationWalk ~= Vector() and orientation ~= ORIENTATION_DEFAULT then
 		
 		local playerCenter = ply:GetPos() + orientation * playerHeightFull / 2
 		local boxSize = Vector(1, 1, 1)
@@ -314,13 +314,13 @@ hook.Add("Think", "TA:StickCamerOrient", function()
 	if orientation == ORIENTATION_DEFAULT then
 		if math.abs(playerEyeAngle.r) > 0.1 then
 			playerEyeAngle.r = math.ApproachAngle(playerEyeAngle.r, 0, FrameTime() * math.min(playerEyeAngle.r * 10, 160))
-		elseif playerEyeAngle.r != 0 then
+		elseif playerEyeAngle.r ~= 0 then
 			playerEyeAngle.r = 0
 		end
 	end
 	
 	-- checking for changing orientation
-	if orientation != prevOrientation then
+	if orientation ~= prevOrientation then
 		local _, angleFrom = WorldToLocal(Vector(), (-orientation):Angle(), Vector(), prevOrientationAng)
 		angleFrom = Angle(0, angleFrom.yaw, 0)
 		_, angleFrom = LocalToWorld(Vector(), angleFrom, Vector(), prevOrientationAng)
@@ -334,11 +334,11 @@ hook.Add("Think", "TA:StickCamerOrient", function()
 	
 	ply:SetNWVector("TA:PrevOrientation", orientation)
 	
-	if newEyeAngle != eyeAngles then
+	if newEyeAngle ~= eyeAngles then
 		local playerAng = ply:GetNWAngle("TA:PlayerAng")
 
 		-- fixing player's roll if orientation is default
-		if playerAng != eyeAngles then
+		if playerAng ~= eyeAngles then
 			local angOffset = eyeAngles - playerAng
 			
 			playerEyeAngle.p = math.max(-88, math.min(88, playerEyeAngle.p))
@@ -381,7 +381,7 @@ hook.Add("Think", "TA:StickCamerOrient", function()
 			local _, orientAngToPly = WorldToLocal(Vector(), plyAng, Vector(), prevOrientationAng)
 
 			-- changing cam orientation when player is have different orientation or roll is inccorect
-			if orientation != ORIENTATION_DEFAULT or orientation == ORIENTATION_DEFAULT and math.abs(ply:EyeAngles().r) > 0.1 then
+			if orientation ~= ORIENTATION_DEFAULT or orientation == ORIENTATION_DEFAULT and math.abs(ply:EyeAngles().r) > 0.1 then
 				ply:SetEyeAngles(newEyeAngle)
 				ply:SetNWAngle("TA:PlayerAng", newEyeAngle)
 			end
@@ -436,4 +436,4 @@ function PAINT_INFO:OnEntityChangedFrom(ent, paintType)
 	PAINT_INFO:OnEntityCleared(ent)
 end
 
-LIB_APERTURE:CreateNewPaintType(PORTAL_PAINT_STICKY, PAINT_INFO)
+LIB_APERTURECONTINUED:CreateNewPaintType(PORTAL_PAINT_STICKY, PAINT_INFO)

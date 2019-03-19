@@ -51,7 +51,7 @@ function ENT:Think()
 		end
 	else
 		self.Burned = true
-		LIB_APERTURE.ACHIEVEMENTS:AchievAchievement(self.Owner, "fried_potato")
+		LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(self.Owner, "fried_potato")
 		self:EmitSound("TA:PotatoOSBurn")
 	end
 	

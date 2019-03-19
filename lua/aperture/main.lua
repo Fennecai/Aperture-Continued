@@ -5,7 +5,7 @@
 ]]
 AddCSLuaFile( )
 
-LIB_APERTURE = {}
+LIB_APERTURECONTINUED = {}
 
 -- Loading sounds
 local paint_types = file.Find("sounds/*.lua", "LUA")
@@ -36,32 +36,32 @@ include("aperture/paint.lua")
 include("aperture/buttons.lua")
 
 -- Funnel
-LIB_APERTURE.FUNNEL_COLOR 			= Color(0, 150, 255)
-LIB_APERTURE.FUNNEL_REVERSE_COLOR 	= Color(255, 150, 0)
-LIB_APERTURE.FUNNEL_MOVE_SPEED 		= 173
+LIB_APERTURECONTINUED.FUNNEL_COLOR 			= Color(0, 150, 255)
+LIB_APERTURECONTINUED.FUNNEL_REVERSE_COLOR 	= Color(255, 150, 0)
+LIB_APERTURECONTINUED.FUNNEL_MOVE_SPEED 		= 173
 
 -- Fizzler
-LIB_APERTURE.DISSOLVE_SPEED 	= 150
-LIB_APERTURE.DISSOLVE_ENTITIES 	= { }
+LIB_APERTURECONTINUED.DISSOLVE_SPEED 	= 150
+LIB_APERTURECONTINUED.DISSOLVE_ENTITIES 	= { }
 
 -- Diversity Vent
-LIB_APERTURE.DIVVENT_ENTITIES = { }
+LIB_APERTURECONTINUED.DIVVENT_ENTITIES = { }
 
-LIB_APERTURE.FALL_BOOTS_LEG_SIZE = 10
+LIB_APERTURECONTINUED.FALL_BOOTS_LEG_SIZE = 10
 
-function LIB_APERTURE:GetAIDisabled()
+function LIB_APERTURECONTINUED:GetAIDisabled()
 	local conVar = GetConVar("ai_disabled")
 	if not conVar then return false end
 	return tobool(conVar:GetInt())
 end
 
-function LIB_APERTURE:GetAIIgnorePlayers()
+function LIB_APERTURECONTINUED:GetAIIgnorePlayers()
 	local conVar = GetConVar("ai_ignoreplayers")
 	if not conVar then return false end
 	return tobool(conVar:GetInt())
 end
 
-function LIB_APERTURE:JumperBootsResizeLegs(ply, size)
+function LIB_APERTURECONTINUED:JumperBootsResizeLegs(ply, size)
 	local ent = ply:GetNWEntity("TA:ItemJumperBootsEntity")
 	local prCalf = ply:LookupBone("ValveBiped.Bip01_R_Calf")
 	local plCalf = ply:LookupBone("ValveBiped.Bip01_L_Calf")
@@ -91,7 +91,7 @@ function LIB_APERTURE:JumperBootsResizeLegs(ply, size)
 	ent:ManipulateBoneScale(lToe0, Vector(1, 1, 1) * size)
 end
 
-function LIB_APERTURE:DissolveEnt(ent)
+function LIB_APERTURECONTINUED:DissolveEnt(ent)
 	if ent.IsDissolving then return end
 	local phys = ent:GetPhysicsObject()
 	ent:SetSolid(SOLID_NONE)
@@ -107,27 +107,27 @@ function LIB_APERTURE:DissolveEnt(ent)
 	ent:EmitSound("TA:FizzlerDissolve")
 	-- Calling fizzle event
 	if ent.OnFizzle then ent:OnFizzle() end
-	table.insert(LIB_APERTURE.DISSOLVE_ENTITIES, ent)
+	table.insert(LIB_APERTURECONTINUED.DISSOLVE_ENTITIES, ent)
 end
 
-function LIB_APERTURE:IsValidEntity(ent)
+function LIB_APERTURECONTINUED:IsValidEntity(ent)
 	if not IsValid(ent) then return false end
 	return true
 end
 
-function LIB_APERTURE:IsValidPhysicsEntity(ent)
+function LIB_APERTURECONTINUED:IsValidPhysicsEntity(ent)
 	if not IsValid(ent) then return false end
 	if not IsValid(ent:GetPhysicsObject()) then return false end
 	return true
 end
 
-function LIB_APERTURE:IsValidAliveEntity(ent)
+function LIB_APERTURECONTINUED:IsValidAliveEntity(ent)
 	if not IsValid(ent) then return false end
 	if not (ent:IsPlayer() and ent:Alive() or ent:IsNPC()) then return end
 	return true
 end
 
-function LIB_APERTURE:IsValidHealthEntity(ent)
+function LIB_APERTURECONTINUED:IsValidHealthEntity(ent)
 	if not IsValid(ent) then return false end
 	if not ent:Health() then return end
 	return true
@@ -148,18 +148,18 @@ local function HandleEntitiesInDivvent(ent, flow, inx, info)
 	if not IsValid(ent) 
 		or not IsValid(info.vent) 
 		or ent:GetMoveType() == MOVETYPE_NOCLIP then
-		LIB_APERTURE.DIVVENT_ENTITIES[ent] = nil
+		LIB_APERTURECONTINUED.DIVVENT_ENTITIES[ent] = nil
 		return
 	end
 
 	local flowpoint = flow[inx]
 	
-	if flowpoint != Vector() then
+	if flowpoint ~= Vector() then
 		local physObj = ent:GetPhysicsObject()
 		local centerPos = ent:LocalToWorld(physObj:GetMassCenter())
 		-- remove entity from table if it too far from the point
 		if centerPos:Distance(flowpoint) > 300 then
-			LIB_APERTURE.DIVVENT_ENTITIES[ent] = nil
+			LIB_APERTURECONTINUED.DIVVENT_ENTITIES[ent] = nil
 			return
 		end
 		
@@ -176,7 +176,7 @@ local function HandleEntitiesInDivvent(ent, flow, inx, info)
 		if flowpoint:Distance(centerPos) < 30 then
 			info.index = inx + 1
 			if (inx + 1) > #flow then
-				LIB_APERTURE.DIVVENT_ENTITIES[ent] = nil
+				LIB_APERTURECONTINUED.DIVVENT_ENTITIES[ent] = nil
 			end
 		end
 	end
@@ -185,7 +185,7 @@ end
 local function HandleDissolvedEntities(ent, index)
 	-- skip if entity doesn't exist
 	if not IsValid(ent) then
-		LIB_APERTURE.DISSOLVE_ENTITIES[index] = nil
+		LIB_APERTURECONTINUED.DISSOLVE_ENTITIES[index] = nil
 		return
 	end
 	
@@ -193,8 +193,8 @@ local function HandleDissolvedEntities(ent, index)
 	ent.TA_Dissovle = ent.TA_Dissovle + 1
 	
 	-- Turning entity into black and then fadeout alpha
-	local colorBlack = (math.max(0, LIB_APERTURE.DISSOLVE_SPEED - ent.TA_Dissovle * 1.75) / LIB_APERTURE.DISSOLVE_SPEED) * 255
-	local alpha = math.max(0, ent.TA_Dissovle - LIB_APERTURE.DISSOLVE_SPEED / 1.1) / (LIB_APERTURE.DISSOLVE_SPEED - LIB_APERTURE.DISSOLVE_SPEED / 1.1)
+	local colorBlack = (math.max(0, LIB_APERTURECONTINUED.DISSOLVE_SPEED - ent.TA_Dissovle * 1.75) / LIB_APERTURECONTINUED.DISSOLVE_SPEED) * 255
+	local alpha = math.max(0, ent.TA_Dissovle - LIB_APERTURECONTINUED.DISSOLVE_SPEED / 1.1) / (LIB_APERTURECONTINUED.DISSOLVE_SPEED - LIB_APERTURECONTINUED.DISSOLVE_SPEED / 1.1)
 	alpha = 255 - alpha * 255
 	ent:SetColor(Color(colorBlack, colorBlack, colorBlack, alpha))
 	if alpha < 255 then ent:SetRenderMode(RENDERMODE_TRANSALPHA) end
@@ -203,19 +203,19 @@ local function HandleDissolvedEntities(ent, index)
 	effectdata:SetEntity(ent)
 	util.Effect("fizzler_dissolve", effectdata)
 	
-	if ent.TA_Dissovle >= LIB_APERTURE.DISSOLVE_SPEED then
-		LIB_APERTURE.DISSOLVE_ENTITIES[index] = nil
+	if ent.TA_Dissovle >= LIB_APERTURECONTINUED.DISSOLVE_SPEED then
+		LIB_APERTURECONTINUED.DISSOLVE_ENTITIES[index] = nil
 		ent:Remove()
 	end
 end
 
 hook.Add("Think", "TA:Think", function()	
 	-- Handling dissolved entities
-	for k,v in pairs(LIB_APERTURE.DISSOLVE_ENTITIES) do
+	for k,v in pairs(LIB_APERTURECONTINUED.DISSOLVE_ENTITIES) do
 		HandleDissolvedEntities(v, k)
 	end
 	
-	for k,v in pairs(LIB_APERTURE.DIVVENT_ENTITIES) do
+	for k,v in pairs(LIB_APERTURECONTINUED.DIVVENT_ENTITIES) do
 		HandleEntitiesInDivvent(k, v.flow, v.index, v)
 	end
 end )
@@ -241,7 +241,7 @@ hook.Add("GetFallDamage", "TA:GetFallDamage", function(ply, speed)
 	if ply:GetNWBool("TA:ItemJumperBoots") then
 		ply:EmitSound("TA:PlayerLand")
 		
-		if speed >= 3500 then LIB_APERTURE.ACHIEVEMENTS:AchievAchievement(ply, "fall_survive") end
+		if speed >= 3500 then LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(ply, "fall_survive") end
 		return 0
 	end
 	return
@@ -250,7 +250,7 @@ end)
 local function ResetingFallboots(ply)
 	if ply:GetNWBool("TA:ItemJumperBoots") then
 		ply:SetNWBool("TA:ItemJumperBoots", false)
-		LIB_APERTURE:JumperBootsResizeLegs(ply, 1)
+		LIB_APERTURECONTINUED:JumperBootsResizeLegs(ply, 1)
 		local boots = ply:GetNWEntity("TA:ItemJumperBootsEntity")
 		if IsValid(boots) then
 			boots:Remove()
@@ -263,7 +263,7 @@ hook.Add("DoPlayerDeath", "TA:DoPlayerDeath", function(ply, attacker, dmg)
 end)
 
 local function Clear()
-	LIB_APERTURE.DISSOLVE_ENTITIES = {}
+	LIB_APERTURECONTINUED.DISSOLVE_ENTITIES = {}
 	for k,v in pairs(player.GetAll()) do
 		ResetingFallboots(v)
 	end
@@ -286,16 +286,16 @@ local function EntityTakeDamage(target, dmg)
 	local damage = dmg:GetDamage()
 	
 	if attacker:GetClass() == "portal_rocket_turret_missile" 
-		and IsValid(attacker.OriginalTarget) and attacker.OriginalTarget:IsPlayer() and attacker != target
+		and IsValid(attacker.OriginalTarget) and attacker.OriginalTarget:IsPlayer() and attacker ~= target
 		and (target:IsPlayer() and target:Alive() or target:IsNPC()) 
 		and damage > target:Health()
 		and attacker.OriginalTarget:GetPos():Distance(target:GetPos()) > 300 then
-			print(attacker.OriginalTarget)
-			LIB_APERTURE.ACHIEVEMENTS:AchievAchievement(attacker.OriginalTarget, "not_for_you")
+		
+			LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(attacker.OriginalTarget, "not_for_you")
 	end
 	if attacker:GetModel() == "models/portal_custom/metal_box_custom.mdl" and attacker:GetSkin() == 1 
 		and target:IsPlayer() and damage > target:Health() then
-		LIB_APERTURE.ACHIEVEMENTS:AchievAchievement(target, "love_kill")
+		LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(target, "love_kill")
 	end
 end
 

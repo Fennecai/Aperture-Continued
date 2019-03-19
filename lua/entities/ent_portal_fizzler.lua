@@ -72,8 +72,8 @@ function ENT:Drawing()
 		endpos = secondEmitter:LocalToWorld(Vector()),
 		filter = function(ent)
 			if not ent.IsAperture
-				and ent != self 
-				and ent != secondEmitter 
+				and ent ~= self 
+				and ent ~= secondEmitter 
 				and not ent:IsPlayer() 
 				and not ent:IsNPC() then
 				table.insert(closesEntities, ent)
@@ -162,5 +162,5 @@ function ENT:HandleEntity(ent)
 	if not IsValid(ent:GetPhysicsObject()) then return end
 	if ent:GetModel() == "models/blackops/portal_sides.mdl" then return end
 	
-	LIB_APERTURE:DissolveEnt(ent)
+	LIB_APERTURECONTINUED:DissolveEnt(ent)
 end

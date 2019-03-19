@@ -7,6 +7,7 @@ ENT.PrintName = "Aerial Faith Plate"
 ENT.IsAperture = true
 ENT.IsConnectable = true
 
+ENT.drawtrajectory = false
 local CATAPULT_WIDTH = 50
 local CATAPULT_LENGTH = 50
 
@@ -48,14 +49,25 @@ if SERVER then
 		if not IsValid(ent) then
 			ent:Remove()
 		end
-		local vec1 = self:LocalToWorld(Vector(CATAPULT_WIDTH, CATAPULT_LENGTH, 5))
-		local vec2 = self:LocalToWorld(-Vector(CATAPULT_WIDTH, CATAPULT_LENGTH, 5))
-		FixMinMax(vec1, vec2)
-		ent:SetPos(self:GetPos())
-		ent:SetParent(self)
-		ent:SetBounds(vec1, vec2)
-		ent:Spawn()
-		self.CatapultTrigger = ent
+		if self:GetModel() == "models/portal_custom/faithplate_slim.mdl" then
+			local vec1 = self:LocalToWorld(Vector(CATAPULT_WIDTH / 2, CATAPULT_LENGTH, 5))
+			local vec2 = self:LocalToWorld(-Vector(CATAPULT_WIDTH / 2, CATAPULT_LENGTH, 5))
+			FixMinMax(vec1, vec2)
+			ent:SetPos(self:GetPos())
+			ent:SetParent(self)
+			ent:SetBounds(vec1, vec2)
+			ent:Spawn()
+			self.CatapultTrigger = ent
+		else
+			local vec1 = self:LocalToWorld(Vector(CATAPULT_WIDTH, CATAPULT_LENGTH, 5))
+			local vec2 = self:LocalToWorld(-Vector(CATAPULT_WIDTH, CATAPULT_LENGTH, 5))
+			FixMinMax(vec1, vec2)
+			ent:SetPos(self:GetPos())
+			ent:SetParent(self)
+			ent:SetBounds(vec1, vec2)
+			ent:Spawn()
+			self.CatapultTrigger = ent
+		end
 	end
 end
 
@@ -180,6 +192,10 @@ end
 function ENT:CalculateTrajectory()
 	local destination = self:GetLandPoint()
 	local pos = self:GetPos()
+
+	if self:GetModel() == "models/portal_custom/faithplate_slim.mdl" then
+		pos = pos + Vector(48, -4, 0)
+	end
 	local direction = Angle()
 	local height = self:GetLaunchHeight()
 	local distXY = Vector(destination.x, destination.y):Distance(Vector(pos.x, pos.y))
@@ -213,6 +229,10 @@ function ENT:CalculateTrajectory()
 			time = velZ / gravity -- time to lift up
 			time = time + math.sqrt((maxZ - difZ) * 2 / gravity)
 			dist = velX * time
+		else
+			time = velZ * gravity -- time to lift up
+			time = time + math.sqrt((maxZ + difZ) / 2 * gravity)
+			dist = velX / time
 		end
 
 		-- if doesn't found add force
@@ -225,50 +245,6 @@ function ENT:CalculateTrajectory()
 			force = force + math.max(10, math.abs(angOffset / 100))
 		end
 	until math.abs(dist - distXY) < 1 and dist ~= 0 and time > 0
-
-	-- if time < 0 then
-	-- isReversed = true
-	-- force = 100
-	-- dist = 0
-	-- angle = 0
-	-- time = 0
-	-- brk = 0
-
-	-- repeat
-	-- brk = brk + 1
-	-- if brk > 1000000 then
-	-- print("cannot calculate trajectory")
-	-- break
-	-- end
-
-	-- local angOffset = (distXY - dist)
-	-- angle = angle + angOffset / 5000
-
-	-- local velX = math.cos(angle * math.pi / 180) * force
-	-- local velZ = math.sin(angle * math.pi / 180) * force
-	-- local maxZ = (velZ * velZ) / (2 * gravity)
-
-	-- if height and height > 0 and math.abs(maxZ - height) > 20 then
-	-- force = force + (height - maxZ)
-	-- end
-
-	-- if maxZ > difZ then
-	-- time = velZ / gravity -- time to lift up
-	-- time = time + math.sqrt((maxZ - difZ) * 2 / gravity)
-	-- dist = velX * time
-	-- end
-
-	-- -- if doesn't found add force
-	-- if not (dist == dist) or dist == 0 or math.abs(angle) > 360 then
-	-- if angle > 360 then
-	-- angle = angle - 360
-	-- elseif angle < -360 then
-	-- angle = angle + 360
-	-- end
-	-- force = force + math.max(10, math.abs(angOffset / 100))
-	-- end
-	-- until math.abs(dist - distXY) < 1 and dist ~= 0 and time > 0
-	-- end
 
 	if isReversed then
 		direction = Angle(-angle, (destination - self:GetPos()):Angle().y, 0)
@@ -300,7 +276,12 @@ function ENT:LaunchEntity(entity)
 	local velOffset = (self:GetPos() - entity:GetPos()) / time
 	local velocity = self:GetLaunchVector() + velOffset
 
-	self:PlaySequence("straightup", 1.0)
+	if self:GetModel() == "models/portal_custom/faithplate_slim.mdl" then
+		self:PlaySequence("launch_up", 1.0)
+		--print("Please disregaurd any recent error message just now about an animation sequence not playing or whatever; this is not a bug.")
+	else
+	self:PlaySequence("straightup",1.0)
+	end
 	sound.Play("TA:CatapultLaunch", self:LocalToWorld(Vector(0, 0, 100)), 75, 100, 1)
 
 	if entity:IsPlayer() then

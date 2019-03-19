@@ -57,7 +57,7 @@ end
 
 function TOOL:LeftClick(trace)
 	-- Ignore if place target is Alive
-	//if ( trace.Entity and ( trace.Entity:IsPlayer() || trace.Entity:IsNPC() || APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
+	--if ( trace.Entity and ( trace.Entity:IsPlayer() || trace.Entity:IsNPC() || APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
 
 	if CLIENT then return true end
 	
@@ -89,10 +89,8 @@ function TOOL:UpdateGhostLaserEmitter(ent, ply)
 	end
 	
 	local curPos = ent:GetPos()
-	local model = self:GetClientInfo("model")
-	local offsets = self:ModelToOffsets(model)
-	local pos = trace.HitPos + trace.HitNormal * offsets.z
-	local ang = trace.HitNormal:Angle() + offsets.ang
+	local pos = trace.HitPos - trace.HitNormal * 12
+	local ang = trace.HitNormal:Angle()
 
 	ent:SetPos(pos)
 	ent:SetAngles(ang)
@@ -107,7 +105,7 @@ function TOOL:Think()
 	local mdl = self:GetClientInfo("model")
 	if not util.IsValidModel(mdl) then self:ReleaseGhostEntity() return end
 
-	if not IsValid(self.GhostEntity) or self.GhostEntity:GetModel() != mdl then
+	if not IsValid(self.GhostEntity) or self.GhostEntity:GetModel() ~= mdl then
 		self:MakeGhostEntity(mdl, Vector(0, 0, 0), Angle(0, 0, 0))
 	end
 

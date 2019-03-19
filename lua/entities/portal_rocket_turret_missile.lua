@@ -42,8 +42,8 @@ function ENT:Think()
 	self.TA_PrevPos = self:GetPos()
 	if IsValid(trace.Entity) and trace.Entity:GetClass() == "prop_portal" then
 		local portal = trace.Entity
-		local pos, ang = LIB_APERTURE:GetPortalTransform(self:GetPos(), self:GetAngles(), portal, true)
-		local vel = LIB_APERTURE:GetPortalRotateVector(self:GetVelocity(), portal, true)
+		local pos, ang = LIB_APERTURECONTINUED:GetPortalTransform(self:GetPos(), self:GetAngles(), portal, true)
+		local vel = LIB_APERTURECONTINUED:GetPortalRotateVector(self:GetVelocity(), portal, true)
 		self:SetPos(pos)
 		self:SetAngles(ang)
 		self:GetPhysicsObject():SetVelocity(vel)

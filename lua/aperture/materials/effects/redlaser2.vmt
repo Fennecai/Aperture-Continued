@@ -1,0 +1,25 @@
+UnlitGeneric
+
+{
+$baseTexture "effects/redlaser1"
+$nocull 1
+$nodecal 1
+$additive 1
+$selfillum 1
+
+$no_fullbright 1
+$model 1
+$nofog 1
+
+Proxies
+{
+
+Sine
+{
+sineperiod .06
+sinemin ".3"
+sinemax ".5"
+resultVar $alpha
+}
+}
+}

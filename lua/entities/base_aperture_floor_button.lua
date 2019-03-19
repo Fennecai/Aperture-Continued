@@ -289,7 +289,6 @@ end
 
 function ENT:UpdateOutputs()
 	if ( !WireAddon ) then return end
-	print(self:GetKey())
 	if self.Pressed then
 		numpad.Activate(self:GetPlayer(), self:GetKey(), true)
 	else

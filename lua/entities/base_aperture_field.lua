@@ -25,7 +25,7 @@ function ENT:Enable(enable)
 	local secondEmitter = self:GetSecondEmitter()
 	if not IsValid(secondEmitter) then return end
 	local middlepos = (self:GetPos() + secondEmitter:GetPos()) / 2
-	if self:GetEnable() != enable then
+	if self:GetEnable() ~= enable then
 		if enable then
 			self:EmitSound("TA:FizzlerEnable")
 			sound.Play("TA:FizzlerEnable", middlepos, 85, 100, 1)
@@ -49,7 +49,7 @@ function ENT:EnableEX(enable)
 		return true
 	end
 	
-	if self:GetStartEnabled() then enable = !enable end
+	if self:GetStartEnabled() then enable = not enable end
 	self:Enable(enable)
 end
 
@@ -139,7 +139,7 @@ function ENT:Think()
 		if not IsValid(secondEmitter) then return end
 		local dist = self:GetPos():Distance(secondEmitter:GetPos())
 		if self.FieldStrech then
-			if #self.FieldsEntities != 1 then
+			if #self.FieldsEntities ~= 1 then
 				self:ClearFields()
 				local ent = ClientsideModel("models/aperture/effects/field_effect.mdl")
 				ent:SetPos(self:LocalToWorld(Vector(0, dist / 2, 0)))
@@ -161,7 +161,7 @@ function ENT:Think()
 			local requireToSpawn = math.ceil(dist / FIELD_MODEL_SIZE)
 			
 			-- clearing
-			if requireToSpawn != #self.FieldsEntities then
+			if requireToSpawn ~= #self.FieldsEntities then
 				self:ClearFields()
 				
 				for i=0, self:GetPos():Distance(secondEmitter:GetPos()), FIELD_MODEL_SIZE do

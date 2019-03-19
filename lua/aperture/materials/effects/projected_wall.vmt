@@ -1,0 +1,86 @@
+"UnlitGeneric"
+{
+$basetexture "effects/projected_wall"
+$detail1 "effects/projected_wall_draw"
+$detail1scale 1
+$selfillum 1
+$DETAIL1BLENDMODE 1
+$detail "effects/projected_wall_noise"
+$detailscale 1
+$detailblendmode 9
+$surfaceprop glass
+"%keywords" Portal2
+//$translucent 1
+$additive 1
+$color "{0 210 255}" 
+$vertexalpha 0
+$vertexcolor 0
+$detailscroll1 "[0 2]"
+$detailscroll2 "[0 2]"
+$detailcomponentscale "[1 1]"
+$basescroll "[2 2]"
+$basescale "[2 1]"
+"!srgb?$outputintensity" .75
+Proxies
+{
+Sine 
+{
+sinemin 0
+sinemax 0.94
+sineperiod 5
+timeoffset 3
+resultVar "$detailscroll1[0]"
+}
+LinearRamp 
+{
+rate -3
+initialValue 0
+resultVar "$detailscroll1[1]"
+}
+LinearRamp 
+{
+rate 0.18
+initialValue 0
+resultVar "$detailscroll2[1]"
+}
+Sine 
+{
+sinemin 0.99
+sinemax 1.01
+sineperiod 0.125
+timeoffset 0
+resultVar "$detailcomponentscale[0]"
+}
+Sine 
+{
+sinemin 0.995
+sinemax 1.005
+sineperiod 0.1
+timeoffset 0.05
+resultVar "$basescale[0]"
+}
+LinearRamp 
+{
+rate 0.15
+initialValue 0
+resultVar "$basescroll[1]"
+}
+TextureTransform
+{
+translateVar $detailscroll1
+resultVar $detail1texturetransform
+}
+TextureTransform
+{
+translateVar $detailscroll2
+scaleVar $detailcomponentscale
+resultVar $detailtexturetransform
+}
+TextureTransform
+{
+translateVar $basescroll
+scaleVar $basescale
+resultVar $basetexturetransform
+}
+}
+}

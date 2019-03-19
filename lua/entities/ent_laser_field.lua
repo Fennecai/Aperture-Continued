@@ -60,6 +60,6 @@ function ENT:HandleEntity(ent)
 	
 	ent:TakeDamage(ent:Health(), self, self)
 	if ent:IsPlayer() and ent:Alive() then
-		LIB_APERTURE.ACHIEVEMENTS:AchievAchievement(ent, "chromium")
+		LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(ent, "chromium")
 	end
 end

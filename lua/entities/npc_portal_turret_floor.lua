@@ -66,11 +66,11 @@ function ENT:Think()
 		for k,v in pairs(constTbl) do
 			if v.Ent1 == self then
 				if v.Ent2:GetModel() == "models/portal_custom/metal_ball_custom.mdl" then
-					if IsValid(self.Owner) then LIB_APERTURE.ACHIEVEMENTS:AchievAchievement(self.Owner, "inventor") end
+					if IsValid(self.Owner) then LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(self.Owner, "inventor") end
 				end
 			elseif v.Ent2 == self then
 				if v.Ent1:GetModel() == "models/portal_custom/metal_ball_custom.mdl" then
-					if IsValid(self.Owner) then LIB_APERTURE.ACHIEVEMENTS:AchievAchievement(self.Owner, "inventor") end
+					if IsValid(self.Owner) then LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(self.Owner, "inventor") end
 				end
 			end
 		end
@@ -87,7 +87,7 @@ function ENT:Think()
 				if v.OnDieFunctions and v.OnDieFunctions.GetCountUpdate and v.OnDieFunctions.GetCountUpdate.Args and v.OnDieFunctions.GetCountUpdate.Args[1] then
 					ply = v.OnDieFunctions.GetCountUpdate.Args[1]
 				end
-				if IsValid(ply) then LIB_APERTURE.ACHIEVEMENTS:AchievAchievement(ply, "im_different") end
+				if IsValid(ply) then LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(ply, "im_different") end
 				self:MakeDifferent()
 				v:SetPos(Vector())
 				v:Remove()
@@ -101,7 +101,7 @@ function ENT:Think()
 		if self.TurretBundle then
 			for k,v in pairs(self.TurretBundle) do
 				if not IsValid(v) then self:StopSing() break end
-				if v:GetTurretState() != TURRET_STATE_IDLE then
+				if v:GetTurretState() ~= TURRET_STATE_IDLE then
 					self:StopSing()
 					break
 				end
@@ -122,7 +122,7 @@ function ENT:Think()
 		local entities = ents.FindInSphere(self:GetPos(), 200)
 		local turrets = {self}
 		for k,v in pairs(entities) do
-			if v != self and v:GetClass() == "npc_portal_turret_floor" and v.TurretDifferent and v:GetTurretState() == TURRET_STATE_IDLE and not v.TurretSong then
+			if v ~= self and v:GetClass() == "npc_portal_turret_floor" and v.TurretDifferent and v:GetTurretState() == TURRET_STATE_IDLE and not v.TurretSong then
 				table.insert(turrets, v)
 			end
 		end
@@ -162,7 +162,7 @@ function ENT:SingInit(turretInx)
 
 	if turretInx == 1 then
 		if IsValid(self.Owner) then
-			LIB_APERTURE.ACHIEVEMENTS:AchievAchievement(self.Owner, "turret_song")
+			LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(self.Owner, "turret_song")
 		end
 		
 		self:EmitSound("TA:TurretSong")

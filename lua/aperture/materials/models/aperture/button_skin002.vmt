@@ -1,0 +1,6 @@
+VertexLitGeneric
+{
+$basetexture "models/aperture/button_skin002"
+$surfaceprop metal
+$selfillum 1
+}

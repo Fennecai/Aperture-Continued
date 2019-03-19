@@ -306,7 +306,7 @@ function TOOL:Think()
 	local amount = countx * county
 	local lastAmount = self.LastPanelAmount
 	
-	if lastAmount != amount then
+	if lastAmount ~= amount then
 		local inx = 0
 		for i1=1,countx do
 		for i2=1,county do

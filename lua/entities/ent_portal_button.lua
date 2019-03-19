@@ -28,7 +28,7 @@ end
 
 function ENT:Press(on, ply)
 	local info = self:ModelToInfo()
-	if self:GetOn() != on then
+	if self:GetOn() ~= on then
 		if on then
 			self:EmitSound(info.sounddown)
 			self:PlaySequence(info.animdown, 1.0)
@@ -55,7 +55,7 @@ function ENT:Press(on, ply)
 		end
 		
 		if ply.PressedButtonCount > 5 then
-			LIB_APERTURE.ACHIEVEMENTS:AchievAchievement(ply, "buttonmaniac")
+			LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(ply, "buttonmaniac")
 		end
 	end
 end

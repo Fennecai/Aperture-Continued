@@ -12,7 +12,7 @@ if ( CLIENT ) then
 	SWEP.Author             = "CrishNate"
 	SWEP.Purpose            = "Shoot Different Gels"
 	SWEP.ViewModelFOV       = 45
-	SWEP.Instructions       = "Left/Right Mouse shoot gel, Reload change gel types"
+	SWEP.Instructions       = "Left/Right to Shoot, Reload to change gel types"
 	SWEP.Slot = 0
 	SWEP.Slotpos = 0
 	SWEP.CSMuzzleFlashes    = false
@@ -102,8 +102,8 @@ function SWEP:MakePaintBlob(paintType)
 	local force = traceForce.HitPos:Distance(ownerShootPos)
 	
 	-- Randomize makes random size between maxsize and minsize by selected procent
-	local randSize = math.Rand(LIB_APERTURE.GEL_MINSIZE, (LIB_APERTURE.GEL_MAXSIZE + LIB_APERTURE.GEL_MINSIZE) / 2)
-	local paint = LIB_APERTURE:MakePaintBlob(paintType, ownerShootPos, forward * math.max(100, math.min(200, force - 100)) * 8 + VectorRand() * 100 + ownerSpeed, randSize)
+	local randSize = math.Rand(LIB_APERTURECONTINUED.GEL_MINSIZE, (LIB_APERTURECONTINUED.GEL_MAXSIZE + LIB_APERTURECONTINUED.GEL_MINSIZE) / 2)
+	local paint = LIB_APERTURECONTINUED:MakePaintBlob(paintType, ownerShootPos, forward * math.max(100, math.min(200, force - 100)) * 8 + VectorRand() * 100 + ownerSpeed, randSize)
 	paint.IsFromPaintGun = true
 	
 	if not IsValid(paint) then return end
@@ -321,7 +321,7 @@ function SWEP:DrawHUD()
 		end
 	end
 	
-	if animation != 0 then
+	if animation ~= 0 then
 		for i = 1,paintCount  do
 			local deg = roundDegTo * (i - 1)
 			local radian = deg * math.pi / 180
@@ -335,7 +335,7 @@ function SWEP:DrawHUD()
 			local YPos = ScrH() / 2 + (sin * wheelRad - imgSize / 2) * animation
 			
 			if selectionDeg == deg and LocalPlayer():KeyDown(IN_RELOAD) then
-				if firstPaintType != i and secondPaintType != i then
+				if firstPaintType ~= i and secondPaintType ~= i then
 					if input.IsMouseDown(MOUSE_LEFT) then
 						net.Start("TA_NW_PaintGun_SwitchPaint")
 							net.WriteString("first")
@@ -370,7 +370,7 @@ function SWEP:DrawHUD()
 			if animation == 1 then
 				if selectionDeg == deg then addingSize = 20 end
 				
-				local PaintName = LIB_APERTURE:PaintTypeToName(i) 
+				local PaintName = LIB_APERTURECONTINUED:PaintTypeToName(i) 
 				surface.SetFont("Default")
 				surface.SetTextColor(DrawColor)
 
@@ -396,7 +396,7 @@ function SWEP:DrawHUD()
 			surface.SetMaterial(Material( "vgui/paint_type_back"))
 			surface.DrawTexturedRect(XPos - addingSize / 2, YPos - addingSize / 2, imgSize + addingSize, imgSize + addingSize)
 			
-			surface.SetDrawColor(LIB_APERTURE:PaintTypeToColor(i))
+			surface.SetDrawColor(LIB_APERTURECONTINUED:PaintTypeToColor(i))
 			surface.SetMaterial(Material("vgui/paint_icon"))
 			surface.DrawTexturedRect(XPos - addingSize / 2, YPos - addingSize / 2, imgSize + addingSize, imgSize + addingSize)
 		end
@@ -486,7 +486,7 @@ if SERVER then
 			if tr.Entity.isClone then tr.Entity = tr.Entity.daddyEnt end
 			local entsize = (tr.Entity:OBBMaxs() - tr.Entity:OBBMins()):Length() / 2
 			if entsize > 45 then return end
-			if not IsValid(self.HoldenProp) and tr.Entity:GetMoveType() != 2 then
+			if not IsValid(self.HoldenProp) and tr.Entity:GetMoveType() ~= 2 then
 				if not self:PickupEntity(tr.Entity) then
 					self:EmitSound("player/object_use_failure_01.wav")
 				end

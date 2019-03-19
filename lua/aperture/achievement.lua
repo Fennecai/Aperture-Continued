@@ -1,14 +1,14 @@
 AddCSLuaFile()
 
-LIB_APERTURE.ACHIEVEMENTS = { }
-LIB_APERTURE.ACHIEVEMENTS.ACHIEVEMENTS_INFO = { }
-LIB_APERTURE.ACHIEVEMENTS.NOTIFICATIONS = { }
+LIB_APERTURECONTINUED.ACHIEVEMENTS = { }
+LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO = { }
+LIB_APERTURECONTINUED.ACHIEVEMENTS.NOTIFICATIONS = { }
 
 TA_DAchivmentPanels = TA_DAchivmentPanels and TA_DAchivmentPanels or {}
 
-function LIB_APERTURE.ACHIEVEMENTS:AddAchievement(key, name, desc)
+function LIB_APERTURECONTINUED.ACHIEVEMENTS:AddAchievement(key, name, desc)
 	local img = "aperture/achievement/"..key
-	LIB_APERTURE.ACHIEVEMENTS.ACHIEVEMENTS_INFO[key] = {
+	LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO[key] = {
 		img = img,
 		name = name,
 		desc = desc,
@@ -17,25 +17,25 @@ function LIB_APERTURE.ACHIEVEMENTS:AddAchievement(key, name, desc)
 end
 
 -- Achievements
-LIB_APERTURE.ACHIEVEMENTS:AddAchievement("turret_song", "The Turret Song")
-LIB_APERTURE.ACHIEVEMENTS:AddAchievement("fried_potato", "Fried Potato")
-LIB_APERTURE.ACHIEVEMENTS:AddAchievement("cake", "Cake is not a lie")
-LIB_APERTURE.ACHIEVEMENTS:AddAchievement("radio", "Strange channel")
-LIB_APERTURE.ACHIEVEMENTS:AddAchievement("fall_survive", "How am I still alive?!")
-LIB_APERTURE.ACHIEVEMENTS:AddAchievement("im_different", "Im Different", "It need a gift")
-LIB_APERTURE.ACHIEVEMENTS:AddAchievement("im_not_defective", "Im not Defective!", "It need something")
-LIB_APERTURE.ACHIEVEMENTS:AddAchievement("chromium", "Made out of chromium")
-LIB_APERTURE.ACHIEVEMENTS:AddAchievement("love_kill", "Love can kill")
-LIB_APERTURE.ACHIEVEMENTS:AddAchievement("inventor", "Yea! I am Inventor")
-LIB_APERTURE.ACHIEVEMENTS:AddAchievement("not_for_you", "This is not for You!")
-LIB_APERTURE.ACHIEVEMENTS:AddAchievement("laser_show", "Laser show", "Make a laser show")
-LIB_APERTURE.ACHIEVEMENTS:AddAchievement("firefighter", "Firefight", "Help!")
-LIB_APERTURE.ACHIEVEMENTS:AddAchievement("buttonmaniac", "Buttonmaniac", "Click, Click")
-LIB_APERTURE.ACHIEVEMENTS:AddAchievement("good_idea", "Ooh, I have an idea")
+LIB_APERTURECONTINUED.ACHIEVEMENTS:AddAchievement("turret_song", "The Turret Song")
+LIB_APERTURECONTINUED.ACHIEVEMENTS:AddAchievement("fried_potato", "Fried Potato")
+LIB_APERTURECONTINUED.ACHIEVEMENTS:AddAchievement("cake", "Cake is not a lie")
+LIB_APERTURECONTINUED.ACHIEVEMENTS:AddAchievement("radio", "Strange channel")
+LIB_APERTURECONTINUED.ACHIEVEMENTS:AddAchievement("fall_survive", "How am I still alive?!")
+LIB_APERTURECONTINUED.ACHIEVEMENTS:AddAchievement("im_different", "Im Different", "It need a gift")
+LIB_APERTURECONTINUED.ACHIEVEMENTS:AddAchievement("im_not_defective", "Im not Defective!", "It need something")
+LIB_APERTURECONTINUED.ACHIEVEMENTS:AddAchievement("chromium", "Made out of chromium")
+LIB_APERTURECONTINUED.ACHIEVEMENTS:AddAchievement("love_kill", "Love can kill")
+LIB_APERTURECONTINUED.ACHIEVEMENTS:AddAchievement("inventor", "Yea! I am Inventor")
+LIB_APERTURECONTINUED.ACHIEVEMENTS:AddAchievement("not_for_you", "This is not for You!")
+LIB_APERTURECONTINUED.ACHIEVEMENTS:AddAchievement("laser_show", "Laser show", "Make a laser show")
+LIB_APERTURECONTINUED.ACHIEVEMENTS:AddAchievement("firefighter", "Firefight", "Help!")
+LIB_APERTURECONTINUED.ACHIEVEMENTS:AddAchievement("buttonmaniac", "Buttonmaniac", "Click, Click")
+LIB_APERTURECONTINUED.ACHIEVEMENTS:AddAchievement("good_idea", "Ooh, I have an idea")
 
 local function UpdateAchievementMenu()
 	for k,v in pairs(TA_DAchivmentPanels) do
-		if LIB_APERTURE.ACHIEVEMENTS.ACHIEVEMENTS_INFO[k] and LIB_APERTURE.ACHIEVEMENTS.ACHIEVEMENTS_INFO[k].achieved then
+		if LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO[k] and LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO[k].achieved then
 			v.item:SetBackgroundColor(Color(255, 255, 255))
 			v.bg_image:SetImage("aperture/achievement/ach_background_achived")
 			v.image:SetImageColor(Color(50, 50, 50, 255))
@@ -53,8 +53,8 @@ if CLIENT then
 			if str then
 				local achKeys = string.Explode(" ", str)
 				for k,v in pairs(achKeys) do
-					if LIB_APERTURE.ACHIEVEMENTS.ACHIEVEMENTS_INFO[v] then
-						LIB_APERTURE.ACHIEVEMENTS.ACHIEVEMENTS_INFO[v].achieved = true
+					if LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO[v] then
+						LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO[v].achieved = true
 					end
 				end
 			end
@@ -67,7 +67,7 @@ if CLIENT then
 end
 
 local function BuildAchievementMenu(panel)
-	for k,info in pairs(LIB_APERTURE.ACHIEVEMENTS.ACHIEVEMENTS_INFO) do
+	for k,info in pairs(LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO) do
 		local item = vgui.Create("DPanel", panel)
 		item:Dock(TOP)
 		item:SetPaintBackground(true)
@@ -125,14 +125,14 @@ end)
 
 local function SaveAchievementProgress()
 	local strDat = ""
-	for k,info in pairs(LIB_APERTURE.ACHIEVEMENTS.ACHIEVEMENTS_INFO) do
+	for k,info in pairs(LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO) do
 		if info.achieved then strDat = strDat..k.." " end
 	end
 	file.Write("aperture_achievements.dat", strDat) 
 	UpdateAchievementMenu()
 end
 
-function LIB_APERTURE.ACHIEVEMENTS:AchievAchievement(ply, achInx)
+function LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(ply, achInx)
 	if CLIENT then return end
 	if not IsValid(ply) then return end
 	
@@ -142,19 +142,19 @@ function LIB_APERTURE.ACHIEVEMENTS:AchievAchievement(ply, achInx)
 end
 
 local function CreateAchievementNotification(achInx)
-	local achInfo = LIB_APERTURE.ACHIEVEMENTS.ACHIEVEMENTS_INFO[achInx]
+	local achInfo = LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO[achInx]
 	if not achInfo then return end
 	local ply = LocalPlayer()
-	table.insert(LIB_APERTURE.ACHIEVEMENTS.NOTIFICATIONS, {achInfo = achInfo, startCurtime = CurTime()})
+	table.insert(LIB_APERTURECONTINUED.ACHIEVEMENTS.NOTIFICATIONS, {achInfo = achInfo, startCurtime = CurTime()})
 	ply:EmitSound("garrysmod/save_load1.wav")
 end
 
 net.Receive("TA:NW_AchievedAchievement", function(len, pl)
 	local achInx = net.ReadString()
 	-- if achievement allready achived skipping it
-	if LIB_APERTURE.ACHIEVEMENTS.ACHIEVEMENTS_INFO[achInx].achieved then return end
+	if LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO[achInx].achieved then return end
 	CreateAchievementNotification(achInx)
-	LIB_APERTURE.ACHIEVEMENTS.ACHIEVEMENTS_INFO[achInx].achieved = true
+	LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO[achInx].achieved = true
 	SaveAchievementProgress()
 end)
 
@@ -169,10 +169,10 @@ local TextYOffset = 10
 local AchievmentTime = 4
 
 hook.Add("PostDrawHUD", "TA:AchievmentNotifications", function()	
-	if not LIB_APERTURE.ACHIEVEMENTS.NOTIFICATIONS then return end
+	if not LIB_APERTURECONTINUED.ACHIEVEMENTS.NOTIFICATIONS then return end
 	
 	local itter = 0
-	for k,v in pairs(LIB_APERTURE.ACHIEVEMENTS.NOTIFICATIONS) do
+	for k,v in pairs(LIB_APERTURECONTINUED.ACHIEVEMENTS.NOTIFICATIONS) do
 		local time = (CurTime() - v.startCurtime)
 		local mult = 0
 		if time <= 1 then mult = time 
@@ -181,7 +181,7 @@ hook.Add("PostDrawHUD", "TA:AchievmentNotifications", function()
 		
 		-- removing notification
 		if time > (2 + AchievmentTime) then
-			LIB_APERTURE.ACHIEVEMENTS.NOTIFICATIONS[k] = nil
+			LIB_APERTURECONTINUED.ACHIEVEMENTS.NOTIFICATIONS[k] = nil
 		end
 		
 		local panelX = ScrW() - mult * AchivmentWidth

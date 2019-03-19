@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	$basetexture "aperture/achievement/not_for_you"
+	$translucent 1
+	$vertexcolor 1
+}

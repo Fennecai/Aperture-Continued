@@ -1,0 +1,19 @@
+VertexLitGeneric
+{
+$basetexture "models/aperture/black_floor"
+//$bumpmap "models/aperture/black_floor_ssnormal"
+//$ssbump 1
+$reflectivity "[ 0.6 0.6 0.6 ]" 
+$envmap env_cubemap
+$envmaplightscale 0.6
+
+$normalmapalphaenvmapmask 1
+$envmapcontrast 1.0
+$envmapsaturation 0.2
+$envmaptint 0.3 0.3 0.3
+"%noportal" 1
+$detail "detail/detail_blackfloor"
+$detailscale 4.2
+$detailblendfactor .6
+$detailblendmode 0
+}

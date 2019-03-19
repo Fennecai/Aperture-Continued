@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	$basetexture "aperture/achievement/inventor"
+	$translucent 1
+	$vertexcolor 1
+}

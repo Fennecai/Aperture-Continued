@@ -63,7 +63,7 @@ end
 function TOOL:LeftClick( trace )
 
 	-- Ignore if place target is Alive
-	//if ( trace.Entity and ( trace.Entity:IsPlayer() || trace.Entity:IsNPC() || APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
+	--if ( trace.Entity and ( trace.Entity:IsPlayer() || trace.Entity:IsNPC() || APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
 
 	if CLIENT then return true end
 	
@@ -116,7 +116,7 @@ function TOOL:Think()
 	local mdl = self:GetClientInfo("model")
 	if not util.IsValidModel(mdl) then self:ReleaseGhostEntity() return end
 
-	if not IsValid(self.GhostEntity) or self.GhostEntity:GetModel() != mdl then
+	if not IsValid(self.GhostEntity) or self.GhostEntity:GetModel() ~= mdl then
 		self:MakeGhostEntity(mdl, Vector(0, 0, 0), Angle(0, 0, 0))
 	end
 

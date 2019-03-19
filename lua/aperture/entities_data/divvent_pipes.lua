@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-if not LIB_APERTURE then error("Error: Aperture lib does not exit!!!") return end
+if not LIB_APERTURECONTINUED then error("Error: Aperture lib does not exit!!!") return end
 
 -- ================================ PIPES DATA ============================
 
@@ -120,11 +120,11 @@ local FilterableModelData = {
 	["models/aperture/vactube_crossroads.mdl"] = Vector(0, 64, 0),
 }
 
-function LIB_APERTURE:GetFilterColor(inx)
+function LIB_APERTURECONTINUED:GetFilterColor(inx)
 	return FilterRoutesColor[inx]
 end
 
-function LIB_APERTURE:GetModelConnectionData(val)
+function LIB_APERTURECONTINUED:GetModelConnectionData(val)
 	if isentity(val) then
 		return ModelConnectionData[val:GetModel()]
 	else
@@ -132,7 +132,7 @@ function LIB_APERTURE:GetModelConnectionData(val)
 	end
 end
 
-function LIB_APERTURE:GetModelFlowData(val)
+function LIB_APERTURECONTINUED:GetModelFlowData(val)
 	if isentity(val) then
 		return ModelFlowData[val:GetModel()]
 	else
@@ -140,7 +140,7 @@ function LIB_APERTURE:GetModelFlowData(val)
 	end
 end
 
-function LIB_APERTURE:GetFilterableModelData(val)
+function LIB_APERTURECONTINUED:GetFilterableModelData(val)
 	if isentity(val) then
 		return FilterableModelData[val:GetModel()]
 	else

@@ -29,7 +29,7 @@ function ENT:ModelToStartCoord()
 end
 
 function ENT:Enable(enable)
-	if self:GetEnable() != enable then
+	if self:GetEnable() ~= enable then
 		if enable then
 			self:MakeSoundEntity("TA:LaserBurn", self:LocalToWorld(Vector(25, 0, 0)))
 			self:MakeSoundEntity("TA:LaserStart", self:LocalToWorld(Vector(25, 0, 0)), self)
@@ -50,7 +50,7 @@ function ENT:EnableEX(enable)
 		return true
 	end
 	
-	if self:GetStartEnabled() then enable = !enable end
+	if self:GetStartEnabled() then enable = not enable end
 	self:Enable(enable)
 end
 
@@ -130,12 +130,12 @@ function ENT:DoLaser(startpos, ang, ignore)
 	self.TA_PassagesCount = self.TA_PassagesCount + 1
 	if self.TA_PassagesCount >= self.MAX_REFLECTIONS then return end
 	if self.TA_PassagesCount > 50 and SERVER then
-		LIB_APERTURE.ACHIEVEMENTS:AchievAchievement(self.Player, "laser_show")
+		LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(self.Player, "laser_show")
 	end
 
 	local drawEndEffect = true
 	local filter = {ignore, "models/aperture/laser_receptacle.mdl"}
-	local points, trace = LIB_APERTURE:GetAllPortalPassagesAng(startpos, ang, nil, filter)
+	local points, trace = LIB_APERTURECONTINUED:GetAllPortalPassagesAng(startpos, ang, nil, filter)
 
 	if IsValid(trace.Entity) then
 		local ent = trace.Entity
@@ -162,7 +162,7 @@ function ENT:DoLaser(startpos, ang, ignore)
 				endpos = v.endpos,
 				ignoreworld = true,
 				filter = function(ent)
-					if ent != self and ent:GetClass() != "prop_portal" then
+					if ent ~= self and ent:GetClass() ~= "prop_portal" then
 						self:HandleEntities(ent, v.startpos, v.endpos)
 					end
 				end,

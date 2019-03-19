@@ -23,7 +23,7 @@ function ENT:SetupDataTables()
 end
 
 function ENT:Enable(enable)
-	if self:GetEnable() != enable then
+	if self:GetEnable() ~= enable then
 		if enable then
 			
 		else
@@ -42,7 +42,7 @@ function ENT:EnableEX(enable)
 		return true
 	end
 	
-	if self:GetStartEnabled() then enable = !enable end
+	if self:GetStartEnabled() then enable = not enable end
 	self:Enable(enable)
 end
 
@@ -130,9 +130,9 @@ function ENT:DamageEntities()
 	
 	local entities = ents.FindInBox(max, min)
 	for k,v in pairs(entities) do
-		if LIB_APERTURE:IsValidHealthEntity(v) then v:TakeDamage(250, self, self) end
+		if LIB_APERTURECONTINUED:IsValidHealthEntity(v) then v:TakeDamage(250, self, self) end
 		if v:GetClass() == "prop_monster_box" then
-			LIB_APERTURE.ACHIEVEMENTS:AchievAchievement(self.Founder, "good_idea")
+			LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(self.Founder, "good_idea")
 		end
 	end
 end

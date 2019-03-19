@@ -1,0 +1,19 @@
+VertexLitGeneric
+{
+$baseTexture "aperture/paint/prop_paint"
+$surfaceprop metal
+$nodecal 1
+$translucent 1
+$bumpmap "aperture/paint/prop_paint_normal"
+$envmap "env_cubemap"
+$envmaptint "[0.05 0.05 0.05]"
+$normalmapalphaenvmapmask 1
+$detail ""
+$detailScale 1
+$detailblendmode 2
+$phong 1
+$phongexponent 50
+$phongfresnelranges "[1 2 4]"
+$phongboost 2
+}
+

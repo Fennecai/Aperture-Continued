@@ -58,7 +58,7 @@ local function CreateBoots(ply)
 	ent:AddEffects(EF_BONEMERGE)
 	ent.GetPlayerColor = function() return ply:GetPlayerColor() end
 	ply:SetNWEntity("TA:ItemJumperBootsEntity", ent)
-	LIB_APERTURE:JumperBootsResizeLegs(ply, 10)
+	LIB_APERTURECONTINUED:JumperBootsResizeLegs(ply, 10)
 end
 
 function ENT:SetPlayer(ply)

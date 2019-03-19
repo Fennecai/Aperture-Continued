@@ -4,7 +4,7 @@ function EFFECT:Init( data )
 	self.Direction = data:GetNormal()
 	self.Color = data:GetColor()
 	self.Radius = math.max(0.6, data:GetRadius() / 150)
-	local color = LIB_APERTURE:PaintTypeToColor(self.Color)
+	local color = LIB_APERTURECONTINUED:PaintTypeToColor(self.Color)
 	
 	self.Emitter = ParticleEmitter(self.Start)
 	

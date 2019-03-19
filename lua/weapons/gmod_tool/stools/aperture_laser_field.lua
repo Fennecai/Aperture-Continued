@@ -114,7 +114,7 @@ end
 function TOOL:RightClick(trace)
 	if not self.FizzlerRotate then self.FizzlerRotate = 0 end
 	-- Somehow rightCLick on client work double or even tripple at the time
-	if CLIENT and self.LastClientRightClick != CurTime() or SERVER then
+	if CLIENT and self.LastClientRightClick ~= CurTime() or SERVER then
 		self.LastClientRightClick = CurTime()
 		self.FizzlerRotate = self.FizzlerRotate == 0 and 90 or 0
 	end
@@ -124,7 +124,7 @@ function TOOL:Think()
 	local mdl = self:GetClientInfo("model")
 	if not util.IsValidModel(mdl) then self:ReleaseGhostEntity() return end
 
-	if not IsValid(self.GhostEntity) or self.GhostEntity:GetModel() != mdl then
+	if not IsValid(self.GhostEntity) or self.GhostEntity:GetModel() ~= mdl then
 		self:MakeGhostEntity(mdl, Vector(), Angle())
 	end
 	

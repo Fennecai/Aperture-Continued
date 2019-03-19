@@ -27,7 +27,7 @@ function ENT:ModelToStartCoord()
 end
 
 function ENT:Activated(on)
-	if self:GetOn() != on then
+	if self:GetOn() ~= on then
 		if on then
 			self:SetSkin(1)
 			self:EmitSound("TA:LaserCatcherOn")

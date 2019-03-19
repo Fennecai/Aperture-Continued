@@ -28,13 +28,13 @@ if CLIENT then
 end
 
 local function GetModelConnectionData(model)
-	return LIB_APERTURE:GetModelConnectionData(model)
+	return LIB_APERTURECONTINUED:GetModelConnectionData(model)
 end
 
 -- if model is filterable then return local center pos
 local function GetFilterableModelData(model)
 	-- print(model)
-	return LIB_APERTURE:GetFilterableModelData(model)
+	return LIB_APERTURECONTINUED:GetFilterableModelData(model)
 end
 
 local function GetClosestVentPoint(ply)
@@ -533,7 +533,7 @@ local function CreateFilterSettings(model)
 	-- Creating Filter Routs
 	for i=0,#connectionDat - 1 do
 		local dFilterRoute = vgui.Create("DColorButton", dFilterPanelL)
-		local color = LIB_APERTURE:GetFilterColor(i + 1)
+		local color = LIB_APERTURECONTINUED:GetFilterColor(i + 1)
 		dFilterRoute:SetPos(5 + 35 * i, 5)
 		dFilterRoute:SetSize(30, 30)
 		dFilterRoute:SetColor(color)
@@ -581,7 +581,7 @@ function TOOL:LeftClick(trace)
 	local vent, vpointType, vpos, vang, vindex = GetClosestVentPoint(ply)
 	
 	if vpointType == POINT_TYPE_FILTER then
-		if CLIENT and self.LastClientLeftClick != CurTime() then
+		if CLIENT and self.LastClientLeftClick ~= CurTime() then
 			self.SelectedVent = vent
 			CreateFilterSettings(vent:GetModel())
 			self.LastClientLeftClick = CurTime()
@@ -606,10 +606,10 @@ function TOOL:LeftClick(trace)
 			local dir = -ang:Up()
 
 			if angOffset > 0 then _, ang = LocalToWorld(Vector(), Angle(0, angOffset, 0), Vector(), ang) end
-			if coords.ang and coords.ang != Angle() then
+			if coords.ang and coords.ang ~= Angle() then
 				_, ang = LocalToWorld(Vector(), coords.ang, Vector(), ang)
 			end
-			if coords.pos and coords.pos != Vector() then
+			if coords.pos and coords.pos ~= Vector() then
 				pos = LocalToWorld(-coords.pos, Angle(), pos, ang)
 			end
 			
@@ -702,7 +702,7 @@ function TOOL:UpdateGhostDiversityVent(ent, ply)
 
 			if not coords then return end
 			-- remaking ghost entity
-			if self.GhostEntity:GetModel() != mdl then
+			if self.GhostEntity:GetModel() ~= mdl then
 				self:MakeGhostEntity(mdl, Vector(), Angle())
 			end
 			
@@ -711,7 +711,7 @@ function TOOL:UpdateGhostDiversityVent(ent, ply)
 				local _, angle = LocalToWorld(Vector(), coords.ang, Vector(), ang)
 				ang = angle
 			end
-			if coords.pos and coords.pos != Vector() then
+			if coords.pos and coords.pos ~= Vector() then
 				pos = LocalToWorld(-coords.pos, Angle(), pos, ang)
 			end
 			
@@ -761,7 +761,7 @@ local function DrawPipesFlow(flowtbl, lastPos)
 		if istable(v) then
 			DrawPipesFlow(v, lastPos)
 		else
-			if lastPos != Vector() then
+			if lastPos ~= Vector() then
 				render.SetMaterial(Material("vgui/hud/paint_type_select_arrow"))
 				render.DrawBeam(v, lastPos, 40, 0, v:Distance(lastPos) / 40, Color(255, 255, 255)) 
 			end
@@ -802,14 +802,14 @@ function TOOL:DrawHUD()
 			local lcenter = GetFilterableModelData(model)
 			local color = vpointType == POINT_TYPE_FILTER and Color(0, 200, 255) or Color(0, 0, 255)
 			
-			if vpointType != POINT_TYPE_FILTER or vpointType == POINT_TYPE_FILTER and vent == v then
+			if vpointType ~= POINT_TYPE_FILTER or vpointType == POINT_TYPE_FILTER and vent == v then
 				render.SetMaterial(CONNTECTION_POINT_MATERIAL)
 				render.DrawSprite(v:LocalToWorld(lcenter), 30, 30, color)
 			end
 			
 			if vpointType == POINT_TYPE_FILTER and vent == v then
 				for inx,coord in pairs(GetModelConnectionData(model)) do
-					local color = LIB_APERTURE:GetFilterColor(inx)
+					local color = LIB_APERTURECONTINUED:GetFilterColor(inx)
 					local coordWorld = v:LocalToWorld(coord.pos)
 					
 					render.SetMaterial(CONNTECTION_POINT_MATERIAL)
@@ -820,7 +820,7 @@ function TOOL:DrawHUD()
 			end
 		end
 
-		if vpointType != POINT_TYPE_FILTER then
+		if vpointType ~= POINT_TYPE_FILTER then
 			local tbl = GetModelConnectionData(model)
 			if tbl then
 				for inx,coord in pairs(tbl) do

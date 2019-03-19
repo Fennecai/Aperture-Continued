@@ -22,7 +22,7 @@ end
 
 
 function ENT:Enable(enable)
-	if self:GetEnable() != enable then
+	if self:GetEnable() ~= enable then
 		if enable then
 			self:EmitSound("TA:WallEmiterEnabledNoises")
 		else
@@ -41,7 +41,7 @@ function ENT:EnableEX(enable)
 		return true
 	end
 	
-	if self:GetStartEnabled() then enable = !enable end
+	if self:GetStartEnabled() then enable = not enable end
 	self:Enable(enable)
 end
 
@@ -74,7 +74,7 @@ function ENT:Think()
 	self:NextThink(CurTime() + 0.1)
 	
 	local penetrateVal = 0
-	local passagesPoints = LIB_APERTURE:GetAllPortalPassagesAng(self:GetPos(), self:GetAngles(), nil, self, true)
+	local passagesPoints = LIB_APERTURECONTINUED:GetAllPortalPassagesAng(self:GetPos(), self:GetAngles(), nil, self, true)
 	
 	local requireToSpawn = #passagesPoints
 	for k,v in pairs(passagesPoints) do
@@ -86,7 +86,7 @@ function ENT:Think()
 		if penetrateVal < 0 then penetrateVal = penetrateVal + WALL_MODEL_SIZE end
 	end
 	
-	if #self.ProjectedWalls != requireToSpawn or not self:GetEnable() then
+	if #self.ProjectedWalls ~= requireToSpawn or not self:GetEnable() then
 		for k, v in pairs(self.ProjectedWalls) do v:Remove() end
 		self.ProjectedWalls = { }
 	end
@@ -103,7 +103,7 @@ function ENT:Think()
 			for i = 0,(distance + offsetV), WALL_MODEL_SIZE do
 				itterator = itterator + 1
 				local pos = v.startpos + (i - offsetV) * direction
-				if table.Count(self.ProjectedWalls) != requireToSpawn then
+				if table.Count(self.ProjectedWalls) ~= requireToSpawn then
 					local wall = ents.Create("prop_physics")
 					wall:SetPos(pos)
 					wall:SetAngles(angles)
@@ -148,7 +148,7 @@ function ENT:Drawing()
 	
 	render.OverrideDepthEnable(true, false)
 	render.SetLightingMode(2)
-	local passagesPoints = LIB_APERTURE:GetAllPortalPassagesAng(self:GetPos(), self:GetAngles(), nil, self, true)
+	local passagesPoints = LIB_APERTURECONTINUED:GetAllPortalPassagesAng(self:GetPos(), self:GetAngles(), nil, self, true)
 	for k,v in pairs(passagesPoints) do
 		local offset = Vector(0, 1, 0) * BRIDGE_WIDTH
 		offset:Rotate(v.angles)

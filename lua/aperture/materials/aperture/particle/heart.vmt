@@ -1,0 +1,7 @@
+UnlitGeneric
+{
+$basetexture "aperture/particle/heart"
+$translucent 1
+$addictive 1
+}
+

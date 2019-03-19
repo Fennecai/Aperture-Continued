@@ -1,10 +1,10 @@
 AddCSLuaFile()
 
-if not LIB_APERTURE then print("Error: Aperture lib does not exit!!!") return end
+if not LIB_APERTURECONTINUED then print("Error: Aperture lib does not exit!!!") return end
 
 -- ================================ ITEM DROPPER ============================
 
-LIB_APERTURE.ITEM_DROPPER_ITEMS = {
+LIB_APERTURECONTINUED.ITEM_DROPPER_ITEMS = {
 	[1] = "Weighted Storage Cube",
 	[2] = "Old Weighted Storage Cube",
 	[3] = "Weighted Companion Cube",

@@ -1,0 +1,6 @@
+"UnlitGeneric"
+{
+	$basetexture "aperture/achievement/fall_survive"
+	$translucent 1
+	$vertexcolor 1
+}

@@ -42,7 +42,7 @@ function ENT:SetupDataTables()
 end
 
 function ENT:Enable(enable)
-	if self:GetEnable() != enable then
+	if self:GetEnable() ~= enable then
 		if enable then
 		else
 		end
@@ -59,7 +59,7 @@ function ENT:EnableEX(enable)
 		return true
 	end
 	
-	if self:GetStartEnabled() then enable = !enable end
+	if self:GetStartEnabled() then enable = not enable end
 	self:Enable(enable)
 end
 
@@ -96,7 +96,7 @@ function ENT:Initialize()
 end
 
 function ENT:Drawing()
-	if not LIB_APERTURE then return end
+	if not LIB_APERTURECONTINUED then return end
 	if not self:GetEnable() then return end
 	if not self.TurretDrawLaserbeam then return end
 	if self:GetNWBool("TA:TurretDifferent") then return end
@@ -105,7 +105,7 @@ function ENT:Drawing()
 	local wangles = self:LocalToWorldAngles(angles)
 	local eyePos = self:LocalToWorld(self.TurretEyePos)
 	
-	local points = LIB_APERTURE:GetAllPortalPassagesAng(eyePos, wangles, 0, self)
+	local points = LIB_APERTURECONTINUED:GetAllPortalPassagesAng(eyePos, wangles, 0, self)
 
 	render.SetMaterial(Material("effects/redlaser1"))
 	for k,v in pairs(points) do
@@ -181,7 +181,7 @@ if SERVER then
 end
 
 function ENT:Think()
-	if not LIB_APERTURE then return end
+	if not LIB_APERTURECONTINUED then return end
 	self:NextThink(CurTime())
 
 	if CLIENT then
@@ -216,10 +216,10 @@ function ENT:Think()
 	local turretState = self:GetTurretState()
 	local eyePos = self:LocalToWorld(self.TurretEyePos)
 	local target, center
-	if self:GetEnable() then target, center = LIB_APERTURE:FindClosestAliveInConeIncludingPortalPassages(eyePos, self:GetForward(), 2000, TURRET_TARGET_DEGRESE) end
+	if self:GetEnable() then target, center = LIB_APERTURECONTINUED:FindClosestAliveInConeIncludingPortalPassages(eyePos, self:GetForward(), 2000, TURRET_TARGET_DEGRESE) end
 	if IsValid(target) then
-		local _, trace = LIB_APERTURE:GetAllPortalPassages(eyePos, (center - eyePos), nil, self)
-		if not IsValid(trace.Entity) or trace.Entity != target then target = nil end
+		local _, trace = LIB_APERTURECONTINUED:GetAllPortalPassages(eyePos, (center - eyePos), nil, self)
+		if not IsValid(trace.Entity) or trace.Entity ~= target then target = nil end
 		if self.TurretDifferent then target = nil end
 	end
 	
@@ -240,7 +240,7 @@ function ENT:Think()
 	if self:GetEnable() then
 		-- if player Hold turret
 		if self:IsPlayerHolding() then
-			if turretState != TURRET_STATE_PANIC_LIGHTER and turretState != TURRET_STATE_SHOOT then
+			if turretState ~= TURRET_STATE_PANIC_LIGHTER and turretState ~= TURRET_STATE_SHOOT then
 				self:SetTurretState(TURRET_STATE_PANIC_LIGHTER)
 				if self.TurretSoundPickup then self:EmitSound(self.TurretSoundPickup) end
 				timer.Remove("TA:StopSearching"..self:EntIndex())
@@ -254,7 +254,7 @@ function ENT:Think()
 		end
 		
 		if self:IsTurretKnockout() then
-			if turretState != TURRET_STATE_PANIC then
+			if turretState ~= TURRET_STATE_PANIC then
 				self:SetTurretState(TURRET_STATE_PANIC)
 				timer.Create("TA:KnockoutTime"..self:EntIndex(), 3, 1, function()
 					if self.TurretDisabled then self:EmitSound(self.TurretDisabled) end
@@ -280,7 +280,7 @@ function ENT:Think()
 			timer.Create("TA:PrepareDeploy"..self:EntIndex(), 1, 1, function()
 				if not IsValid(self) then return end
 				self:EmitSound("TA:TurretDeploy")
-				if self.TurretSoundFound != "" then self:EmitSound(self.TurretSoundFound) end
+				if self.TurretSoundFound ~= "" then self:EmitSound(self.TurretSoundFound) end
 				
 				self:SetTurretState(TURRET_STATE_DEPLOY)
 				timer.Simple(1, function()
@@ -296,7 +296,7 @@ function ENT:Think()
 				if not IsValid(self) then return end
 				
 				self:EmitSound("TA:TurretRetract")
-				if self.TurretRetract != "" then self:EmitSound(self.TurretRetract) end
+				if self.TurretRetract ~= "" then self:EmitSound(self.TurretRetract) end
 				
 				self:SetTurretState(TURRET_STATE_RETRACT)
 				timer.Simple(1, function()
@@ -305,7 +305,7 @@ function ENT:Think()
 					timer.Remove("TA:StopSearching"..self:EntIndex())
 					timer.Create("TA:TurretAutoSearch"..self:EntIndex(), 3, 1, function()
 						if not IsValid(self) then return end
-						if self.TurretSoundAutoSearch != "" then self:EmitSound(self.TurretSoundAutoSearch) end
+						if self.TurretSoundAutoSearch ~= "" then self:EmitSound(self.TurretSoundAutoSearch) end
 					end)
 				end)
 			end)
@@ -355,7 +355,7 @@ function ENT:Think()
 				timer.Create("TA:TurretReleaseTarget"..self:EntIndex(), 0.25, 1, function()
 					if not IsValid(self) then return end
 					
-					if self.TurretSoundSearch != "" then self:EmitSound(self.TurretSoundSearch) end
+					if self.TurretSoundSearch ~= "" then self:EmitSound(self.TurretSoundSearch) end
 					self.LockingSound = false
 					self:SetTurretState(TURRET_STATE_SEARCH)
 					self:SetTarget(NULL)
@@ -400,7 +400,7 @@ function ENT:Think()
 		if turretOpen > 0 then self:SetTurretOpen(turretOpen - 2 * FrameTime()) else self:SetTurretOpen(0) end
 	end
 	
-	if self:IsOnFire() and turretState != TURRET_STATE_EXPLODE then
+	if self:IsOnFire() and turretState ~= TURRET_STATE_EXPLODE then
 		self:SetTurretState(TURRET_STATE_EXPLODE)
 		if self.TurretDisabled then self:EmitSound(self.TurretDisabled) end
 		timer.Simple(3, function()
@@ -419,7 +419,7 @@ function ENT:Think()
 end
 
 function ENT:OnFizzle()
-	if self.TurretSoundFizzle != "" then self:EmitSound(self.TurretSoundFizzle) end
+	if self.TurretSoundFizzle ~= "" then self:EmitSound(self.TurretSoundFizzle) end
 	self:Enable(false)
 end
 

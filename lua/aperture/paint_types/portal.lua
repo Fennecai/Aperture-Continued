@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-if not LIB_APERTURE then return end
+if not LIB_APERTURECONTINUED then return end
 
 --============= Conversion Gel ==============
 
@@ -15,4 +15,4 @@ if SERVER then
 
 end -- SERVER
 
-LIB_APERTURE:CreateNewPaintType(PORTAL_PAINT_PORTAL, PAINT_INFO)
+LIB_APERTURECONTINUED:CreateNewPaintType(PORTAL_PAINT_PORTAL, PAINT_INFO)

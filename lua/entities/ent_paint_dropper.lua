@@ -22,7 +22,7 @@ function ENT:SetupDataTables()
 end
 
 function ENT:Enable(enable)
-	if self:GetEnable() != enable then
+	if self:GetEnable() ~= enable then
 		if enable then
 		else
 		end
@@ -39,7 +39,7 @@ function ENT:EnableEX(enable)
 		return true
 	end
 	
-	if self:GetStartEnabled() then enable = !enable end
+	if self:GetStartEnabled() then enable = not enable end
 	self:Enable(enable)
 end
 
@@ -87,13 +87,13 @@ function ENT:MakePuddle()
 	local launchSpeed = self:GetPaintLaunchSpeed()
 	local randSize = math.Rand(-1, 1) * radius / 4
 
-	local rad = math.max(LIB_APERTURE.GEL_MINSIZE, math.min(LIB_APERTURE.GEL_MAXSIZE, radius + randSize))
-	local randomSpread = VectorRand():GetNormalized() * (LIB_APERTURE.GEL_MAXSIZE - rad) * (launchSpeed / LIB_APERTURE.GEL_MAX_LAUNCH_SPEED)
+	local rad = math.max(LIB_APERTURECONTINUED.GEL_MINSIZE, math.min(LIB_APERTURECONTINUED.GEL_MAXSIZE, radius + randSize))
+	local randomSpread = VectorRand():GetNormalized() * (LIB_APERTURECONTINUED.GEL_MAXSIZE - rad) * (launchSpeed / LIB_APERTURECONTINUED.GEL_MAX_LAUNCH_SPEED)
 	local velocity = -self:GetUp() * launchSpeed + randomSpread
-	local maxRad = (40 - (rad / LIB_APERTURE.GEL_MAXSIZE) * 40) / 4
+	local maxRad = (40 - (rad / LIB_APERTURECONTINUED.GEL_MAXSIZE) * 40) / 4
 	local pos = self:LocalToWorld(Vector(0, 0, -(maxRad + 5)) + VectorRand() * maxRad)
 	
-	local paint_blob = LIB_APERTURE:MakePaintBlob(self:GetPaintType(), pos, velocity, rad)
+	local paint_blob = LIB_APERTURECONTINUED:MakePaintBlob(self:GetPaintType(), pos, velocity, rad)
 	if IsValid(self.Owner) and self.Owner:IsPlayer() then paint_blob:SetOwner(self.Owner) end
 	
 	return ent
@@ -105,7 +105,7 @@ function ENT:TriggerInput( iname, value )
 	if iname == "Enable" then self:Enable(tobool(value)) end
 	if iname == "Gel Radius" then self:SetPaintRadius(value) end
 	if iname == "Gel Amount" then self:SetPaintAmount(value) end
-	if iname == "Gel Launch Speed" then self:PaintLaunchSpeed(value) end
+	if iname == "Gel Launch Speed" then self:SetPaintLaunchSpeed(value) end
 end
 
 numpad.Register("PaintDropper_Enable", function(pl, ent, keydown)

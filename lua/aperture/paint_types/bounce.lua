@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-if not LIB_APERTURE then return end
+if not LIB_APERTURECONTINUED then return end
 
 --============= Repulsion Gel ==============
 if not PORTAL_PAINT_BOUNCE then
@@ -41,6 +41,7 @@ end
 
 -- When player step from this type to other
 function PAINT_INFO:OnChangeFrom(ply, newType, normal)
+	ply:SetVelocity(ply:GetVelocity())
 end
 
 -- Handling player landing
@@ -140,4 +141,4 @@ end
 
 end -- SERVER
 
-LIB_APERTURE:CreateNewPaintType(PORTAL_PAINT_BOUNCE, PAINT_INFO)
+LIB_APERTURECONTINUED:CreateNewPaintType(PORTAL_PAINT_BOUNCE, PAINT_INFO)
