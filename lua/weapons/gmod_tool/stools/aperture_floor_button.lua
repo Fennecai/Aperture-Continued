@@ -17,7 +17,8 @@ function TOOL:ModelToEntity(mdl)
 		["models/portal_custom/ball_button_custom.mdl"] = "ent_portal_button_ball",
 		["models/portal_custom/box_socket_custom.mdl"] = "ent_portal_button_box",
 		["models/portal_custom/portal_button_custom.mdl"] = "ent_portal_button_normal",
-		["models/portal_custom/underground_floor_button_custom.mdl"] = "ent_portal_button_old"
+		["models/portal_custom/underground_floor_button_custom.mdl"] = "ent_portal_button_old",
+		["models/props_h2f/portal_button.mdl"] = "ent_portal_button_h2f"
 		
 	}
 	return modelToEntity[mdl]
@@ -61,13 +62,14 @@ if SERVER then
 	duplicator.RegisterEntityClass("ent_portal_button_box", MakePortalFloorButton, "pos", "ang", "class", "key_group", "data")
 	duplicator.RegisterEntityClass("ent_portal_button_normal", MakePortalFloorButton, "pos", "ang", "class", "key_group", "data")
 	duplicator.RegisterEntityClass("ent_portal_button_old", MakePortalFloorButton, "pos", "ang", "class", "key_group", "data")
+	duplicator.RegisterEntityClass("ent_portal_button_h2f", MakePortalFloorButton, "pos", "ang", "class", "key_group", "data")
 
 end
 
 function TOOL:LeftClick( trace )
 
 	-- Ignore if place target is Alive
-	//if ( trace.Entity and ( trace.Entity:IsPlayer() || trace.Entity:IsNPC() || APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
+	--if ( trace.Entity and ( trace.Entity:IsPlayer() || trace.Entity:IsNPC() || APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
 
 	if CLIENT then return true end
 	
@@ -138,3 +140,4 @@ list.Set("PortalFloorButtonModels", "models/portal_custom/ball_button_custom.mdl
 list.Set("PortalFloorButtonModels", "models/portal_custom/box_socket_custom.mdl", {})
 list.Set("PortalFloorButtonModels", "models/portal_custom/portal_button_custom.mdl", {})
 list.Set("PortalFloorButtonModels", "models/portal_custom/underground_floor_button_custom.mdl", {})
+list.Set("PortalFloorButtonModels", "models/props_h2f/portal_button.mdl", {})

@@ -76,3 +76,83 @@ local laserCatcherLoop =
 	pitch	= 100,
 }
 sound.Add(laserCatcherLoop)
+
+
+
+--music!
+
+sound.Add({
+	channel	= CHAN_BODY,
+	name	= "TA:wheatleymusic1",
+	level	= 75,
+	sound	= "music/sp_a4_laser_platform_l1.wav",
+	volume	= 1.0,
+	pitch	= 100,
+})
+
+
+sound.Add({
+	channel	= CHAN_BODY,
+	name	= "TA:wheatleymusic2",
+	level	= 75,
+	sound	= "music/sp_a4_laser_platform_l2.wav",
+	volume	= 1.0,
+	pitch	= 100,
+})
+
+sound.Add({
+	channel	= CHAN_BODY,
+	name	= "TA:wheatleymusic3",
+	level	= 75,
+	sound	= "music/sp_a4_laser_platform_l3.wav",
+	volume	= 1.0,
+	pitch	= 100,
+})
+
+sound.Add({
+	channel	= CHAN_BODY,
+	name	= "TA:trimusic1",
+	level	= 75,
+	sound	= "music/sp_a2_triple_laser_l1_01.wav",
+	volume	= 1.0,
+	pitch	= 100,
+})
+
+sound.Add({
+	channel	= CHAN_BODY,
+	name	= "TA:trimusic2",
+	level	= 75,
+	sound	= "music/sp_a2_triple_laser_l2_01.wav",
+	volume	= 1.0,
+	pitch	= 100,
+})
+
+sound.Add({
+	channel	= CHAN_BODY,
+	name	= "TA:trimusic3",
+	level	= 75,
+	sound	= "music/sp_a2_triple_laser_l3_01.wav",
+	volume	= 1.0,
+	pitch	= 100,
+})
+
+
+sound.Add({
+	channel	= CHAN_BODY,
+	name	= "TA:portal1music",
+	level	= 75,
+	sound	= "music/portal1.wav",
+	volume	= 1.0,
+	pitch	= 100,
+})
+
+
+sound.Add({
+	channel	= CHAN_BODY,
+	name	= "TA:radio_laser",
+	level	= 75,
+	sound	= "music/looping_radio_mix_loud.wav",
+	volume	= 1.0,
+	pitch	= 100,
+})
+

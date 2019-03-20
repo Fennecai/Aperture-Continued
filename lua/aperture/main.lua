@@ -22,6 +22,9 @@ end
 -- Loading math lib
 include("aperture/math.lua")
 
+-- Loading music lib
+include("aperture/music.lua")
+
 -- Loading portal integration lib
 include("aperture/portal_integration.lua")
 
