@@ -12,7 +12,7 @@ Unlike this addon's predecessor "The aperture", which you may find copies of on 
 * and many,many more! 
 
 ## Features
-1. the best Portal gun addon is included as part of this addon with additional updates and bugfixes (coming soon; just a 3rd party requirement for now)
+1. the best Portal gun addon is included as part of this addon with additional updates and bugfixes (coming soon; its mostly just a straight copy atm. with minor edits)
 2. Wiremod compatability
 3. Faith plates in 2 variants, which you can configure the near-exact target of
 4. radios that have a 1/20 chance of playing a never-before-heard message from Dr. breen (no, really.)
@@ -55,7 +55,7 @@ and all of those who supported the workshop version and continue to support this
 
 
 ## installing
-Simply clone or downlaod this repositiory and place the entirety of it's contents in your Garry's mod addons folder.
+Simply clone or downlaod this repositiory and place the entirety of it's contents in a folder inside your Garry's mod addons folder.
 
 If you have issues, please run this command in your console and try again: "menu_cleanupgmas"
 
