@@ -1,17 +1,17 @@
-#Aperture: continued
+# Aperture: continued
 
 Aperture Continued is an actively supported, up-to-date addon for Garry's mod that adds various items and gameplay mechanics from the Portal franchise into Garry's mod.
 
 Unlike this addon's predecessor "The aperture", which you may find copies of on the steam workshop, this is still in active development, and as such, new features and bug fixes roll out with every new update.
 
-#Featured Bug fixes
+## Featured Bug fixes
 * fixed light bridge flares incompatible with other addons, and not rendering correctly anyways
 * fixed faith plates ghosting wrong and tool options failing to load, and faithplates can now be adjusted again
 * fixed paint droppers having an invalid flow type option by default which caused them to have really bad issues
 * fixed crushers being weird when double sided
 * and many,many more! 
 
-#Features
+## Features
 1. the best Portal gun addon is included as part of this addon with additional updates and bugfixes (coming soon; just a 3rd party requirement for now)
 2. Wiremod compatability
 3. Faith plates in 2 variants, which you can configure the near-exact target of
@@ -42,7 +42,7 @@ Unlike this addon's predecessor "The aperture", which you may find copies of on 
 For a list of upcoming features and bug fixes, please see my todo list on trello! https://trello.com/b/EjYVkgls
 
 
-Credits
+# Credits
 CrishNate - code / textures / models / original addon creator
 Zer0NoWing - some code / a lot of testing
 MINxCaldarian - trajectory calculation method and some achievement icons
