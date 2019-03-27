@@ -58,3 +58,7 @@ and all of those who supported the workshop version and continue to support this
 Simply clone or downlaod this repositiory and place the entirety of it's contents in your Garry's mod addons folder.
 
 If you have issues, please run this command in your console and try again: "menu_cleanupgmas"
+
+#### the "its canceled" update.....?
+
+that was an ill-concieved self-deprecating joke that cant be changed. ignore that; the addon is NOT canceled.
