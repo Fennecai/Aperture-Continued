@@ -42,7 +42,7 @@ Unlike this addon's predecessor "The aperture", which you may find copies of on 
 For a list of upcoming features and bug fixes, please see my todo list on trello! https://trello.com/b/EjYVkgls
 
 
-# Credits
+## Credits
 CrishNate - code / textures / models / original addon creator
 Zer0NoWing - some code / a lot of testing
 MINxCaldarian - trajectory calculation method and some achievement icons
@@ -52,3 +52,9 @@ Anonymous - Dr. breen voice actor for secret radio message
 
 
 and all of those who supported the workshop version and continue to support this as well! :)
+
+
+## installing
+Simply clone or downlaod this repositiory and place the entirety of it's contents in your Garry's mod addons folder.
+
+If you have issues, please run this command in your console and try again: "menu_cleanupgmas"
