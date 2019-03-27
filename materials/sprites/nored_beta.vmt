@@ -1,0 +1,16 @@
+"UnlitGeneric"
+{
+	"$basetexture" "sprites/nored_beta"
+	"$additive" "0"
+	"$translucent" "1"
+	"$model" "1"
+	"Proxies"
+	{
+		"AnimatedTexture"
+		{
+			"animatedTextureVar" "$basetexture"
+			"animatedTextureFrameNumVar" "$frame"
+			"animatedTextureFrameRate" "25"
+		}
+	}
+}

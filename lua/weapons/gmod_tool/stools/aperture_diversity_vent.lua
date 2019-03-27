@@ -15,15 +15,15 @@ local POINT_TYPE_CONNECTION = 0
 local POINT_TYPE_FILTER 	= 1
 
 if CLIENT then
-	language.Add("tool.aperture_diversity_vent.name", "Pneumatic Diversity Vent")
+	language.Add("tool.aperture_diversity_vent.name", "Diversity Vent")
 	language.Add("tool.aperture_diversity_vent.desc", "A Pneumatic Diversity Vent will suck up anything that gets too close in a non-discriminatory manner.")
-	language.Add("tool.aperture_diversity_vent.0", "Left click to use, E to show path, Right click to change attachement position and R to rotate")
+	language.Add("tool.aperture_diversity_vent.0", "Left click to place, E to show path, Right click to change attachement position and R to rotate")
 	language.Add("tool.aperture_diversity_vent.count", "Count")
 	language.Add("tool.aperture_diversity_vent.ignorealive", "Ignore Alive")
 	language.Add("tool.aperture_diversity_vent.ignorealive.help", "Diversity vent will be slightly more discriminatory, and refuse to suck up any players or npcs.")
 	language.Add("tool.aperture_diversity_vent.keyenable", "Enable")
 	language.Add("tool.aperture_diversity_vent.startenabled", "Enabled")
-	language.Add("tool.aperture_diversity_vent.startenabled.help", "Pneumatic Diversity Vent will be activated when it placed")
+	language.Add("tool.aperture_diversity_vent.startenabled.help", "Pneumatic Diversity Vent will be activated when placed")
 	language.Add("tool.aperture_diversity_vent.toggle", "Toggle")
 end
 
@@ -575,7 +575,7 @@ end
 
 function TOOL:LeftClick(trace)
 
-	//if ( !APERTURESCIENCE.ALLOWING.diversity_vent && !self:GetOwner():IsSuperAdmin() ) then self:GetOwner():PrintMessage( HUD_PRINTTALK, "This tool is disabled" ) return end
+	--if ( not APERTURESCIENCE.ALLOWING.diversity_vent and not self:GetOwner():IsSuperAdmin() ) then self:GetOwner():PrintMessage( HUD_PRINTTALK, "This tool is disabled" ) return end
 	
 	local ply = self:GetOwner()
 	local vent, vpointType, vpos, vang, vindex = GetClosestVentPoint(ply)

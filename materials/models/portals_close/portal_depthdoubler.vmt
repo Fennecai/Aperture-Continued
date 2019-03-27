@@ -1,0 +1,9 @@
+//used to fake infinite portal depth, only seen at depth level >= 2 in stencil mode and replaces stencil drawing at that level
+"Portal"
+{
+	"$basetexture" "_rt_DepthDoubler" 					//what we rendered to the screen last frame, except the view model/hud
+	"$alphamasktexture" "models/portals/portal_mask" 	//alpha mask for defining the portal's edges
+	
+	"$usealternateviewmatrix" "1"
+	"$alternateviewmatrix" "[ 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 0.000000 0.000000 0.000000 0.000000 1.000000 ]"
+}

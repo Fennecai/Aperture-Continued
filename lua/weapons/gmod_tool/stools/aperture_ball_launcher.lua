@@ -10,7 +10,7 @@ TOOL.ClientConVar["time"] = "1"
 local LAUNCHER_MODEL = "models/aperture/combine_ball_launcher.mdl"
 
 if CLIENT then
-	language.Add("tool.aperture_ball_launcher.name", "Hight Energy Pellet Launcher")
+	language.Add("tool.aperture_ball_launcher.name", "Pellet Launcher")
 	language.Add("tool.aperture_ball_launcher.desc", "A High Energy Pellet Launcher")
 	language.Add("tool.aperture_ball_launcher.0", "Left click to place")
 	language.Add("tool.aperture_ball_launcher.enable", "Enable")
@@ -65,7 +65,7 @@ end
 
 function TOOL:LeftClick( trace )
 	-- Ignore if place target is Alive
-	//if ( trace.Entity and ( trace.Entity:IsPlayer() || trace.Entity:IsNPC() || APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
+	--if ( trace.Entity and ( trace.Entity:IsPlayer() or trace.Entity:IsNPC() or APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
 
 	if CLIENT then return true end
 	

@@ -11,7 +11,7 @@ local UP = Vector(0, 0, 1)
 
 if CLIENT then
 	language.Add("tool.aperture_turret_floor.name", "Floor Turret")
-	language.Add("tool.aperture_turret_floor.desc", "A Turret will protect specific places from any hostile")
+	language.Add("tool.aperture_turret_floor.desc", "A Turret will protect specific places from any hostile....even if they're friendly.")
 	language.Add("tool.aperture_turret_floor.0", "Left click to place")
 	language.Add("tool.aperture_turret_floor.enable", "Enable")
 	language.Add("tool.aperture_turret_floor.startenabled", "Enabled")
@@ -74,7 +74,7 @@ end
 
 function TOOL:LeftClick(trace)
 	-- Ignore if place target is Alive
-	//if ( trace.Entity and ( trace.Entity:IsPlayer() || trace.Entity:IsNPC() || APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
+	--if ( trace.Entity and ( trace.Entity:IsPlayer() or trace.Entity:IsNPC() or APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
 
 	if CLIENT then return true end
 	

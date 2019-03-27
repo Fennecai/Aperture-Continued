@@ -27,7 +27,7 @@ if CLIENT then
     language.Add("tool.aperture_crusher.countx", "Copies to the back")
     language.Add("tool.aperture_crusher.county", "Copies to the right")
     language.Add("tool.aperture_crusher.toggle", "Toggle")
-    language.Add("tool.aperture_crusher.toggle.help", "Toggle")
+    language.Add("tool.aperture_crusher.toggle.help", "Toggle it on and off, or hold the key down the entire time. Crushers repeatedly crush while activated.")
 end
 
 local function IsCrushersNearby(pos)
@@ -115,7 +115,7 @@ end
 
 function TOOL:LeftClick(trace)
     -- Ignore if place target is Alive
-    --if ( trace.Entity and ( trace.Entity:IsPlayer() || trace.Entity:IsNPC() || APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
+    --if ( trace.Entity and ( trace.Entity:IsPlayer() or trace.Entity:IsNPC() or APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
     if CLIENT then
         return true
     end

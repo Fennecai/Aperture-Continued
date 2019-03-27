@@ -15,14 +15,14 @@ local PAINT_MAX_LAUNCH_SPEED = 1000
 
 if CLIENT then
 	language.Add("tool.aperture_paint_dropper.name", "Gel Dropper")
-	language.Add("tool.aperture_paint_dropper.desc", "The Gel Dropper will deploy specified gel type")
+	language.Add("tool.aperture_paint_dropper.desc", "The Gel Dropper will deploy the specified gel type")
 	language.Add("tool.aperture_paint_dropper.0", "Left click to place")
 	language.Add("tool.aperture_paint_dropper.enable", "Enable")
 	language.Add("tool.aperture_paint_dropper.paintType", "Gel Type")
 	language.Add("tool.aperture_paint_dropper.paintFlowType", "Gel Flow Type")
 	language.Add("tool.aperture_paint_dropper.paintLaunchSpeed", "Gel Launch Speed")
 	language.Add("tool.aperture_paint_dropper.startenabled", "Enabled")
-	language.Add("tool.aperture_paint_dropper.startenabled.help", "Gel Dropper will start deploy gel when placed")
+	language.Add("tool.aperture_paint_dropper.startenabled.help", "Gel Dropper will start to deploy gel when placed")
 	language.Add("tool.aperture_paint_dropper.toggle", "Toggle")
 end
 
@@ -98,7 +98,7 @@ end
 function TOOL:LeftClick( trace )
 
 	-- Ignore if place target is Alive
-	//if ( trace.Entity and ( trace.Entity:IsPlayer() || trace.Entity:IsNPC() || APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
+	--if ( trace.Entity and ( trace.Entity:IsPlayer() or trace.Entity:IsNPC() or APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
 
 	if CLIENT then return true end
 	

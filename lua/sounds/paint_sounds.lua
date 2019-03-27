@@ -54,9 +54,9 @@ local playerBounce =
 	channel	= CHAN_WEAPON,
 	name	= "TA:PlayerBounce",
 	level	= 75,
-	sound	= { "paint/player_bounce_jump_paint_01.wav"
-		, "paint/player_bounce_jump_paint_02.wav"
-		, "paint/player_bounce_jump_paint_03.wav"
+	sound	= { "player/paint/player_bounce_jump_paint_01.wav"
+		, "player/paint/player_bounce_jump_paint_02.wav"
+		, "player/paint/player_bounce_jump_paint_03.wav"
 	},
 	volume	= 1.0,
 	pitch	= 100,

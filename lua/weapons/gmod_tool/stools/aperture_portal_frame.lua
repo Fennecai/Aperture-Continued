@@ -10,7 +10,7 @@ TOOL.ClientConVar["portaltype"] = "1"
 
 if CLIENT then
 	language.Add("tool.aperture_portal_frame.name", "Portal Emitter")
-	language.Add("tool.aperture_portal_frame.desc", "A Portal Emitter used to make a bridges between surfaces")
+	language.Add("tool.aperture_portal_frame.desc", "A Portal emitter used to make a portal on the surface it is attached to.")
 	language.Add("tool.aperture_portal_frame.0", "Left click to place")
 	language.Add("tool.aperture_portal_frame.enable", "Enable")
 	language.Add("tool.aperture_portal_frame.startenabled", "Enabled")
@@ -63,7 +63,7 @@ end
 
 function TOOL:LeftClick( trace )
 	-- Ignore if place target is Alive
-	//if ( trace.Entity and ( trace.Entity:IsPlayer() || trace.Entity:IsNPC() || APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
+	--if ( trace.Entity and ( trace.Entity:IsPlayer() or trace.Entity:IsNPC() or APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
 
 	if CLIENT then return true end
 	

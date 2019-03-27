@@ -1,0 +1,7 @@
+//Used in texture drawing mode to draw the surface of portal 2 (faking the view through it) when the player is close up or there's no fog in the level
+"Portal"
+{
+	"$fogcompatible" "0" 							//flag that controls if the material is fog compatible. WARNING: Fog compatibility breaks portal drawing when the camera is near a portal polygon.
+	"$basetexture" "_rt_Portal2" 						//portal 2's view
+	"$alphamasktexture" "models/portals/portal_mask" 	//alpha mask for defining the portal's edges
+}

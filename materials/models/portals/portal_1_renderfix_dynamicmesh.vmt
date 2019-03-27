@@ -1,0 +1,6 @@
+//used in texture mode when a player is so close to a portal polygon that the renderer would clip by zNear. This is used on special polygons to cover up the clips.
+"Portal"
+{
+	"$basetexture" "_rt_Portal1"
+	"$renderfixz" "1" //depth buffer hacks
+}

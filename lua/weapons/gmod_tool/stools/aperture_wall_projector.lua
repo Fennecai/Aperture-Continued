@@ -11,7 +11,7 @@ local BRIDGE_WIDTH	= 36
 
 if CLIENT then
 	language.Add("tool.aperture_wall_projector.name", "Hard Light Bridge")
-	language.Add("tool.aperture_wall_projector.desc", "A Hard Light Bridge used to make a bridges between surfaces")
+	language.Add("tool.aperture_wall_projector.desc", "A Hard Light Bridge is a flat, solid beam of sunlight that can be walked on while it is enabled.")
 	language.Add("tool.aperture_wall_projector.0", "Left click to place")
 	language.Add("tool.aperture_wall_projector.enable", "Enable")
 	language.Add("tool.aperture_wall_projector.startenabled", "Enabled")
@@ -61,7 +61,7 @@ end
 
 function TOOL:LeftClick( trace )
 	-- Ignore if place target is Alive
-	//if ( trace.Entity and ( trace.Entity:IsPlayer() || trace.Entity:IsNPC() || APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
+	--if ( trace.Entity and ( trace.Entity:IsPlayer() or trace.Entity:IsNPC() or APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
 
 	if CLIENT then return true end
 	

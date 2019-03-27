@@ -1,0 +1,8 @@
+//Used in texture drawing mode to draw the surface of portal 2 (faking the view through it) when there's fog in the level and the player is far enough away that the projection math won't screw up
+//this should look EXACTLY like portal_2_dynamicmesh.vmt with the exception of having "$fogcompatible" set to 1
+"Portal"
+{
+	"$fogcompatible" "1" 							//flag that controls if the material is fog compatible. WARNING: Fog compatibility breaks portal drawing when the camera is near a portal polygon.
+	"$basetexture" "_rt_Portal2" 						//portal 2's view
+	"$alphamasktexture" "models/portals/portal_mask" 	//alpha mask for defining the portal's edges
+}

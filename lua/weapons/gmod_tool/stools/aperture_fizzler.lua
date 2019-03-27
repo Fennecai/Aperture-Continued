@@ -11,8 +11,8 @@ local PAINT_MAX_LAUNCH_SPEED = 1000
 local ToolBackground = Material("vgui/tool_screen_background")
 
 if CLIENT then
-	language.Add("tool.aperture_fizzler.name", "Material Emancipation Grill")
-	language.Add("tool.aperture_fizzler.desc", "A Material Emancipation Grill used to prevent the passage of unauthorized equipment or objects that pass through it.")
+	language.Add("tool.aperture_fizzler.name", "Fizzler")
+	language.Add("tool.aperture_fizzler.desc", "A Material Emancipation Grill, often referred to by test subjects as a fizzler for some reason, is used to prevent the passage of unauthorized equipment or objects that pass through it.")
 	language.Add("tool.aperture_fizzler.0", "Left click to place")
 	language.Add("tool.aperture_fizzler.enable", "Enable")
 	language.Add("tool.aperture_fizzler.startenabled", "Enabled")
@@ -63,7 +63,7 @@ end
 
 function TOOL:LeftClick(trace)
 	-- Ignore if place target is Alive
-	//if ( trace.Entity and ( trace.Entity:IsPlayer() || trace.Entity:IsNPC() || APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
+	--if ( trace.Entity and ( trace.Entity:IsPlayer() or trace.Entity:IsNPC() or APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
 
 	if CLIENT then return true end
 	

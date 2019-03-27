@@ -1,0 +1,17 @@
+"UnlitGeneric"
+{
+	"$basetexture" "sprites/blueborder"
+	"$additive" "1"
+	"$translucent" "1"
+	"$frame" "0"
+	"Proxies"
+	{
+		"AnimatedTexture"
+		{
+			"animatedTextureVar" "$basetexture"
+			"animatedTextureFrameNumVar" "$frame"
+			"animatedTextureFrameRate" "60"
+		}
+	}
+}
+

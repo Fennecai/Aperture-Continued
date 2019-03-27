@@ -1,0 +1,8 @@
+"writez"
+{
+	"$alphamasktexture" "models/portals/portal_mask"
+	"$bluramount" "1"
+	"$bumpframe" 0
+	"$translucent" 1
+	"$additive" 1
+}

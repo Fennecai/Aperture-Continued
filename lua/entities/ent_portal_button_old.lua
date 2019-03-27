@@ -44,8 +44,8 @@ function ENT:OnUpdateSettings()
 end
 
 function ENT:Filter( ent )
-	if !AcceptedModels then return false end
-	if !AcceptedModels[ent:GetModel()] then return false end
+	if not AcceptedModels then return false end
+	if not AcceptedModels[ent:GetModel()] then return false end
 
 	return true
 end
@@ -53,10 +53,10 @@ end
 local StopVector = Vector()
 
 function ENT:OnChangePressEnt(ent_new, ent_old)
-	if !AcceptedModels then return end
+	if not AcceptedModels then return end
 
 	if IsValid(ent_old) then
-		if !ent_old:IsPlayer() then
+		if not ent_old:IsPlayer() then
 			ent_old:PhysWake()
 		end
 	end
@@ -64,7 +64,7 @@ function ENT:OnChangePressEnt(ent_new, ent_old)
 	if IsValid(ent_new) then
 		self:EnableButtonPhys( false )
 
-		if !ent_new:IsPlayer() then
+		if not ent_new:IsPlayer() then
 			ent_new:PhysWake()
 		end
 	end

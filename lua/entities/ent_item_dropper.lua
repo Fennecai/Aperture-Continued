@@ -9,6 +9,7 @@ ENT.IsConnectable = true
 
 ENT.LASER_BBOX = 1
 ENT.MAX_REFLECTIONS = 256
+ENT.dropforcevar = nil
 
 if WireAddon then
 	ENT.WireDebugName = ENT.PrintName
@@ -82,7 +83,7 @@ function ENT:Initialize()
 				1,
 				function()
 					if IsValid(self) then
-						self:Drop()
+						self:Drop(true)
 					end
 				end
 			)
@@ -114,6 +115,8 @@ end
 function ENT:Think()
 	self:NextThink(CurTime())
 
+	self.dropforcevar = self:GetDropForce()
+
 	-- skip if item dropper allready drops item
 	if timer.Exists("TA:ItemDroper_Redrop" .. self:EntIndex()) then
 		return true
@@ -127,7 +130,7 @@ function ENT:Think()
 	end
 	-- if item is missing spawn another and if this function enabled
 	if not IsValid(self.LastDroppedItem) and self:GetRespawn() then
-		self:Drop()
+		self:Drop(true)
 	end
 
 	return true
@@ -208,15 +211,14 @@ function ENT:Drop(shoulddrop)
 				return
 			end
 
+			local dforce = self.dropforcevar
 			local normalizednormal = self.Entity:GetUp()
 
 			normalizednormal:Normalize()
 
-			local dforce = self.dropforcevar
-			
-			dforcevector = Vector(dforce, dforce, dforce)
+			-- dforcevector = Vector(dforce, dforce, dforce)
 
-			print(dforce .. " VS " .. tostring(dforcevector))
+			--print(dforce .. " VS " .. tostring(dforcevector))
 
 			lastSpawnedItemPhys:ApplyForceCenter(-normalizednormal * dforce)
 			if lastSpawnedItem:GetClass() == "ent_portal_bomb" then
@@ -273,8 +275,6 @@ function ENT:TriggerInput(iname, value)
 	if not WireAddon then
 		return
 	end
-
-	
 
 	if iname == "Drop" then
 		if value >= 1 then

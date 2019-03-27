@@ -23,7 +23,7 @@ function ENT:Initialize()
 	self:SetSolid( SOLID_VPHYSICS )
 	self:SetUseType( SIMPLE_USE )
 
-	if !AcceptedModels and PortalButtons then
+	if not AcceptedModels and PortalButtons then
 		AcceptedModels = PortalButtons.GetAcceptedObjects()["All"] or {}
 	end
 
@@ -32,7 +32,7 @@ end
 
 function ENT:OnUpdateSettings()
 	self:CreatePhys("models/portal_custom/portal_button_custom_phy.mdl")
-	if !IsValid( self.ButtonPhysEnt ) then
+	if not IsValid( self.ButtonPhysEnt ) then
 		self:Remove()
 		return
 	end
@@ -44,17 +44,17 @@ function ENT:OnUpdateSettings()
 end
 
 function ENT:Filter( ent )
-	if !AcceptedModels then return false end
-	if !AcceptedModels[ent:GetModel()] then return false end
+	if not AcceptedModels then return false end
+	if not AcceptedModels[ent:GetModel()] then return false end
 
 	return true
 end
 
 function ENT:OnChangePressEnt(ent_new, ent_old)
-	if !AcceptedModels then return end
+	if not AcceptedModels then return end
 
 	if IsValid(ent_old) then
-		if !ent_old:IsPlayer() then
+		if not ent_old:IsPlayer() then
 			local model = ent_old:GetModel()
 			local skin = ent_old:GetSkin()
 			local skindata = AcceptedModels[model] or {}
@@ -71,7 +71,7 @@ function ENT:OnChangePressEnt(ent_new, ent_old)
 	if IsValid(ent_new) then
 		self:EnableButtonPhys(false)
 
-		if !ent_new:IsPlayer() then
+		if not ent_new:IsPlayer() then
 			local model = ent_new:GetModel()
 			local skin = ent_new:GetSkin()
 			local skindata = AcceptedModels[model] or {}

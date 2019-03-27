@@ -7,7 +7,7 @@ TOOL.ClientConVar["keygroup"] = "45"
 local CATCHER_MODEL = "models/aperture/combine_ball_catcher.mdl"
 
 if CLIENT then
-	language.Add("tool.aperture_ball_catcher.name", "High Energy Pellet Catcher")
+	language.Add("tool.aperture_ball_catcher.name", "Energy Pellet Catcher")
 	language.Add("tool.aperture_ball_catcher.desc", "Catches High-energy pellets and powers things it is connected to.")
 	language.Add("tool.aperture_ball_catcher.0", "Left click to place")
 	language.Add("tool.aperture_ball_catcher.enable", "Key to simulate")
@@ -50,7 +50,7 @@ end
 
 function TOOL:LeftClick( trace )
 	-- Ignore if place target is Alive
-	//if ( trace.Entity and ( trace.Entity:IsPlayer() || trace.Entity:IsNPC() || APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
+	--if ( trace.Entity and ( trace.Entity:IsPlayer() or trace.Entity:IsNPC() or APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
 
 	if CLIENT then return true end
 	

@@ -17,7 +17,7 @@ if CLIENT then
     language.Add("tool.aperture_catapult.name", "Aerial Faith Plate")
     language.Add(
         "tool.aperture_catapult.desc",
-        "The Aperture Science Aerial Faith Plate will catapult players and objects through the air, precisely landing them on the chosen target location. Right click the end or middle circle, then right click somewhere else to move it. The middle circle will be set as close to the selected position's height as possible."
+        "The Aperture Science Aerial Faith Plate will catapult players and objects through the air, as precisely landing them on the chosen target location as possible. Right click the end or middle circle, then right click somewhere else to move it. The middle circle will be set as close to the selected position's height as possible."
     )
     language.Add("tool.aperture_catapult.0", "Left click to place")
     language.Add("tool.aperture_catapult.enable", "Enable")

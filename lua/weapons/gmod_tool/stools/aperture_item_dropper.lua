@@ -15,24 +15,24 @@ if CLIENT then
 	language.Add("tool.aperture_item_dropper.0", "Left click to place")
 	language.Add("tool.aperture_item_dropper.keyenable", "Drop Button")
 	language.Add("tool.aperture_item_dropper.dropType", "Drop Type")
-	language.Add("tool.aperture_item_dropper.drop_at_start", "Drop when Place")
-	language.Add("tool.aperture_item_dropper.drop_at_start.help", "Item Dropper will imidiatly drop an item when he be placed")
-	language.Add("tool.aperture_item_dropper.respawn", "Respawn on it lost")
-	language.Add("tool.aperture_item_dropper.respawn.help", "Redropping item if it is no more exist")
+	language.Add("tool.aperture_item_dropper.drop_at_start", "Drop when Placed")
+	language.Add("tool.aperture_item_dropper.drop_at_start.help", "Item Dropper will drop an item as soon as it is placed")
+	language.Add("tool.aperture_item_dropper.respawn", "Respawn on item lost")
+	language.Add("tool.aperture_item_dropper.respawn.help", "Drop another item if the last one ceases to exist")
 	language.Add("tool.aperture_item_dropper.dropforce", "Drop Force")
-	language.Add("tool.aperture_item_dropper.dropforce.help", "How much force is applied to the item when it is dropped. useful for droppers that arent on the ceiling.")
+	language.Add("tool.aperture_item_dropper.dropforce.help", "How much force is applied to the item when it is dropped. useful for droppers that arent on the ceiling, and for rogue A.Is that want to slam cubes down on test subjects really really hard.")
 end
 
 if SERVER then
 
-	function MakeDropper(pl, pos, ang, model, key_enable, drop_type, drop_at_start, respawn, dforce,data)
+	function MakeDropper(pl, pos, ang, model, key_enable, drop_type, drop_at_start, respawnthecube, dforce,data)
 		local ent = ents.Create("ent_item_dropper")
 		if not IsValid(ent) then return end
 		ent:SetModel(model)
 		ent:SetPos(pos)
 		ent:SetAngles(ang)
 		ent:SetMoveType(MOVETYPE_NONE)
-		ent:SetRespawn(tobool(respawn))
+		ent:SetRespawn(tobool(respawnthecube))
 		ent:SetDropType(drop_type)
 		ent:SetDropAtStart(drop_at_start)
 		ent:SetDropForce(dforce)
@@ -66,7 +66,7 @@ if SERVER then
 		return ent
 	end
 	
-	duplicator.RegisterEntityClass("ent_item_dropper", MakeDropper, "pos", "ang", "model", "key_enable", "drop_type", "drop_at_start", "respawn", "dropforce", "data")
+	duplicator.RegisterEntityClass("ent_item_dropper", MakeDropper, "pos", "ang", "model", "key_enable", "drop_type", "drop_at_start", "respawnthecube", "dforce", "data")
 
 end
 
@@ -82,14 +82,14 @@ function TOOL:LeftClick(trace)
 	local ply = self:GetOwner()
 	local model = self:GetClientInfo("model")
 	local key_enable = self:GetClientNumber("keyenable")
-	local respawn = self:GetClientNumber("respawn")
+	local respawnthecube = self:GetClientNumber("respawn")
 	local dropType = self:GetClientNumber("drop_type")
 	local drop_at_start = tobool(self:GetClientNumber("initdrop"))
-	local dforce = self:GetClientNumber("dropforce")
+	local dforce = self:GetClientNumber("dropforce") * 1000
 	local pos = trace.HitPos + normal * 85
 	local ang = normal:Angle() - Angle(90, 0, 0)
 	--local ent = MakeDropper(ply, pos, ang, model, key_enable, dropType, drop_at_start, respawn)
-	local ent = MakeDropper(ply, pos, ang, model, key_enable, dropType, drop_at_start, respawn,dforce)
+	local ent = MakeDropper(ply, pos, ang, model, key_enable, dropType, drop_at_start, respawnthecube,dforce)
 	
 	undo.Create("Item Dropper")
 		undo.AddEntity(ent)
@@ -153,7 +153,7 @@ function TOOL.BuildCPanel(CPanel)
 	CPanel:AddControl("Numpad", {Label = "#tool.aperture_item_dropper.keyenable", Command = "aperture_item_dropper_keyenable"})
 	CPanel:AddControl("CheckBox", {Label = "#tool.aperture_item_dropper.drop_at_start", Command = "aperture_item_dropper_initdrop", Help = true})
 	CPanel:AddControl("CheckBox", {Label = "#tool.aperture_item_dropper.respawn", Command = "aperture_item_dropper_respawn", Help = true})
-	CPanel:NumSlider("#tool.aperture_item_dropper.dropforce", "aperture_item_dropper_dropforce", 0, 99999,3)
+	CPanel:NumSlider("#tool.aperture_item_dropper.dropforce", "aperture_item_dropper_dropforce", 0, 1000,3)
 end
 
 list.Set("PortalItemDropperModels", "models/aperture/item_dropper.mdl", {})

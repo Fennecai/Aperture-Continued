@@ -37,11 +37,11 @@ function ENT:Initialize()
 	self.PhysTraceParams = {}
 	self.PhysTraceParams.ignoreworld = true
 	self.PhysTraceParams.filter = function(ent)
-		if ( !IsValid( self ) ) then return false end
-		if ( !IsValid( ent ) ) then return false end
+		if ( not IsValid( self ) ) then return false end
+		if ( not IsValid( ent ) ) then return false end
 
 		if ( ent:IsWorld() ) then return false end
-		if ( !ent:IsPlayer() ) then return false end
+		if ( not ent:IsPlayer() ) then return false end
 		if ( ent == self.Parent ) then return false end
 		if ( ent.IsPortalButtonPhys ) then return false end
 		if ( ent.IsPortalButtonTrigger ) then return false end
@@ -54,7 +54,7 @@ function ENT:Initialize()
 end
 
 function ENT:WeldToEnt( ent )
-	if !IsValid( ent ) then
+	if not IsValid( ent ) then
 		return
 	end
 	self.Parent = ent
@@ -68,7 +68,7 @@ function ENT:WeldToEnt( ent )
 	end
 
 	con = constraint.Weld( ent, self, 0, 0, 0, true, false )
-	if !IsValid( con ) then
+	if not IsValid( con ) then
 		return
 	end
 
@@ -92,16 +92,16 @@ function ENT:UpdateTransmitState()
 end
 
 function ENT:EnableButtonPhys( bool )
-	if !IsValid( self.Parent ) then return end
-	if !self.PhysTraceParams then return end
+	if not IsValid( self.Parent ) then return end
+	if not self.PhysTraceParams then return end
 
 	local phys = self:GetPhysicsObject()
-	if !IsValid( phys ) then return end
+	if not IsValid( phys ) then return end
 
 	local timername = tostring( self ) .. "_PhysOFF"
 	timer.Remove( timername ) 
 
-	if !bool then
+	if not bool then
 		self:SetNotSolid( true )
 		phys:EnableCollisions( false ) 
 		phys:Wake()
@@ -111,12 +111,12 @@ function ENT:EnableButtonPhys( bool )
 	self:EnableButtonPhys( false )
 
 	timer.Create( timername, 0.25, 0, function()
-		if !IsValid( self ) then
+		if not IsValid( self ) then
 			timer.Remove( timername ) 
 			return
 		end
 
-		if !IsValid( self.Parent ) then
+		if not IsValid( self.Parent ) then
 			timer.Remove( timername ) 
 			return
 		end
@@ -128,18 +128,18 @@ function ENT:EnableButtonPhys( bool )
 		end
 
 		local phys = self:GetPhysicsObject()
-		if !IsValid( phys ) then
+		if not IsValid( phys ) then
 			timer.Remove( timername )
 			return
 		end
 
 		local parent_phys = self.Parent:GetPhysicsObject()
-		if !IsValid( parent_phys ) then
+		if not IsValid( parent_phys ) then
 			timer.Remove( timername )
 			return
 		end
 
-		if !parent_phys:IsCollisionEnabled() then
+		if not parent_phys:IsCollisionEnabled() then
 			timer.Remove( timername )
 			return
 		end
@@ -158,17 +158,17 @@ function ENT:EnableButtonPhys( bool )
 end
 
 function ENT:OnFreeze()
-	if !IsValid( self.Parent ) then return end
+	if not IsValid( self.Parent ) then return end
 	self:EnableButtonPhys( false )
 
 	timer.Simple( 0.01, function()
-		if !IsValid( self ) then return end
-		if !IsValid( self.Parent ) then return end
+		if not IsValid( self ) then return end
+		if not IsValid( self.Parent ) then return end
 
 		local self_phys = self:GetPhysicsObject()
 		local parent_phys = self.Parent:GetPhysicsObject()
-		if !IsValid( self_phys ) then return end
-		if !IsValid( parent_phys ) then return end
+		if not IsValid( self_phys ) then return end
+		if not IsValid( parent_phys ) then return end
 
 		self:SetPos(self.Parent:GetPos())
 		self:SetAngles(self.Parent:GetAngles())

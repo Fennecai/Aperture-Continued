@@ -1,6 +1,6 @@
 AddCSLuaFile()
 
-if not LIB_APERTURECONTINUED then print("Error: Aperture lib does not exit!!!") return end
+if not LIB_APERTURECONTINUED then print("Error: Aperture lib does not exist or could not be found.") return end
 
 -- ================================ ITEM DROPPER ============================
 

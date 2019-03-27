@@ -70,8 +70,7 @@ sound.Add({
 	}
 })
 
-local AcceptedObjects = {
-	Cupes = {
+local AcceptedObjects = {	Cupes = {
 		["models/props/metal_box_fx_fizzler.mdl"] = {
 			on = {[0] = 2},
 			off = {[2] = 0},
@@ -80,10 +79,12 @@ local AcceptedObjects = {
 			on = {[0] = 2, [1] = 4, [3] = 5},
 			off = {[2] = 0, [4] = 1, [5] = 3},
 		},
+		["models/aperture/reflection_cube.mdl"] = {},
 		["models/props/reflection_cube.mdl"] = {},
 		["models/props/metal_box.mdl"] = {},
 		["models/props_underground/underground_weighted_cube.mdl"] = {},
 		["models/portal_custom/underground_weighted_cube.mdl"] = {},
+		["models/aperture/monster_cube.mdl"] = {},
 	},
 
 	Spheres = {
@@ -130,10 +131,10 @@ local function FilterDuplicatorTable(data)
 	for k,v in pairs(data) do
 		if istable(v) then
 			FilterDuplicatorTable(v)
-			continue
+			
 		end
 	
-		if !Whitelist[type(v)] or !Whitelist[type(k)] then
+		if not Whitelist[type(v)] or not Whitelist[type(k)] then
 			data[k] = nil
 		end
 	end
@@ -153,27 +154,27 @@ function PortalButtons.FilterDuplicatorTable( data )
 end
 
 local function PortalButtonPhys_PhysgunPickup( ply, ent )
-	if !IsValid(ent) then return end
+	if not IsValid(ent) then return end
 
-	if !ent.IsPortalButtonEnt then return end
-	if !ent.OnUnfreeze then return end
+	if not ent.IsPortalButtonEnt then return end
+	if not ent.OnUnfreeze then return end
 	if ent:OnUnfreeze() == false then return false end
 end
 hook.Add( "PhysgunPickup", "PortalButtonPhys_PhysgunPickup", PortalButtonPhys_PhysgunPickup )
 
 local function PortalButtonPhys_OnPhysgunFreeze( weapon, physobj, ent, ply )
-	if !IsValid(ent) then return end
+	if not IsValid(ent) then return end
 
-	if !ent.IsPortalButtonEnt then return end
-	if !ent.OnFreeze then return end
+	if not ent.IsPortalButtonEnt then return end
+	if not ent.OnFreeze then return end
 	if ent:OnFreeze() == false then return false end
 end
 hook.Add( "OnPhysgunFreeze", "PortalButtonPhys_OnPhysgunFreeze", PortalButtonPhys_OnPhysgunFreeze )
 
 
 local function PortalButtonPhys_CanDrive( ply, ent )
-	if !IsValid(ent) then return end
-	if !ent.IsPortalButtonEnt then return end
+	if not IsValid(ent) then return end
+	if not ent.IsPortalButtonEnt then return end
 	if ent.IsPortalButton then return end
 	
 	return false
@@ -181,8 +182,8 @@ end
 hook.Add( "CanDrive", "PortalButtonPhys_CanDrive", PortalButtonPhys_CanDrive )
 
 local function PortalButtonPhys_PlayerPickup( ply, ent )
-	if !IsValid(ent) then return end
-	if !ent.IsPortalButtonEnt then return end
+	if not IsValid(ent) then return end
+	if not ent.IsPortalButtonEnt then return end
 	if ent.IsPortalButton then return end
 	
 	return false
@@ -192,8 +193,8 @@ hook.Add( "PlayerPickup", "PortalButtonPhys_PlayerPickup", PortalButtonPhys_Play
 local function PortalButtonPhys_CanTool( ply, tr, tool )
 	local ent = tr.Entity
 
-	if !IsValid(ent) then return end
-	if !ent.IsPortalButtonEnt then return end
+	if not IsValid(ent) then return end
+	if not ent.IsPortalButtonEnt then return end
 	if ent.IsPortalButton then return end
 
 	if IsValid(ent.Parent) then

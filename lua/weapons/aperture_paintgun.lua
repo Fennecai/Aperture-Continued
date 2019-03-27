@@ -7,12 +7,12 @@ if ( SERVER ) then
 end
 
 if ( CLIENT ) then
-	//SWEP.WepSelectIcon 		= surface.GetTextureID("weapons/portalgun_inventory")
+	--SWEP.WepSelectIcon 		= surface.GetTextureID("weapons/portalgun_inventory")
 	SWEP.PrintName          = "Paint Gun"
 	SWEP.Author             = "CrishNate"
 	SWEP.Purpose            = "Shoot Different Gels"
 	SWEP.ViewModelFOV       = 45
-	SWEP.Instructions       = "Left/Right to Shoot, Reload to change gel types"
+	SWEP.Instructions       = "Left/Right Mouse shoot gel, Reload change gel types"
 	SWEP.Slot = 0
 	SWEP.Slotpos = 0
 	SWEP.CSMuzzleFlashes    = false
@@ -174,16 +174,16 @@ function SWEP:DrawPickupEffects(ent)
 		
 		if (IsValid(self.Owner) and self.Owner:IsPlayer() and 
 			ent == self.Owner:GetViewModel() and self.ViewModelFlip) then
-			ang.r = -ang.r // Fixes mirrored models
+			ang.r = -ang.r -- Fixes mirrored models
 		end
 		
-		if not pos then continue end
+		if pos then return end
 		
 		local col = Color(255, 255, 255, math.Rand(96, 128))
 		local offset = Vector(v.pos)
 		offset:Rotate(ang)
 		local drawpos = pos + offset
-		local _sin = math.abs(math.sin(CurTime() * 0.1 * math.Rand(1, 3))) //math.sinwave( 25, 3, true )
+		local _sin = math.abs(math.sin(CurTime() * 0.1 * math.Rand(1, 3))) --math.sinwave( 25, 3, true )
 		
 		render.SetMaterial(gravityLight)
 		render.DrawSprite(drawpos, v.size.x + _sin, v.size.y + _sin, col)

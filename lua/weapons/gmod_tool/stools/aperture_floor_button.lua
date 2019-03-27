@@ -26,7 +26,7 @@ end
 
 if SERVER then
 
-	function MakePortalFloorButton(ply, pos, ang, class, key_group, data)
+	function MakePortalFloorButton(ply, pos, ang, class, key_group, hitent,data)
 		local ent = ents.Create(class)
 		if not IsValid(ent) then return end
 		
@@ -41,6 +41,7 @@ if SERVER then
 		ent:SetPlayer(ply)
 		ent:Spawn()
 		ent:Activate()
+		constraint.Weld( ent,hitent,0,0,0, false, false )
 		
 		-- saving data
 		local ttable = {
@@ -69,7 +70,7 @@ end
 function TOOL:LeftClick( trace )
 
 	-- Ignore if place target is Alive
-	--if ( trace.Entity and ( trace.Entity:IsPlayer() || trace.Entity:IsNPC() || APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
+	--if ( trace.Entity and ( trace.Entity:IsPlayer() or trace.Entity:IsNPC() or APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
 
 	if CLIENT then return true end
 	
@@ -82,9 +83,9 @@ function TOOL:LeftClick( trace )
 	
 	local pos = trace.HitPos
 	local ang = trace.HitNormal:Angle() + Angle(90, 0, 0)
-	
+	local hitent = trace.Entity
 	local class = self:ModelToEntity(model)
-	local ent = MakePortalFloorButton(ply, pos, ang, class, key_group)
+	local ent = MakePortalFloorButton(ply, pos, ang, class, key_group,hitent)
 		
 	undo.Create("#tool.aperture_floor_button.name")
 		undo.AddEntity(ent)

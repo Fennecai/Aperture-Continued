@@ -8,8 +8,8 @@ TOOL.ClientConVar["startenabled"] = "0"
 TOOL.ClientConVar["toggle"] = "0"
 
 if CLIENT then
-	language.Add("tool.aperture_laser_emitter.name", "Thermal Discouragement Beam Emitter")
-	language.Add("tool.aperture_laser_emitter.desc", "A Thermal Discouragement Beam Emitter that shoot a laser beam")
+	language.Add("tool.aperture_laser_emitter.name", "Laser")
+	language.Add("tool.aperture_laser_emitter.desc", "A Thermal Discouragement Beam Emitter that shoots a laser beam. not to be confused for a lazor. thats completely different.")
 	language.Add("tool.aperture_laser_emitter.0", "Left click to place")
 	language.Add("tool.aperture_laser_emitter.enable", "Enable")
 	language.Add("tool.aperture_laser_emitter.startenabled", "Enabled")
@@ -63,7 +63,7 @@ end
 function TOOL:LeftClick( trace )
 
 	-- Ignore if place target is Alive
-	--if ( trace.Entity and ( trace.Entity:IsPlayer() || trace.Entity:IsNPC() || APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
+	--if ( trace.Entity and ( trace.Entity:IsPlayer() or trace.Entity:IsNPC() or APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
 
 	if CLIENT then return true end
 	

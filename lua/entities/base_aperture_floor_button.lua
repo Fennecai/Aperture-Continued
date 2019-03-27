@@ -36,8 +36,8 @@ if ( WireAddon ) then
 end
 
 function ENT:Changed( key )
-	if ( !self.old ) then return false end
-	if ( !key ) then return false end
+	if ( not self.old ) then return false end
+	if ( not key ) then return false end
 
 	local old, new = self.old[key], self[key]
 	if ( new ~= old ) then
@@ -48,11 +48,11 @@ function ENT:Changed( key )
 end
 
 function ENT:NetworkKeyValue( key, value )
-	if ( !key ) then return end
+	if ( not key ) then return end
 
 	local GET, SET = self["Get"..key], self["Set"..key]
-	if ( !GET ) then error("self.Get"..key.."() missing!", 2) return end
-	if ( !SET ) then error("self.Set"..key.."() missing!", 2) return end
+	if ( not GET ) then error("self.Get"..key.."() missing!", 2) return end
+	if ( not SET ) then error("self.Set"..key.."() missing!", 2) return end
 
 	if ( value ~= nil ) then
 		if ( self:Changed( key ) ) then
@@ -69,7 +69,7 @@ function ENT:SetupDataTables()
 end
 
 function ENT:SetAnim( Animation, Frame, Rate )
-	if ( !self.Animated ) then
+	if ( not self.Animated ) then
 		-- This must be run once on entities that will be animated
 		self.Animated = true
 		self.AutomaticFrameAdvance = true
@@ -81,7 +81,7 @@ function ENT:SetAnim( Animation, Frame, Rate )
 end
 
 function ENT:SetAnimEX( ent, Animation, Frame, Rate )
-	if ( !self.Animated ) then
+	if ( not self.Animated ) then
 		-- This must be run once on entities that will be animated
 		self.Animated = true
 		self.AutomaticFrameAdvance = true
@@ -94,7 +94,7 @@ end
 
 if CLIENT then
 	function ENT:Think()
-		if ( !WireAddon ) then return end
+		if ( not WireAddon ) then return end
 
 		if ( CurTime() >= ( self.NextRBUpdate or 0 ) ) then
 			self.NextRBUpdate = CurTime() + math.random( 30, 100 ) / 10
@@ -105,7 +105,7 @@ if CLIENT then
 	function ENT:DrawTranslucent()
 		self:DrawModel()
 
-		if ( !WireAddon ) then return end
+		if ( not WireAddon ) then return end
 		Wire_Render( self )
 	end
 
@@ -114,7 +114,7 @@ end
 
 local function SpawnCPPI(class, ply)
 	local ent = ents.Create( class )
-	if !IsValid( ent ) then return end
+	if not IsValid( ent ) then return end
 
 	ent.Owner = ply
 	if ent.CPPISetOwner then
@@ -165,7 +165,7 @@ function ENT:CreateTrigger()
 	end
 
 	local ent = SpawnCPPI( "trigger_aperture_floor_button", self.Owner )
-	if !IsValid( ent ) then return end
+	if not IsValid( ent ) then return end
 
 	local pos = self:GetPos()
 	local ang = self:GetAngles()
@@ -188,7 +188,7 @@ function ENT:CreatePhys( model )
 	end
 
 	local ent = SpawnCPPI( "phys_aperture_floor_button", self.Owner )
-	if !IsValid( ent ) then return end
+	if not IsValid( ent ) then return end
 
 	local pos = self:GetPos()
 	local ang = self:GetAngles()
@@ -205,7 +205,7 @@ function ENT:CreatePhys( model )
 end
 
 function ENT:UpdateSettings()
-	if !self.CanUpdateSettings then return end
+	if not self.CanUpdateSettings then return end
 
 	self:SetAnim(0)
 	self:SetSkin(0)
@@ -228,7 +228,7 @@ function ENT:UpdateSettings()
 
 	if self.UsePlayerTrigger then
 		self:CreateTrigger()
-		if !IsValid( self.PlayerTrigger ) then
+		if not IsValid( self.PlayerTrigger ) then
 			self:Remove()
 			return
 		end
@@ -245,8 +245,8 @@ function ENT:UpdateSettings()
 		self.PressTraceParams.output = self.PressTrace
 		self.PressTraceParams.ignoreworld = true
 		self.PressTraceParams.filter = function( ent )
-			if ( !IsValid( self ) ) then return false end
-			if ( !IsValid( ent ) ) then return false end
+			if ( not IsValid( self ) ) then return false end
+			if ( not IsValid( ent ) ) then return false end
 
 			if ( ent:IsWorld() ) then return false end
 			if ( ent:IsPlayer() ) then return false end
@@ -268,7 +268,7 @@ function ENT:UpdateSettings()
 	self:UpdateOutputs()
 	
 	self:CheckPressed()
-	self:EnableButtonPhys(!self.Pressed)
+	self:EnableButtonPhys(not self.Pressed)
 end
 
 function ENT:OnUpdateSettings()
@@ -288,7 +288,7 @@ function ENT:UpdateTransmitState()
 end
 
 function ENT:UpdateOutputs()
-	if ( !WireAddon ) then return end
+	if ( not WireAddon ) then return end
 	if self.Pressed then
 		numpad.Activate(self:GetPlayer(), self:GetKey(), true)
 	else
@@ -317,22 +317,22 @@ function ENT:OnTurnOFF()
 end
 
 function ENT:EnableButtonPhys( bool )
-	if !IsValid( self.ButtonPhysEnt ) then return end
+	if not IsValid( self.ButtonPhysEnt ) then return end
 	self.ButtonPhysEnt:EnableButtonPhys( bool )
 end
 
 function ENT:OnFreeze()
-	if !IsValid( self.ButtonPhysEnt ) then return end
+	if not IsValid( self.ButtonPhysEnt ) then return end
 	self:EnableButtonPhys( false )
 
 	timer.Simple( 0.01, function()
-		if !IsValid( self ) then return end
-		if !IsValid( self.ButtonPhysEnt ) then return end
+		if not IsValid( self ) then return end
+		if not IsValid( self.ButtonPhysEnt ) then return end
 
 		local self_phys = self:GetPhysicsObject()
 		local button_phys = self.ButtonPhysEnt:GetPhysicsObject()
-		if !IsValid( self_phys ) then return end
-		if !IsValid( button_phys ) then return end
+		if not IsValid( self_phys ) then return end
+		if not IsValid( button_phys ) then return end
 
 		self.ButtonPhysEnt:SetPos(self:GetPos())
 		self.ButtonPhysEnt:SetAngles(self:GetAngles())
@@ -346,12 +346,12 @@ function ENT:OnUnfreeze()
 end
 
 function ENT:TurnON( ent )
-	if (!self.Active) then
+	if (not self.Active) then
 		self:TurnOFF()
 		return
 	end
 
-	if ( !IsValid(ent) ) then
+	if ( not IsValid(ent) ) then
 		self:TurnOFF()
 		return
 	end
@@ -375,7 +375,7 @@ function ENT:TurnON( ent )
 end
 
 function ENT:TurnOFF()
-	if (!self.Pressed and !IsValid(self.CurrentEntity)) then return end
+	if (not self.Pressed and not IsValid(self.CurrentEntity)) then return end
 
 	if IsValid(self.CurrentEntity) then
 		self:OnChangePressEnt(NULL, self.CurrentEntity)
@@ -387,7 +387,7 @@ function ENT:TurnOFF()
 
 	self:UpdateOutputs()
 
-	if ( !OldPressed ) then return end
+	if ( not OldPressed ) then return end
 	self:OnTurnOFF()
 end
 
@@ -428,7 +428,7 @@ end
 
 
 function ENT:CheckPressed()
-	if !self.Active then
+	if not self.Active then
 		self:TurnOFF()
 		return
 	end
@@ -480,11 +480,11 @@ function ENT:CheckPressed()
 end
 
 function ENT:Think()
-	self.Active = self:NetworkKeyValue("Active", self.Active) and !(!PortalButtons)
+	self.Active = self:NetworkKeyValue("Active", self.Active) and (PortalButtons)
 	self.ActiveChange = self.Active
 
 	if ( self:Changed( "ActiveChange" ) ) then
-		if !self.Active then
+		if not self.Active then
 			self:TurnOFF()
 			
 			if IsValid( self.PlayerTrigger ) then
@@ -564,8 +564,8 @@ function ENT:PostEntityPaste(Player,Ent,CreatedEntities)
 	end
 end
 
-function ENT:PostEntityPaste( Player, Ent, CreatedEntities ) // apply the DupeInfo
-	if ( !IsValid( Ent ) ) then return end
+function ENT:PostEntityPaste( Player, Ent, CreatedEntities ) -- apply the DupeInfo
+	if ( not IsValid( Ent ) ) then return end
 
 	Ent:SetAnim(0)
 	Ent:SetSkin(0)

@@ -116,7 +116,7 @@ function ENT:ReverseEX(reverse)
 		return true
 	end
 	
-	if self:GetStartReversed() then reverse = !reverse end
+	if self:GetStartReversed() then reverse = not reverse end
 	self:Reverse(reverse)
 end
 
@@ -137,7 +137,7 @@ function ENT:Initialize()
 		
 		if self:GetStartEnabled() then self:Enable(true) end
 		if self:GetStartReversed() then self:Reverse(true) end
-		//self:SetReverse(true)
+		--self:SetReverse(true)
 
 		if not WireAddon then return end
 		self.Inputs = Wire_CreateInputs(self, {"Enable", "Reverse"})
@@ -163,14 +163,14 @@ function ENT:Drawing()
 	local dir = reverse and -1 or 1
 	local material = reverse and Material("effects/particle_ring_pulled_add_oriented_reverse") or Material("effects/particle_ring_pulled_add_oriented")
 
-	//render.SuppressEngineLighting(true) 
+	--render.SuppressEngineLighting(true) 
 	render.SetColorModulation(color.r / 255, color.g / 255, color.b / 255)
 	render.OverrideDepthEnable(true, false)
 	render.SetLightingMode(2)
 	if self.FieldEffects then
 		for k,v in pairs(self.FieldEffects) do v:DrawModel() end
 	end
-	//render.SuppressEngineLighting(false) 
+	--render.SuppressEngineLighting(false) 
 	render.SetColorModulation(1, 1, 1)
 	render.OverrideDepthEnable(false, false)
 	render.SetLightingMode(0)

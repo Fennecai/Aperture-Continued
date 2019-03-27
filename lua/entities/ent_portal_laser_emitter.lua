@@ -148,12 +148,12 @@ function ENT:DoLaser(startpos, ang, ignore)
 		
 	for k,v in pairs(points) do
 		if CLIENT then
-			//render.OverrideDepthEnable(true, false)
-			//render.SetLightingMode(2)
+			--render.OverrideDepthEnable(true, false)
+			--render.SetLightingMode(2)
 			render.SetMaterial(Material("sprites/purplelaser1")) 
 			render.DrawBeam(v.startpos, v.endpos, 60, 1, v.startpos:Distance(v.endpos) / 50, Color(255, 255, 255))
-			//render.OverrideDepthEnable(false, false)
-			//render.SetLightingMode(0)
+			--render.OverrideDepthEnable(false, false)
+			--render.SetLightingMode(0)
 		end
 		
 		if SERVER then

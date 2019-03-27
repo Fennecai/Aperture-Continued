@@ -1,7 +1,7 @@
 function EFFECT:Init( data )
 
 	self.eEntity = data:GetEntity()
-	if ( !self.eEntity:IsValid() ) then return end
+	if ( not self.eEntity:IsValid() ) then return end
 	
 	self.Emitter = ParticleEmitter( self.eEntity:GetPos() )
 	

@@ -12,7 +12,7 @@ local ToolBackground = Material("vgui/tool_screen_background")
 
 if CLIENT then
 	language.Add("tool.aperture_laser_field.name", "Discouragement Field")
-	language.Add("tool.aperture_laser_field.desc", "A Discouragement Field used to prevent the passages of any alive or breakable objects")
+	language.Add("tool.aperture_laser_field.desc", "A feild of discouragement beams that prevent the safe passage of unauthorized personnel and breakable items. and literally nobody is authorized.")
 	language.Add("tool.aperture_laser_field.0", "Left click to place")
 	language.Add("tool.aperture_laser_field.enable", "Enable")
 	language.Add("tool.aperture_laser_field.startenabled", "Enabled")
@@ -63,7 +63,7 @@ end
 
 function TOOL:LeftClick(trace)
 	-- Ignore if place target is Alive
-	//if ( trace.Entity and ( trace.Entity:IsPlayer() || trace.Entity:IsNPC() || APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
+	--if ( trace.Entity and ( trace.Entity:IsPlayer() or trace.Entity:IsNPC() or APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
 
 	if CLIENT then return true end
 	

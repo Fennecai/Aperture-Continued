@@ -154,7 +154,7 @@ local function RFindClosestAliveInSphereIncludingPortalPassages(entities, startp
 		
 		if IsValid(portal) then
 			local p = WorldToLocal(pos, Angle(), portal:GetPos(), portal:GetAngles())
-			if p.x < 0 then continue end
+			if not p.x < 0 then return end
 		end
 		
 		local d = pos:Distance(startpos)
@@ -264,7 +264,7 @@ function OverridedShootPortal(self, type)
 				local cellInfo = LIB_PAINT:GetCellPaintInfo(cellPos)
 				
 				
-				if !trace.HitNoDraw and !trace.HitSky and ( trace.MatType ~= MAT_METAL and trace.MatType ~= MAT_GLASS or ( trace.MatType == MAT_CONCRETE or trace.MatType == MAT_DIRT ) ) and validpos and validnormang 
+				if not trace.HitNoDraw and not trace.HitSky and ( trace.MatType ~= MAT_METAL and trace.MatType ~= MAT_GLASS or ( trace.MatType == MAT_CONCRETE or trace.MatType == MAT_DIRT ) ) and validpos and validnormang 
 					or cellInfo and cellInfo.paintType == PORTAL_PAINT_PORTAL or trace.Entity:GetClass() == "env_portal_wall" then
 					  --Wait until our ball lands, if it's enabled.
 					  hitDelay = ((trace.Fraction * 2048 * 1000)-100)/ballSpeed:GetInt()
@@ -281,7 +281,7 @@ function OverridedShootPortal(self, type)
 								
 								local EntToUse = type == TYPE_BLUE and BluePortalEnt or OrangePortalEnt
 								local OtherEnt = type == TYPE_BLUE and OrangePortalEnt or BluePortalEnt
-								if !IsValid( EntToUse ) then
+								if not IsValid( EntToUse ) then
 							   
 										local Portal = ents.Create( "prop_portal" )
 										Portal:SetPos( validpos )

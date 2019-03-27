@@ -12,7 +12,7 @@ local FIELD_RADIUS = 50
 
 if CLIENT then
 	language.Add("tool.aperture_tractor_beam.name", "Exursion Funnel")
-	language.Add("tool.aperture_tractor_beam.desc", "The Exursion Funnel will transport players and entities to some direction or back from it")
+	language.Add("tool.aperture_tractor_beam.desc", "The Exursion Funnel will transport players and entities to some direction or back from it like a tractor beam; which is made of liquid esbestos.")
 	language.Add("tool.aperture_tractor_beam.0", "Left click to place")
 	language.Add("tool.aperture_tractor_beam.enable", "Enable")
 	language.Add("tool.aperture_tractor_beam.reverse", "Reverse")
@@ -73,7 +73,7 @@ function TOOL:LeftClick( trace )
 	-- Ignore if place target is Alive
 	if trace.Entity and trace.Entity:IsPlayer() then return false end
 	if CLIENT then return true end
-	//if not APERTURESCIENCE.ALLOWING.tractor_beam and not self:GetOwner():IsSuperAdmin() then self:GetOwner():PrintMessage( HUD_PRINTTALK, "This tool is disabled" ) return end
+	--if not APERTURESCIENCE.ALLOWING.tractor_beam and not self:GetOwner():IsSuperAdmin() then self:GetOwner():PrintMessage( HUD_PRINTTALK, "This tool is disabled" ) return end
 
 	local ply = self:GetOwner()
 	local key_enable = self:GetClientNumber("keyenable")

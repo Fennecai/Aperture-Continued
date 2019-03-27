@@ -35,7 +35,7 @@ function ENT:Initialize()
 	self.DoNotDuplicate = true
 	self.Parent = self:GetParent()
 	
-	if !IsValid( self.Parent ) then
+	if not IsValid( self.Parent ) then
 		self:Remove()
 	end
 	
@@ -45,11 +45,11 @@ function ENT:Initialize()
 
 	self.CheckTraceParams.output = self.CheckTrace
 	self.CheckTraceParams.filter = function( ent )
-		if ( !IsValid( self ) ) then return false end
-		if ( !IsValid( ent ) ) then return false end
+		if ( not IsValid( self ) ) then return false end
+		if ( not IsValid( ent ) ) then return false end
 
 		local Parent = self.Parent
-		if ( !IsValid( Parent ) ) then return false end
+		if ( not IsValid( Parent ) ) then return false end
 
 		if ( ent == self ) then return false end
 		if self.InTrigger[ent] then return false end
@@ -91,8 +91,8 @@ end
 
 function ENT:Reset()
 	for k,v in pairs(self.InTrigger or {}) do
-		if !IsValid(k) then
-			continue
+		if IsValid(k) then
+		 return
 		end
 
 		self:EndTouch( k )
@@ -123,8 +123,8 @@ end
 
 function ENT:CleanUpList()
 	for k,v in pairs(self.InTrigger or {}) do
-		if IsValid(k) then
-			continue
+		if not IsValid(k) then
+			return
 		end
 
 		self.InTrigger[k] = nil
@@ -132,19 +132,19 @@ function ENT:CleanUpList()
 end
 
 function ENT:Filter( ent )
-	if ( !IsValid( ent ) ) then return false end
-	if ( !IsValid( self ) ) then return false end
+	if ( not IsValid( ent ) ) then return false end
+	if ( not IsValid( self ) ) then return false end
 
 	local Parent = self.Parent
-	if ( !IsValid( Parent ) ) then return false end
-	if ( !ent:IsPlayer() ) then return false end
+	if ( not IsValid( Parent ) ) then return false end
+	if ( not ent:IsPlayer() ) then return false end
 
 	return true
 end
 
 function ENT:StartTouch( ent )
-	if !IsValid(self.Parent) then return end
-	if !self.Parent.Active then return end
+	if not IsValid(self.Parent) then return end
+	if not self.Parent.Active then return end
 
 	--local ang = self:GetAngles()
 	--local tab = Box(self.minpos, self.maxpos)
@@ -153,7 +153,7 @@ function ENT:StartTouch( ent )
 	--end
 
 	if self.InTrigger[ent] then return end
-	if !self:Filter( ent ) then return end
+	if not self:Filter( ent ) then return end
 
 	local tr = self:GetTouchTrace()
 	if self:DoCheckTrace( tr.HitPos ) then return end
@@ -176,11 +176,11 @@ function ENT:StartTouch( ent )
 end
 
 function ENT:EndTouch( ent )
-	if !IsValid(self.Parent) then return end
-	if !self.Parent.Active then return end
+	if not IsValid(self.Parent) then return end
+	if not self.Parent.Active then return end
 
-	if !self.InTrigger[ent] then return end
-	if !self:Filter( ent ) then return end
+	if not self.InTrigger[ent] then return end
+	if not self:Filter( ent ) then return end
 
 	self.InTrigger[ent] = nil
 	self:CleanUpList()

@@ -8,15 +8,15 @@ TOOL.ClientConVar["timer"] = "1"
 TOOL.ClientConVar["Music"] = "none"
 
 if CLIENT then
-	language.Add("tool.aperture_laser_catcher.name", "Thermal Discouragement Beam Catcher")
+	language.Add("tool.aperture_laser_catcher.name", "Laser Catcher")
 	language.Add(
 		"tool.aperture_laser_catcher.desc",
-		"A beam catcher that can catch thermal discouragement beam to activate other stuff"
+		"A beam catcher that can catch thermal discouragement beams to activate other stuff"
 	)
 	language.Add("tool.aperture_laser_catcher.enable", "Key to simulate")
-	language.Add("tool.aperture_laser_catcher.timer", "Time before release")
 	language.Add("tool.aperture_laser_catcher.0", "Left click to use")
 	language.Add("tool.aperture_laser_catcher.music", "Music to play")
+	language.Add("tool.aperture_laser_catcher.help", "Music played when a laser is powering this node.")
 end
 
 function TOOL:ModelToOffsets(model)
@@ -64,7 +64,7 @@ end
 
 function TOOL:LeftClick(trace)
 	-- Ignore if place target is Alive
-	--if ( trace.Entity and ( trace.Entity:IsPlayer() || trace.Entity:IsNPC() || APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
+	--if ( trace.Entity and ( trace.Entity:IsPlayer() or trace.Entity:IsNPC() or APERTURESCIENCE:GASLStuff( trace.Entity ) ) ) then return false end
 
 	if CLIENT then
 		return true

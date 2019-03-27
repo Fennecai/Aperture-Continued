@@ -1,0 +1,29 @@
+PortalRefract
+{
+$baseTexture "models\portals\dummy-blue"
+
+$mappingwidth 256
+$mappingheight 256
+$translucent 0
+$Stage 2
+$PortalOpenAmount "1"
+$PortalStatic "1"
+$UseOnStaticProp 1
+$PortalMaskTexture "models/portals_close/noise-blur-256x256"
+$PortalColorTexture "models/portals_close/portal-blue-color"
+$PortalColorScale "10"
+"<DX90"
+{
+$PortalMaskTexture "models/portals_close/portal-mask-gmod-dx8"
+$PortalColorTexture "models/portals_close/portal-blue-color-dx8"
+$PortalColorScale "1.4"
+}
+$time "0.0"
+Proxies
+{
+CurrentTime
+{
+resultVar $time
+}
+}
+}
