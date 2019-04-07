@@ -1,6 +1,6 @@
 AddCSLuaFile( )
 
-if not LIB_APERTURECONTINUED then error("Error: Aperture lib does not exit!!!") end
+if not LIB_APERTURECONTINUED then error("Error: Aperture lib does not exist or could not be found!!!") end
 
 DEFINE_BASECLASS("base_anim")
 

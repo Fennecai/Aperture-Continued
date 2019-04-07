@@ -45,17 +45,19 @@ local ModelConnectionData = {
 		[1] = {pos = Vector(), ang = Angle(0, 0, -90)}, 
 		[2] = {pos = Vector(0, 384, -384), ang = Angle()}
 	},
+	
 	["models/aperture/vactube_tjunction.mdl"] = { 
 		[1] = {pos = Vector(), ang = Angle(0, 0, -90)},
 		[2] = {pos = Vector(-192, 64, 0), ang = Angle(90, 0, 0)},
 		[3] = {pos = Vector(0, 128, 0), ang = Angle(0, 0, 90)}
 	},
-	["models/aperture/vactube_crossroads.mdl"] = { 
-		[1] = {pos = Vector(), ang = Angle(0, 0, -90)},
-		[2] = {pos = Vector(192, 64, 0), ang = Angle(-90, 0, 0)},
-		[3] = {pos = Vector(0, 128, 0), ang = Angle(0, 0, 90)},
-		[4] = {pos = Vector(-192, 64, 0), ang = Angle(90, 0, 0)} 
-	},
+	-- temporarily removed because its very hard to figure out the code that actually causes the infinite loop issue with self-crossing crossroads. theres no "pick random path" method or anything that i can narrow down. :/
+	-- ["models/aperture/vactube_crossroads.mdl"] = { 
+	-- 	[1] = {pos = Vector(), ang = Angle(0, 0, -90)},
+	-- 	[2] = {pos = Vector(192, 64, 0), ang = Angle(-90, 0, 0)},
+	-- 	[3] = {pos = Vector(0, 128, 0), ang = Angle(0, 0, 90)},
+	-- 	[4] = {pos = Vector(-192, 64, 0), ang = Angle(90, 0, 0)} 
+	-- },
 }
 
 local ModelFlowData = {
