@@ -107,19 +107,19 @@ local ModelFlowData = {
         [4] = {pos = Vector(0, 275, -110), connected = {3, 5}},
         [5] = {pos = Vector(0, 365, -250), connected = {2, 4}}
     },
-    ["models/aperture/vactube_tjunction.mdl"] = {
-        [1] = {pos = Vector(), connected = {4}, outinx = 1},
-        [2] = {pos = Vector(-192, 64, 0), connected = {4}, outinx = 2},
-        [3] = {pos = Vector(0, 128, 0), connected = {4}, outinx = 3},
-        [4] = {pos = Vector(0, 64, 0), connected = {1, 2, 3}}
-    },
-    ["models/aperture/vactube_crossroads.mdl"] = {
-        [1] = {pos = Vector(), connected = {5}, outinx = 1},
-        [2] = {pos = Vector(192, 64, 0), connected = {5}, outinx = 2},
-        [3] = {pos = Vector(0, 128, 0), connected = {5}, outinx = 3},
-        [4] = {pos = Vector(-192, 64, 0), connected = {5}, outinx = 4},
-        [5] = {pos = Vector(0, 64, 0), connected = {1, 2, 3, 4}}
-    },
+    -- ["models/aperture/vactube_tjunction.mdl"] = {
+    --     [1] = {pos = Vector(), connected = {4}, outinx = 1},
+    --     [2] = {pos = Vector(-192, 64, 0), connected = {4}, outinx = 2},
+    --     [3] = {pos = Vector(0, 128, 0), connected = {4}, outinx = 3},
+    --     [4] = {pos = Vector(0, 64, 0), connected = {1, 2, 3}}
+    -- },
+    -- ["models/aperture/vactube_crossroads.mdl"] = {
+    --     [1] = {pos = Vector(), connected = {5}, outinx = 1},
+    --     [2] = {pos = Vector(192, 64, 0), connected = {5}, outinx = 2},
+    --     [3] = {pos = Vector(0, 128, 0), connected = {5}, outinx = 3},
+    --     [4] = {pos = Vector(-192, 64, 0), connected = {5}, outinx = 4},
+    --     [5] = {pos = Vector(0, 64, 0), connected = {1, 2, 3, 4}}
+    -- },
     ["models/portal_custom/clear_tube_straight.mdl"] = {
         [1] = {pos = Vector(0, 0, 64), connected = {2}, outinx = 1},
         [2] = {pos = Vector(0, 0, -64), connected = {1}, outinx = 2}
