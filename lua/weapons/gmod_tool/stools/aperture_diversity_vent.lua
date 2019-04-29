@@ -219,7 +219,7 @@ if SERVER then
 	end
 	
 	function CreatePipe(ply, pos, ang, model, dir, count)
-		if count > 1 and model == "models/aperture/vactube_128_straight.mdl" then
+		if count > 1 and (model == "models/aperture/vactube_128_straight.mdl" or model == "models/portal_custom/clear_tube_straight.mdl") then
 			return MakePortalDiversityVentPipeArray(ply, pos, ang, model, dir, count)
 		else
 			return MakePortalDiversityVentPipe(ply, pos, ang, model)
@@ -861,12 +861,6 @@ list.Set("DiversityVentModels", "models/aperture/vactube_90deg_04.mdl", {})
 list.Set("DiversityVentModels", "models/aperture/vactube_90deg_05.mdl", {})
 list.Set("DiversityVentModels", "models/aperture/vactube_90deg_06.mdl", {})
 list.Set("DiversityVentModels", "models/aperture/vactube_tjunction.mdl", {})
-
---TODO: modify the models to have the same origin/rotation as the portal 2 equivalents!
--- list.Set("DiversityVentModels", "models/props_bts/clear_tube_straight.mdl", {})
--- list.Set("DiversityVentModels", "models/props_bts/clear_tube_90deg.mdl", {})
-
-
-
---see the comment on why this is removed on line 53 in entities_data/divvent_pipes.lua
---list.Set("DiversityVentModels", "models/aperture/vactube_crossroads.mdl", {})
+list.Set("DiversityVentModels", "models/aperture/vactube_crossroads.mdl", {})
+list.Set("DiversityVentModels","models/portal_custom/clear_tube_straight.mdl",{})
+list.Set("DiversityVentModels", "models/portal_custom/clear_tube_90deg.mdl", {})
