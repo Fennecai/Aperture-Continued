@@ -55,11 +55,11 @@ local ModelConnectionData = {
         [3] = {pos = Vector(0, 128, 0), ang = Angle(0, 0, 90)},
         [4] = {pos = Vector(-192, 64, 0), ang = Angle(90, 0, 0)}
     },
-    ["models/props_bts/clear_tube_straight.mdl"] = {
+    ["models/portal_custom/clear_tube_straight.mdl"] = {
         [1] = {pos = Vector(0, 0, 64), ang = Angle(0, 0, 0)},
         [2] = {pos = Vector(0, 0, -64), ang = Angle(0, 0, 0)}
     },
-    ["models/props_bts/clear_tube_90deg.mdl"] = {
+    ["models/portal_custom/clear_tube_90deg.mdl"] = {
         [1] = {pos = Vector(0, 0, -64), ang = Angle(180, 0, 0)},
         [2] = {pos = Vector(64, 0, 0), ang = Angle(-90, 0, 0)}
     },
@@ -120,11 +120,11 @@ local ModelFlowData = {
         [4] = {pos = Vector(-192, 64, 0), connected = {5}, outinx = 4},
         [5] = {pos = Vector(0, 64, 0), connected = {1, 2, 3, 4}}
     },
-    ["models/props_bts/clear_tube_straight.mdl"] = {
+    ["models/portal_custom/clear_tube_straight.mdl"] = {
         [1] = {pos = Vector(0, 0, 64), connected = {2}, outinx = 1},
         [2] = {pos = Vector(0, 0, -64), connected = {1}, outinx = 2}
     },
-    ["models/props_bts/clear_tube_90deg.mdl"] = {
+    ["models/portal_custom/clear_tube_90deg.mdl"] = {
         [1] = {pos = Vector(0,0,-64), connected = {3}, outinx = 1},
         [2] = {pos = Vector(64,0,0), connected = {3}, outinx = 2},
         [3] = {pos = Vector(16, 0,-16), connected = {1, 2}}

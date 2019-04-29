@@ -1,0 +1,16 @@
+"VertexLitGeneric"
+{
+	"$baseTexture" "models/props/clear_tubes"
+
+	"$bumpmap" "models/props/clear_tubes"
+	"$phong" "1"
+	"$phongexponenttexture" "models/props/clear_tubes_exponent"
+	"$phongboost" "1"	
+	"$lightwarptexture" "models/props/clear_tubes_lightwarp"
+	"$phongfresnelranges"	"[0.5 1 2.5]"
+
+//	"$envmap" "env_cubemap"
+//  "$normalmapalphaenvmapmask" 1
+
+  //"$selfillum" 1
+}

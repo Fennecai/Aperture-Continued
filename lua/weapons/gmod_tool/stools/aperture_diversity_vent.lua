@@ -219,7 +219,7 @@ if SERVER then
 	end
 	
 	function CreatePipe(ply, pos, ang, model, dir, count)
-		if count > 1 and (model == "models/aperture/vactube_128_straight.mdl" or model == "models/props_bts/clear_tube_straight.mdl") then
+		if count > 1 and (model == "models/aperture/vactube_128_straight.mdl" or model == "models/portal_custom/clear_tube_straight.mdl") then
 			return MakePortalDiversityVentPipeArray(ply, pos, ang, model, dir, count)
 		else
 			return MakePortalDiversityVentPipe(ply, pos, ang, model)
@@ -862,5 +862,5 @@ list.Set("DiversityVentModels", "models/aperture/vactube_90deg_05.mdl", {})
 list.Set("DiversityVentModels", "models/aperture/vactube_90deg_06.mdl", {})
 list.Set("DiversityVentModels", "models/aperture/vactube_tjunction.mdl", {})
 list.Set("DiversityVentModels", "models/aperture/vactube_crossroads.mdl", {})
-list.Set("DiversityVentModels","models/props_bts/clear_tube_straight.mdl",{})
-list.Set("DiversityVentModels", "models/props_bts/clear_tube_90deg.mdl", {})
+list.Set("DiversityVentModels","models/portal_custom/clear_tube_straight.mdl",{})
+list.Set("DiversityVentModels", "models/portal_custom/clear_tube_90deg.mdl", {})
