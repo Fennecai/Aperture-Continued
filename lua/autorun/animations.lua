@@ -1,4 +1,3 @@
-
 if( SERVER ) then
     AddCSLuaFile( "animations.lua" );
 end
@@ -18,9 +17,8 @@ end
 
 timer.Simple(.1, function()
 
-	
 	function GAMEMODE:HandlePlayerJumping( ply, velocity )
-		
+
 		if ( ply:GetMoveType() == MOVETYPE_NOCLIP ) and not IsValid( ply.InPortal ) then
 			ply.m_bJumping = false;
 			return
@@ -29,11 +27,11 @@ timer.Simple(.1, function()
 		-- airwalk more like hl2mp, we airwalk until we have 0 velocity, then it's the jump animation
 		-- underwater we're alright we airwalking
 		if ( not ply.m_bJumping and not ply:PortalGroundCheck() and ply:WaterLevel() <= 0 ) then
-		
+
 			if ( not ply.m_fGroundTime ) then
 
 				ply.m_fGroundTime = CurTime()
-				
+
 			elseif (CurTime() - ply.m_fGroundTime) > 0 and velocity:Length2D() < 0.5 then
 
 				ply.m_bJumping = true
@@ -42,16 +40,16 @@ timer.Simple(.1, function()
 
 			end
 		end
-		
+
 		if ply.m_bJumping then
-		
+
 			if ply.m_bFirstJumpFrame then
 
 				ply.m_bFirstJumpFrame = false
 				ply:AnimRestartMainSequence()
 
 			end
-			
+
 			if ( ply:WaterLevel() >= 2 ) or	( (CurTime() - ply.m_flJumpStartTime) > 0.2 ) then
 				if IsValid(ply.InPortal) and ply.InPortal.IsHorizontal and ply.InPortal:IsHorizontal() then
 					local z = ply.InPortal:WorldToLocal( ply:GetPos() ).z
@@ -67,13 +65,13 @@ timer.Simple(.1, function()
 				end
 
 			end
-			
+
 			if ply.m_bJumping then
 				ply.CalcIdeal = ACT_MP_JUMP
 				return true
 			end
 		end
-		
+
 		return false
 	end
 
@@ -86,14 +84,14 @@ timer.Simple(.1, function()
 		else
 			ply.CalcIdeal = ACT_MP_CROUCH_IDLE
 		end
-			
+
 		return true
 
 	end
 
 	function GAMEMODE:HandlePlayerNoClipping( ply, velocity )
 
-		if ( ply:GetMoveType() ~= MOVETYPE_NOCLIP or ply:InVehicle() or IsValid(ply.InPortal)) then 
+		if ( ply:GetMoveType() ~= MOVETYPE_NOCLIP or ply:InVehicle() or IsValid(ply.InPortal)) then
 
 			if ( ply.m_bWasNoclipping ) then
 
@@ -122,27 +120,27 @@ timer.Simple(.1, function()
 
 		if ( velocity:Length() < 1000 ) then return end
 		if ( ply:PortalGroundCheck() ) then return end
-		ply.CalcIdeal = ACT_MP_SWIM	
-		
+		ply.CalcIdeal = ACT_MP_SWIM
+
 		return true
 
 	end
 
 	function GAMEMODE:HandlePlayerSwimming( ply, velocity )
 
-		if ( ply:WaterLevel() < 2 or ply:PortalGroundCheck()) then 
+		if ( ply:WaterLevel() < 2 or ply:PortalGroundCheck()) then
 			ply.m_bInSwim = false
-			return false 
+			return false
 		end
-		
+
 		ply.CalcIdeal = ACT_MP_SWIM
-			
+
 		ply.m_bInSwim = true
 		return true
-		
+
 	end
 
-	function GAMEMODE:HandlePlayerLanding( ply, velocity, WasOnGround ) 
+	function GAMEMODE:HandlePlayerLanding( ply, velocity, WasOnGround )
 
 		if ( ply:GetMoveType() == MOVETYPE_NOCLIP ) and not IsValid( ply.InPortal ) then return end
 		if ( ply:PortalGroundCheck() and not WasOnGround ) then
@@ -155,23 +153,23 @@ timer.Simple(.1, function()
 
 		if ply:InVehicle() then
 			local pVehicle = ply:GetVehicle()
-			
+
 			if ( pVehicle.HandleAnimation ~= nil ) then
 
 				if type(pVehicle.HandleAnimation) ~= "function" then
 					return false
 				end
-			
+
 				local seq = pVehicle:HandleAnimation( ply )
 				if ( seq ~= nil ) then
 					ply.CalcSeqOverride = seq
 					return true
 				end
-				
+
 			else
-			
+
 				local class = pVehicle:GetClass()
-				
+
 				if ( class == "prop_vehicle_jeep" ) then
 					ply.CalcSeqOverride = ply:LookupSequence( "drive_jeep" )
 				elseif ( class == "prop_vehicle_airboat" ) then
@@ -181,7 +179,7 @@ timer.Simple(.1, function()
 					ply.CalcSeqOverride = ply:LookupSequence( "drive_pd" )
 				else
 					ply.CalcSeqOverride = ply:LookupSequence( "sit_rollercoaster" )
-					
+
 					if ( ply:GetAllowWeaponsInVehicle() and IsValid( ply:GetActiveWeapon() ) ) then
 						local holdtype = ply:GetActiveWeapon():GetHoldType()
 						if ( holdtype == "smg" ) then holdtype = "smg1" end
@@ -192,11 +190,11 @@ timer.Simple(.1, function()
 						end
 					end
 				end
-				
+
 				return true
 			end
 		end
-		
+
 		return false
 	end
 
@@ -204,62 +202,62 @@ timer.Simple(.1, function()
 	   Name: gamemode:UpdateAnimation( )
 	   Desc: Animation updates (pose params etc) should be done here
 	-----------------------------------------------------------]]
-	function GAMEMODE:UpdateAnimation( ply, velocity, maxseqgroundspeed )	
+	function GAMEMODE:UpdateAnimation( ply, velocity, maxseqgroundspeed )
 
 		local len = velocity:Length()
 		local movement = 1.0
-		
+
 		if ( len > 0.2 ) then
 			movement =  ( len / maxseqgroundspeed )
 		end
-		
+
 		local rate = math.min( movement, 2 )
 
 		-- if we're under water we want to constantly be swimming..
 		if ( ply:WaterLevel() >= 2 ) then
 			rate = math.max( rate, 0.5 )
-		elseif ( not ply:PortalGroundCheck() and len >= 1000 ) then 
+		elseif ( not ply:PortalGroundCheck() and len >= 1000 ) then
 			rate = 0.1
 		end
-		
+
 		ply:SetPlaybackRate( rate )
-		
+
 		if ( ply:InVehicle() ) then
 
 			local Vehicle =  ply:GetVehicle()
-			
+
 			-- We only need to do this clientside..
 			if ( CLIENT ) then
 				--
 				-- This is used for the 'rollercoaster' arms
 				--
 				local Velocity = Vehicle:GetVelocity()
-				local fwd = Vehicle:GetUp()                       
+				local fwd = Vehicle:GetUp()
 				local dp = fwd:Dot( Vector(0,0,1) )
 				local dp2 = fwd:Dot( Velocity )
 
-				ply:SetPoseParameter( "vertical_velocity", (dp<0 and dp or 0)+dp2*0.005 ) 
+				ply:SetPoseParameter( "vertical_velocity", (dp<0 and dp or 0)+dp2*0.005 )
 
 				-- Pass the vehicles steer param down to the player
 				local steer = Vehicle:GetPoseParameter( "vehicle_steer" )
 				steer = steer * 2 - 1 -- convert from 0..1 to -1..1
-				ply:SetPoseParameter( "vehicle_steer", steer  ) 
+				ply:SetPoseParameter( "vehicle_steer", steer  )
 			end
-			
+
 		end
-		
+
 		if ( CLIENT ) then
 			GAMEMODE:GrabEarAnimation( ply )
 			GAMEMODE:MouthMoveAnimation( ply )
 		end
-		
+
 	end
 
 	--
 	-- If you don't want the player to grab his ear in your gamemode then
 	-- just override this.
 	--
-	function GAMEMODE:GrabEarAnimation( ply )	
+	function GAMEMODE:GrabEarAnimation( ply )
 
 		ply.ChatGestureWeight = ply.ChatGestureWeight or 0
 
@@ -271,12 +269,12 @@ timer.Simple(.1, function()
 		else
 			ply.ChatGestureWeight = math.Approach( ply.ChatGestureWeight, 0, FrameTime()  * 5.0 );
 		end
-		
+
 		if ( ply.ChatGestureWeight > 0 ) then
-		
+
 			ply:AnimRestartGesture( GESTURE_SLOT_VCD, ACT_GMOD_IN_CHAT, true )
 			ply:AnimSetGestureWeight( GESTURE_SLOT_VCD, ply.ChatGestureWeight )
-			
+
 		end
 
 	end
@@ -288,9 +286,9 @@ timer.Simple(.1, function()
 
 		local FlexNum = ply:GetFlexNum() - 1
 		if ( FlexNum <= 0 ) then return end
-		
+
 		for i=0, FlexNum-1 do
-		
+
 			local Name = ply:GetFlexName( i )
 
 			if ( Name == "jaw_drop" or Name == "right_part" or Name == "left_part" or Name == "right_mouth_drop" or Name == "left_mouth_drop"  ) then
@@ -301,12 +299,12 @@ timer.Simple(.1, function()
 					ply:SetFlexWeight( i, 0 )
 				end
 			end
-			
+
 		end
-		
+
 	end
 
-	function GAMEMODE:CalcMainActivity( ply, velocity )	
+	function GAMEMODE:CalcMainActivity( ply, velocity )
 
 		ply.CalcIdeal = ACT_MP_STAND_IDLE
 		ply.CalcSeqOverride = -1
@@ -365,44 +363,44 @@ timer.Simple(.1, function()
 
 	function GAMEMODE:DoAnimationEvent( ply, event, data )
 		if event == PLAYERANIMEVENT_ATTACK_PRIMARY then
-		
+
 			if ply:Crouching() then
 				ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_CROUCH_PRIMARYFIRE, true )
 			else
 				ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_ATTACK_STAND_PRIMARYFIRE, true )
 			end
-			
+
 			return ACT_VM_PRIMARYATTACK
-		
+
 		elseif event == PLAYERANIMEVENT_ATTACK_SECONDARY then
-		
+
 			-- there is no gesture, so just fire off the VM event
 			return ACT_VM_SECONDARYATTACK
-			
+
 		elseif event == PLAYERANIMEVENT_RELOAD then
-		
+
 			if ply:Crouching() then
 				ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_CROUCH, true )
 			else
 				ply:AnimRestartGesture( GESTURE_SLOT_ATTACK_AND_RELOAD, ACT_MP_RELOAD_STAND, true )
 			end
-			
+
 			return ACT_INVALID
-			
+
 		elseif event == PLAYERANIMEVENT_JUMP then
-		
+
 			ply.m_bJumping = true
 			ply.m_bFirstJumpFrame = true
 			ply.m_flJumpStartTime = CurTime()
-			
+
 			ply:AnimRestartMainSequence()
-			
+
 			return ACT_INVALID
-			
+
 		elseif event == PLAYERANIMEVENT_CANCEL_RELOAD then
-		
+
 			ply:AnimResetGestureSlot( GESTURE_SLOT_ATTACK_AND_RELOAD )
-			
+
 			return ACT_INVALID
 		end
 
