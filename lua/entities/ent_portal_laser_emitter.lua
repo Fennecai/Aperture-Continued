@@ -1,13 +1,13 @@
-AddCSLuaFile( )
+AddCSLuaFile()
 DEFINE_BASECLASS("base_aperture_ent")
 
 local WireAddon = WireAddon or WIRE_CLIENT_INSTALLED
 
-ENT.PrintName 		= "Thermal Discouragement Beam Emitter"
-ENT.IsAperture 		= true
-ENT.IsConnectable 	= true
+ENT.PrintName = "Thermal Discouragement Beam Emitter"
+ENT.IsAperture = true
+ENT.IsConnectable = true
 
-ENT.LASER_BBOX 		= 1
+ENT.LASER_BBOX = 1
 ENT.MAX_REFLECTIONS = 256
 
 if WireAddon then
@@ -37,7 +37,7 @@ function ENT:Enable(enable)
 			self:RemoveSoundEntity("TA:LaserBurn")
 			self:RemoveSoundEntity("TA:LaserStart")
 		end
-		
+
 		self:SetEnable(enable)
 	end
 end
@@ -49,42 +49,45 @@ function ENT:EnableEX(enable)
 		end
 		return true
 	end
-	
-	if self:GetStartEnabled() then enable = not enable end
+
+	if self:GetStartEnabled() then
+		enable = not enable
+	end
 	self:Enable(enable)
 end
 
 function ENT:Initialize()
-
 	self.BaseClass.Initialize(self)
-	
+
 	if SERVER then
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetMoveType(MOVETYPE_VPHYSICS)
 		self:SetSolid(SOLID_VPHYSICS)
 		self:GetPhysicsObject():EnableMotion(false)
-		
-		if self:GetStartEnabled() then self:Enable(true) end
 
-		if not WireAddon then return end
+		if self:GetStartEnabled() then
+			self:Enable(true)
+		end
+
+		if not WireAddon then
+			return
+		end
 		self.Inputs = Wire_CreateInputs(self, {"Enable"})
 	end
 
 	if CLIENT then
-		
 	end
-	
-	self.TA_FilterEntities 	= { }
-	self.TA_PassagesCount 	= 0
-end
 
+	self.TA_FilterEntities = {}
+	self.TA_PassagesCount = 0
+end
 
 if CLIENT then
 	local laserSpriteCount = 32
 	local laserSpriteRadius = 40
 	-- Beam shoot effect
 	function ENT:DrawMuzzleEffect(startpos, dir)
-		for i = 1,laserSpriteCount do
+		for i = 1, laserSpriteCount do
 			local radius = laserSpriteRadius * (1 - i / laserSpriteCount) * math.Rand(0.9, 1.1)
 			render.SetMaterial(Material("particle/laser_beam_glow"))
 			render.DrawSprite(startpos + dir * i * (1 + (i - 1) / 80), radius, radius, Color(255, 255, 255))
@@ -93,23 +96,31 @@ if CLIENT then
 end
 
 function ENT:DamageEntity(ent, startpos, endpos)
-	if not IsValid(ent) then return end
+	if not IsValid(ent) then
+		return
+	end
 
-	if not timer.Exists("TA:DamageEntity"..ent:EntIndex()) then
-		ent:TakeDamage(4, self, self) 
+	if not timer.Exists("TA:DamageEntity" .. ent:EntIndex()) then
+		ent:TakeDamage(4, self, self)
 		ent:EmitSound("TA:LaserBodyBurn")
-		timer.Create("TA:DamageEntity"..ent:EntIndex(), 0.25, 1, function() end)
+		timer.Create(
+			"TA:DamageEntity" .. ent:EntIndex(),
+			0.25,
+			1,
+			function()
+			end
+		)
 	end
 
 	if ent:IsPlayer() and ent:IsOnGround() then
 		local dir = (endpos - startpos):GetNormalized()
-		
+
 		-- Forces Player away from the laser
 		local angles = dir:Angle()
 		local center = ent:LocalToWorld(ent:GetPhysicsObject():GetMassCenter())
 		local forceDirLocal = WorldToLocal(center, Angle(), startpos, angles)
 		forceDirLocal.x = 0
-		
+
 		local forceDir = LocalToWorld(forceDirLocal, Angle(), Vector(), angles)
 		forceDir.z = 0
 		forceDir = forceDir:GetNormalized() * math.max(0, 40 - forceDir:Length())
@@ -126,16 +137,18 @@ function ENT:HandleEntities(ent, startpos, endpos)
 end
 
 function ENT:DoLaser(startpos, ang, ignore)
-
 	self.TA_PassagesCount = self.TA_PassagesCount + 1
-	if self.TA_PassagesCount >= self.MAX_REFLECTIONS then return end
+	if self.TA_PassagesCount >= self.MAX_REFLECTIONS then
+		return
+	end
 	if self.TA_PassagesCount > 50 and SERVER then
 		LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(self.Player, "laser_show")
 	end
 
 	local drawEndEffect = true
 	local filter = {ignore, "models/aperture/laser_receptacle.mdl"}
-	local points, trace = LIB_APERTURECONTINUED:GetAllPortalPassagesAng(startpos, ang, nil, filter)
+	local points,
+		trace = LIB_APERTURECONTINUED:GetAllPortalPassagesAng(startpos, ang, nil, filter)
 
 	if IsValid(trace.Entity) then
 		local ent = trace.Entity
@@ -145,47 +158,51 @@ function ENT:DoLaser(startpos, ang, ignore)
 			ent.LastHittedByLaser = CurTime()
 		end
 	end
-		
-	for k,v in pairs(points) do
+
+	for k, v in pairs(points) do
 		if CLIENT then
 			--render.OverrideDepthEnable(true, false)
 			--render.SetLightingMode(2)
-			render.SetMaterial(Material("sprites/purplelaser1")) 
+			render.SetMaterial(Material("sprites/purplelaser1"))
 			render.DrawBeam(v.startpos, v.endpos, 60, 1, v.startpos:Distance(v.endpos) / 50, Color(255, 255, 255))
-			--render.OverrideDepthEnable(false, false)
-			--render.SetLightingMode(0)
+		--render.OverrideDepthEnable(false, false)
+		--render.SetLightingMode(0)
 		end
-		
+
 		if SERVER then
-			util.TraceHull({
-				start = v.startpos,
-				endpos = v.endpos,
-				ignoreworld = true,
-				filter = function(ent)
-					if ent ~= self and ent:GetClass() ~= "prop_portal" then
-						self:HandleEntities(ent, v.startpos, v.endpos)
-					end
-				end,
-				mins = -Vector(1, 1, 1) * self.LASER_BBOX,
-				maxs = Vector(1, 1, 1) * self.LASER_BBOX,
-				mask = MASK_SHOT_HULL
-			})
+			util.TraceHull(
+				{
+					start = v.startpos,
+					endpos = v.endpos,
+					ignoreworld = true,
+					filter = function(ent)
+						if ent ~= self and ent:GetClass() ~= "prop_portal" then
+							self:HandleEntities(ent, v.startpos, v.endpos)
+						end
+					end,
+					mins = -Vector(1, 1, 1) * self.LASER_BBOX,
+					maxs = Vector(1, 1, 1) * self.LASER_BBOX,
+					mask = MASK_SHOT_HULL
+				}
+			)
 		end
 	end
-	
+
 	local cellPos = LIB_MATH_TA:ConvertToGrid(trace.HitPos, LIB_PAINT.PAINT_INFO_SIZE)
 	local paintInfo = LIB_PAINT:GetCellPaintInfo(cellPos)
 	local ent = trace.Entity
-	if (paintInfo and paintInfo.paintType == PORTAL_PAINT_REFLECTION)
-		or IsValid(ent) and IsValid(ent) and ent:GetNWInt("TA:PaintType") and ent:GetNWInt("TA:PaintType") == PORTAL_PAINT_REFLECTION then
-		
+	if
+		(paintInfo and paintInfo.paintType == PORTAL_PAINT_REFLECTION) or
+			IsValid(ent) and IsValid(ent) and ent:GetNWInt("TA:PaintType") and
+				ent:GetNWInt("TA:PaintType") == PORTAL_PAINT_REFLECTION
+	 then
 		local normal = trace.HitNormal
 		local lastPointInfo = points[#points]
-		if lastPointInfo then 
+		if lastPointInfo then
 			local direction = (lastPointInfo.endpos - lastPointInfo.startpos):GetNormalized()
 			LIB_MATH_TA:NormalFlipZeros(normal)
-			
-			local reflectionDir = normal:Dot(-direction) * normal * 2 + direction 
+
+			local reflectionDir = normal:Dot(-direction) * normal * 2 + direction
 			return self:DoLaser(trace.HitPos, reflectionDir:Angle())
 		end
 	end
@@ -199,11 +216,10 @@ function ENT:DoLaser(startpos, ang, ignore)
 			return self:DoLaser(ent:LocalToWorld(Vector(20, 0, 0)), ent:GetAngles(), ent)
 		end
 	end
-		
+
 	-- returning last tracer hit position
 	return trace, drawEndEffect
 end
-
 
 function ENT:Draw()
 	self:DrawModel()
@@ -216,7 +232,9 @@ end
 
 function ENT:Drawing()
 	-- skip if disabled
-	if not self:GetEnable() then return end
+	if not self:GetEnable() then
+		return
+	end
 	local startpos = self:LocalToWorld(self:ModelToStartCoord())
 	-- clearing data
 	self:DrawMuzzleEffect(startpos + self:GetForward() * 5, self:GetForward())
@@ -225,23 +243,36 @@ function ENT:Drawing()
 end
 
 -- no more client side
-if CLIENT then return end
+if CLIENT then
+	return
+end
 
 function ENT:Think()
 	self:NextThink(CurTime())
-	
+
 	-- skip if disabled
-	if not self:GetEnable() then return end
+	if not self:GetEnable() then
+		return
+	end
 
 	self:ClearData()
 	local startPos = self:LocalToWorld(self:ModelToStartCoord())
-	local endtrace, effect = self:DoLaser(startPos, self:GetAngles(), self)
-	if not endtrace then return true end
-	
+	local endtrace,
+		effect = self:DoLaser(startPos, self:GetAngles(), self)
+	if not endtrace then
+		return true
+	end
+
 	self:MoveSoundEntity("TA:LaserBurn", endtrace.HitPos + endtrace.HitNormal)
-		
-	if not timer.Exists("TA:LaserSparksEffect"..self:EntIndex()) and effect then 
-		timer.Create( "TA:LaserSparksEffect"..self:EntIndex(), 0.05, 1, function() end )
+
+	if not timer.Exists("TA:LaserSparksEffect" .. self:EntIndex()) and effect then
+		timer.Create(
+			"TA:LaserSparksEffect" .. self:EntIndex(),
+			0.05,
+			1,
+			function()
+			end
+		)
 
 		local effectdata = EffectData()
 		effectdata:SetOrigin(endtrace.HitPos)
@@ -253,16 +284,25 @@ function ENT:Think()
 end
 
 function ENT:TriggerInput(iname, value)
-	if not WireAddon then return end
+	if not WireAddon then
+		return
+	end
 
-	if iname == "Enable" then self:Enable(tobool(value)) end
+	if iname == "Enable" then
+		self:Enable(tobool(value))
+	end
 end
 
-numpad.Register("PortalLaserEmitter_Enable", function(pl, ent, keydown)
-	if not IsValid(ent) then return false end
-	ent:EnableEX(keydown)
-	return true
-end)
+numpad.Register(
+	"PortalLaserEmitter_Enable",
+	function(pl, ent, keydown)
+		if not IsValid(ent) then
+			return false
+		end
+		ent:EnableEX(keydown)
+		return true
+	end
+)
 
 function ENT:OnRemove()
 	self:RemoveSoundEntity("TA:LaserBurn")

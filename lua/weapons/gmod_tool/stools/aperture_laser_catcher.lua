@@ -78,7 +78,7 @@ function TOOL:LeftClick(trace)
 	local offsets = self:ModelToOffsets(model)
 	local pos = trace.HitPos + trace.HitNormal * offsets.z
 	local ang = trace.HitNormal:Angle() + offsets.ang
-	local ent = MakePortalLaserCatcher(ply, pos, ang, model, key_group,music)
+	local ent = MakePortalLaserCatcher(ply, pos, ang, model, key_group, music)
 
 	undo.Create("Thermal Discouragement Beam Catcher")
 	undo.AddEntity(ent)
@@ -137,8 +137,9 @@ function TOOL.BuildCPanel(CPanel)
 		"Numpad",
 		{Label = "#tool.aperture_laser_catcher.enable", Command = "aperture_laser_catcher_keygroup"}
 	)
-	local combobox, label = CPanel:ComboBox("#tool.aperture_laser_catcher.music", "aperture_laser_catcher_Music")
-	combobox:AddChoice("none",nil,true)
+	local combobox,
+		label = CPanel:ComboBox("#tool.aperture_laser_catcher.music", "aperture_laser_catcher_Music")
+	combobox:AddChoice("none", nil, true)
 	combobox:AddChoice("wheatley")
 	combobox:AddChoice("triple laser 1")
 	combobox:AddChoice("triple laser 2")

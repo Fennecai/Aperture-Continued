@@ -1,13 +1,11 @@
-AddCSLuaFile( "shared.lua" )
+AddCSLuaFile("shared.lua")
 
-include( "shared.lua" )
-include( "ai_translations.lua" )
+include("shared.lua")
+include("ai_translations.lua")
 
-SWEP.Weight				= 5			-- Decides whether we should switch from/to this
-SWEP.AutoSwitchTo		= true		-- Auto switch to if we pick it up
-SWEP.AutoSwitchFrom		= true		-- Auto switch from if you pick up a better weapon
-
-
+SWEP.Weight = 5 -- Decides whether we should switch from/to this
+SWEP.AutoSwitchTo = true -- Auto switch to if we pick it up
+SWEP.AutoSwitchFrom = true -- Auto switch from if you pick up a better weapon
 
 --[[-------------------------------------------------------
    Name: weapon:TranslateActivity( )
@@ -15,21 +13,19 @@ SWEP.AutoSwitchFrom		= true		-- Auto switch from if you pick up a better weapon
 		 So for example, ACT_HL2MP_RUN becomes ACT_HL2MP_RUN_PISTOL
 		 Depending on how you want the player to be holding the weapon
 ---------------------------------------------------------]]
-function SWEP:TranslateActivity( act )
+function SWEP:TranslateActivity(act)
+     if (self.Owner:IsNPC()) then
+          if (self.ActivityTranslateAI[act]) then
+               return self.ActivityTranslateAI[act]
+          end
+          return -1
+     end
 
-	if ( self.Owner:IsNPC() ) then
-		if ( self.ActivityTranslateAI[ act ] ) then
-			return self.ActivityTranslateAI[ act ]
-		end
-		return -1
-	end
+     if (self.ActivityTranslate[act] ~= nil) then
+          return self.ActivityTranslate[act]
+     end
 
-	if ( self.ActivityTranslate[ act ] ~= nil ) then
-		return self.ActivityTranslate[ act ]
-	end
-	
-	return -1
-
+     return -1
 end
 
 --[[-------------------------------------------------------
@@ -40,24 +36,25 @@ end
 function SWEP:OnRestore()
 end
 
-
 --[[-------------------------------------------------------
    Name: AcceptInput
    Desc: Accepts input, return true to override/accept input
 ---------------------------------------------------------]]
-function SWEP:AcceptInput( input, activator, called, data )
-	if input == 'FirePortal1' then self:PrimaryAttack() end
-	if input == 'FirePortal2' then self:SecondaryAttack() end
+function SWEP:AcceptInput(input, activator, called, data)
+     if input == "FirePortal1" then
+          self:PrimaryAttack()
+     end
+     if input == "FirePortal2" then
+          self:SecondaryAttack()
+     end
 end
-
 
 --[[-------------------------------------------------------
    Name: KeyValue
    Desc: Called when a keyvalue is added to us
 ---------------------------------------------------------]]
-function SWEP:KeyValue( key, value )
+function SWEP:KeyValue(key, value)
 end
-
 
 --[[-------------------------------------------------------
    Name: OnRemove
@@ -70,8 +67,7 @@ end
    Name: Equip
    Desc: A player or NPC has picked the weapon up
 ---------------------------------------------------------]]
-function SWEP:Equip( NewOwner )
-
+function SWEP:Equip(NewOwner)
 end
 
 --[[-------------------------------------------------------
@@ -79,17 +75,14 @@ end
    Desc: The player has picked up the weapon and has taken the ammo from it
 		The weapon will be removed immidiately after this call.
 ---------------------------------------------------------]]
-function SWEP:EquipAmmo( NewOwner )
-
+function SWEP:EquipAmmo(NewOwner)
 end
-
 
 --[[-------------------------------------------------------
    Name: OnDrop
    Desc: Weapon was dropped
 ---------------------------------------------------------]]
 function SWEP:OnDrop()
-
 end
 
 --[[-------------------------------------------------------
@@ -97,7 +90,7 @@ end
    Desc: Should this weapon be dropped when its owner dies?
 ---------------------------------------------------------]]
 function SWEP:ShouldDropOnDie()
-	return true
+     return true
 end
 
 --[[-------------------------------------------------------
@@ -105,36 +98,28 @@ end
    Desc: For NPCs, returns what they should try to do with it.
 ---------------------------------------------------------]]
 function SWEP:GetCapabilities()
-
-	return bit.bor(CAP_WEAPON_RANGE_ATTACK1 , CAP_INNATE_RANGE_ATTACK1)
-
+     return bit.bor(CAP_WEAPON_RANGE_ATTACK1, CAP_INNATE_RANGE_ATTACK1)
 end
 
 --[[-------------------------------------------------------
    Name: NPCShoot_Secondary
    Desc: NPC tried to fire secondary attack
 ---------------------------------------------------------]]
-function SWEP:NPCShoot_Secondary( ShootPos, ShootDir )
-
-	self:SecondaryAttack()
-
+function SWEP:NPCShoot_Secondary(ShootPos, ShootDir)
+     self:SecondaryAttack()
 end
 
 --[[-------------------------------------------------------
    Name: NPCShoot_Secondary
    Desc: NPC tried to fire primary attack
 ---------------------------------------------------------]]
-function SWEP:NPCShoot_Primary( ShootPos, ShootDir )
-
-	self:PrimaryAttack()
-
+function SWEP:NPCShoot_Primary(ShootPos, ShootDir)
+     self:PrimaryAttack()
 end
 
 -- These tell the NPC how to use the weapon
-AccessorFunc( SWEP, "fNPCMinBurst", 		"NPCMinBurst" )
-AccessorFunc( SWEP, "fNPCMaxBurst", 		"NPCMaxBurst" )
-AccessorFunc( SWEP, "fNPCFireRate", 		"NPCFireRate" )
-AccessorFunc( SWEP, "fNPCMinRestTime", 	"NPCMinRest" )
-AccessorFunc( SWEP, "fNPCMaxRestTime", 	"NPCMaxRest" )
-
-
+AccessorFunc(SWEP, "fNPCMinBurst", "NPCMinBurst")
+AccessorFunc(SWEP, "fNPCMaxBurst", "NPCMaxBurst")
+AccessorFunc(SWEP, "fNPCFireRate", "NPCFireRate")
+AccessorFunc(SWEP, "fNPCMinRestTime", "NPCMinRest")
+AccessorFunc(SWEP, "fNPCMaxRestTime", "NPCMaxRest")

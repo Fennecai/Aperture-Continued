@@ -12,7 +12,8 @@ local limitPickups =
 	"Whether to limit the Portalgun to pickup certain props from the Portal game."
 )
 
-local ballSpeed, useNoBalls
+local ballSpeed,
+	useNoBalls
 if (SERVER) then
 	AddCSLuaFile("shared.lua")
 	SWEP.Weight = 4
@@ -542,7 +543,8 @@ function SWEP:ShootPortal(type)
 
 			-- if ( trace.Hit and trace.HitWorld ) then
 			if (trace.Hit) then
-				local validpos, validnormang = self:IsPosionValid(trace.HitPos, trace.HitNormal, 2, true)
+				local validpos,
+					validnormang = self:IsPosionValid(trace.HitPos, trace.HitNormal, 2, true)
 
 				local prophit = false
 				if trace.Entity:GetClass() == "prop_physics" then

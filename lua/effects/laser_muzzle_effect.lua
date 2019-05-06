@@ -2,8 +2,8 @@ function EFFECT:Init(data)
 	local startpos = data:GetOrigin()
 	local radius = data:GetRadius()
 	local dir = data:GetNormal()
-	
-	self.Emitter = ParticleEmitter(startpos)	
+
+	self.Emitter = ParticleEmitter(startpos)
 	local p = self.Emitter:Add("particle/laser_beam_glow", startpos)
 	p:SetDieTime(0.25)
 	p:SetStartAlpha(255)
@@ -14,7 +14,7 @@ function EFFECT:Init(data)
 	p:SetGravity(dir * 1000)
 	p:SetColor(255, 255, 255)
 	p:SetCollide(false)
-	
+
 	self.Emitter:Finish()
 end
 
@@ -23,5 +23,4 @@ function EFFECT:Think()
 end
 
 function EFFECT:Render()
-	
 end

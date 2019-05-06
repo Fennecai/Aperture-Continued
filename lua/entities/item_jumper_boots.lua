@@ -1,20 +1,22 @@
-AddCSLuaFile( )
+AddCSLuaFile()
 DEFINE_BASECLASS("base_aperture_ent")
 
-ENT.Editable		= true
-ENT.PrintName		= "Long Fall Boots"
-ENT.Category		= "Aperture Science"
-ENT.Spawnable 		= true
+ENT.Editable = true
+ENT.PrintName = "Long Fall Boots"
+ENT.Category = "Aperture Science"
+ENT.Spawnable = true
 ENT.AutomaticFrameAdvance = true
 
 function ENT:SpawnFunction(ply, trace, className)
-	if not trace.Hit then return end
-	
+	if not trace.Hit then
+		return
+	end
+
 	local ent = ents.Create(className)
 	ent:SetPos(trace.HitPos + trace.HitNormal * 30)
 	ent:SetAngles(Angle(0, ply:EyeAngles().y + 180, 0))
 	ent:Spawn()
-	
+
 	return ent
 end
 
@@ -23,7 +25,9 @@ function ENT:Draw()
 end
 
 -- no more client side
-if CLIENT then return end
+if CLIENT then
+	return
+end
 
 function ENT:Initialize()
 	self:SetModel("models/aperture/jumper_boots_box.mdl")
@@ -35,7 +39,7 @@ end
 
 function ENT:Think()
 	self:NextThink(CurTime() + 0.1)
-	
+
 	return true
 end
 
@@ -46,9 +50,13 @@ function ENT:Use(activator, caller)
 end
 
 local function CreateBoots(ply)
-	if not IsValid(ply) then return end
+	if not IsValid(ply) then
+		return
+	end
 	local ent = ents.Create("prop_physics")
-	if not IsValid(ent) then return end
+	if not IsValid(ent) then
+		return
+	end
 	ent:SetModel("models/aperture/jumper_boots.mdl")
 	ent:SetPos(ply:GetPos())
 	ent:PhysicsInitStatic(SOLID_VPHYSICS)
@@ -56,7 +64,9 @@ local function CreateBoots(ply)
 	ent:SetNotSolid(true)
 	ent:SetParent(ply)
 	ent:AddEffects(EF_BONEMERGE)
-	ent.GetPlayerColor = function() return ply:GetPlayerColor() end
+	ent.GetPlayerColor = function()
+		return ply:GetPlayerColor()
+	end
 	ply:SetNWEntity("TA:ItemJumperBootsEntity", ent)
 	LIB_APERTURECONTINUED:JumperBootsResizeLegs(ply, 10)
 end

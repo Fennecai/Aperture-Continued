@@ -1,6 +1,6 @@
 --Portalgun resource download list
 
-CreateConVar("portal_bullet","1",true,"Allow shooting through the portal.")
+CreateConVar("portal_bullet", "1", true, "Allow shooting through the portal.")
 
 resource.AddFile("models/weapons/portalgun/w_portalgun_hl2.mdl")
 resource.AddFile("models/weapons/portalgun/v_portalgun.mdl")

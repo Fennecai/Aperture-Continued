@@ -1,27 +1,29 @@
 AddCSLuaFile()
 DEFINE_BASECLASS("base_aperture_floor_button")
 
-ENT.PrintName		= "Wired Button (Box)"
-ENT.Spawnable		= false
-ENT.AdminOnly		= false
-ENT.Category		= "Aperture Science"
+ENT.PrintName = "Wired Button (Box)"
+ENT.Spawnable = false
+ENT.AdminOnly = false
+ENT.Category = "Aperture Science"
 
 local WireAddon = WireAddon or WIRE_CLIENT_INSTALLED
 local PortalButtons = PortalButtons
 
-if ( WireAddon ) then
+if (WireAddon) then
 	ENT.WireDebugName = "Wired Portal Button (Box)"
 end
 
-if CLIENT then return end
+if CLIENT then
+	return
+end
 
 local AcceptedModels = nil
 function ENT:Initialize()
-	self:SetModel( "models/portal_custom/box_socket_custom.mdl" )
-	self:PhysicsInit( SOLID_VPHYSICS )
-	self:SetMoveType( MOVETYPE_VPHYSICS )
-	self:SetSolid( SOLID_VPHYSICS )
-	self:SetUseType( SIMPLE_USE )
+	self:SetModel("models/portal_custom/box_socket_custom.mdl")
+	self:PhysicsInit(SOLID_VPHYSICS)
+	self:SetMoveType(MOVETYPE_VPHYSICS)
+	self:SetSolid(SOLID_VPHYSICS)
+	self:SetUseType(SIMPLE_USE)
 
 	if not AcceptedModels and PortalButtons then
 		AcceptedModels = PortalButtons.GetAcceptedObjects()["Cupes"] or {}
@@ -37,15 +39,21 @@ function ENT:OnUpdateSettings()
 	self.PressTraceCount = 3
 end
 
-function ENT:Filter( ent )
-	if not AcceptedModels then return false end
-	if not AcceptedModels[ent:GetModel()] then return false end
+function ENT:Filter(ent)
+	if not AcceptedModels then
+		return false
+	end
+	if not AcceptedModels[ent:GetModel()] then
+		return false
+	end
 
 	return true
 end
 
 function ENT:OnChangePressEnt(ent_new, ent_old)
-	if not AcceptedModels then return end
+	if not AcceptedModels then
+		return
+	end
 
 	if IsValid(ent_old) then
 		if not ent_old:IsPlayer() then
@@ -63,16 +71,16 @@ function ENT:OnChangePressEnt(ent_new, ent_old)
 				if string.lower(self.CurEntMat) == "default" then -- "default" is not working
 					self.CurEntMat = nil
 				end
-				
+
 				phys:SetMaterial(self.CurEntMat or "Plastic_Box")
-				phys:EnableGravity( true )
+				phys:EnableGravity(true)
 
 				self.CurEntMat = nil
 				phys:Wake()
 			end
 		end
 	end
-	
+
 	if IsValid(ent_new) then
 		if not ent_new:IsPlayer() then
 			local model = ent_new:GetModel()
@@ -88,8 +96,8 @@ function ENT:OnChangePressEnt(ent_new, ent_old)
 			if IsValid(phys) then
 				self.CurEntMat = phys:GetMaterial()
 				phys:SetMaterial("ice")
-				phys:EnableGravity( true )
-				phys:Wake() 
+				phys:EnableGravity(true)
+				phys:Wake()
 			end
 		end
 	end

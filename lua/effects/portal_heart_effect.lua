@@ -1,10 +1,10 @@
-function EFFECT:Init( data )
-
+function EFFECT:Init(data)
 	local ent = data:GetEntity()
 	local emitter = ParticleEmitter(Vector())
-	
-	for i = 1,10 do
-		local min, max = ent:GetModelBounds()
+
+	for i = 1, 10 do
+		local min,
+			max = ent:GetModelBounds()
 		local randVec = Vector(math.Rand(min.x, max.x), math.Rand(min.y, max.y), math.Rand(min.z, max.z))
 		local pos = ent:LocalToWorld(randVec)
 		local p = emitter:Add("aperture/particle/heart", pos)
@@ -19,17 +19,13 @@ function EFFECT:Init( data )
 		-- p:SetColor(color.r, color.g, color.b )
 		p:SetCollide(true)
 	end
-	
+
 	emitter:Finish()
-	
 end
 
 function EFFECT:Think()
-
 	return
-	
 end
 
 function EFFECT:Render()
-
 end

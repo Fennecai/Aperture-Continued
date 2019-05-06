@@ -1,11 +1,11 @@
-AddCSLuaFile( )
+AddCSLuaFile()
 DEFINE_BASECLASS("base_aperture_ent")
 
 local WireAddon = WireAddon or WIRE_CLIENT_INSTALLED
 
-ENT.PrintName 		= "Gel Dropper"
-ENT.IsAperture 		= true
-ENT.IsConnectable 	= true
+ENT.PrintName = "Gel Dropper"
+ENT.IsAperture = true
+ENT.IsConnectable = true
 
 if WireAddon then
 	ENT.WireDebugName = ENT.PrintName
@@ -26,7 +26,7 @@ function ENT:Enable(enable)
 		if enable then
 		else
 		end
-		
+
 		self:SetEnable(enable)
 	end
 end
@@ -38,78 +38,101 @@ function ENT:EnableEX(enable)
 		end
 		return true
 	end
-	
-	if self:GetStartEnabled() then enable = not enable end
+
+	if self:GetStartEnabled() then
+		enable = not enable
+	end
 	self:Enable(enable)
 end
 
 function ENT:Initialize()
-
 	self.BaseClass.Initialize(self)
-	
+
 	if SERVER then
 		self:PhysicsInit(SOLID_VPHYSICS)
 		self:SetMoveType(MOVETYPE_VPHYSICS)
 		self:SetSolid(SOLID_VPHYSICS)
 		self:GetPhysicsObject():EnableMotion(false)
-		
-		if self:GetStartEnabled() then self:Enable(true) end
-		
-		if not WireAddon then return end
+
+		if self:GetStartEnabled() then
+			self:Enable(true)
+		end
+
+		if not WireAddon then
+			return
+		end
 		self.Inputs = Wire_CreateInputs(self, {"Enable", "Gel Radius", "Gel Amount", "Gel Launch Speed"})
 	end
 
 	if CLIENT then
-		
 	end
 end
 
 -- No more client side
-if CLIENT then return end
+if CLIENT then
+	return
+end
 
 function ENT:Think()
-	
 	self.BaseClass.Think(self)
 
 	self:NextThink(CurTime() + 1)
 	if self:GetEnable() then
 		self:NextThink(CurTime() + math.max(1, 100 - self:GetPaintAmount()) / 50)
 		self:MakePuddle()
-	end	
-	
+	end
+
 	return true
 end
 
 function ENT:MakePuddle()
-
 	-- Randomize makes random size between maxsize and minsize by selected procent
 	local radius = self:GetPaintRadius()
 	local launchSpeed = self:GetPaintLaunchSpeed()
 	local randSize = math.Rand(-1, 1) * radius / 4
 
 	local rad = math.max(LIB_APERTURECONTINUED.GEL_MINSIZE, math.min(LIB_APERTURECONTINUED.GEL_MAXSIZE, radius + randSize))
-	local randomSpread = VectorRand():GetNormalized() * (LIB_APERTURECONTINUED.GEL_MAXSIZE - rad) * (launchSpeed / LIB_APERTURECONTINUED.GEL_MAX_LAUNCH_SPEED)
+	local randomSpread =
+		VectorRand():GetNormalized() * (LIB_APERTURECONTINUED.GEL_MAXSIZE - rad) *
+		(launchSpeed / LIB_APERTURECONTINUED.GEL_MAX_LAUNCH_SPEED)
 	local velocity = -self:GetUp() * launchSpeed + randomSpread
 	local maxRad = (40 - (rad / LIB_APERTURECONTINUED.GEL_MAXSIZE) * 40) / 4
 	local pos = self:LocalToWorld(Vector(0, 0, -(maxRad + 5)) + VectorRand() * maxRad)
-	
+
 	local paint_blob = LIB_APERTURECONTINUED:MakePaintBlob(self:GetPaintType(), pos, velocity, rad)
-	if IsValid(self.Owner) and self.Owner:IsPlayer() then paint_blob:SetOwner(self.Owner) end
-	
+	if IsValid(self.Owner) and self.Owner:IsPlayer() then
+		paint_blob:SetOwner(self.Owner)
+	end
+
 	return ent
 end
 
-function ENT:TriggerInput( iname, value )
-	if not WireAddon then return end
+function ENT:TriggerInput(iname, value)
+	if not WireAddon then
+		return
+	end
 
-	if iname == "Enable" then self:Enable(tobool(value)) end
-	if iname == "Gel Radius" then self:SetPaintRadius(value) end
-	if iname == "Gel Amount" then self:SetPaintAmount(value) end
-	if iname == "Gel Launch Speed" then self:SetPaintLaunchSpeed(value) end
+	if iname == "Enable" then
+		self:Enable(tobool(value))
+	end
+	if iname == "Gel Radius" then
+		self:SetPaintRadius(value)
+	end
+	if iname == "Gel Amount" then
+		self:SetPaintAmount(value)
+	end
+	if iname == "Gel Launch Speed" then
+		self:SetPaintLaunchSpeed(value)
+	end
 end
 
-numpad.Register("PaintDropper_Enable", function(pl, ent, keydown)
-	if not IsValid(ent) then return false end
-	ent:EnableEX(keydown)
-	return true
-end)
+numpad.Register(
+	"PaintDropper_Enable",
+	function(pl, ent, keydown)
+		if not IsValid(ent) then
+			return false
+		end
+		ent:EnableEX(keydown)
+		return true
+	end
+)

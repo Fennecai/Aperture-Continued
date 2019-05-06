@@ -1,13 +1,13 @@
 AddCSLuaFile()
 
-ENT.Type 					= "anim"
-ENT.Base 					= "base_entity"
-ENT.RenderGroup 			= RENDERGROUP_BOTH
-ENT.AutomaticFrameAdvance 	= true
-ENT.Purpose 				= "Prop that can be animated"
-ENT.RenderGroup				= RENDERGROUP_BOTH
-ENT.Spawnable 				= false
-ENT.AdminOnly 				= false
+ENT.Type = "anim"
+ENT.Base = "base_entity"
+ENT.RenderGroup = RENDERGROUP_BOTH
+ENT.AutomaticFrameAdvance = true
+ENT.Purpose = "Prop that can be animated"
+ENT.RenderGroup = RENDERGROUP_BOTH
+ENT.Spawnable = false
+ENT.AdminOnly = false
 
 function ENT:Initialize()
 	if SERVER then
