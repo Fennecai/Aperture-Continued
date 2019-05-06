@@ -1,18 +1,18 @@
 AddCSLuaFile()
 
-LIB_APERTURECONTINUED.ACHIEVEMENTS = { }
-LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO = { }
-LIB_APERTURECONTINUED.ACHIEVEMENTS.NOTIFICATIONS = { }
+LIB_APERTURECONTINUED.ACHIEVEMENTS = {}
+LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO = {}
+LIB_APERTURECONTINUED.ACHIEVEMENTS.NOTIFICATIONS = {}
 
 TA_DAchivmentPanels = TA_DAchivmentPanels and TA_DAchivmentPanels or {}
 
 function LIB_APERTURECONTINUED.ACHIEVEMENTS:AddAchievement(key, name, desc)
-	local img = "aperture/achievement/"..key
+	local img = "aperture/achievement/" .. key
 	LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO[key] = {
 		img = img,
 		name = name,
 		desc = desc,
-		achieved = false,
+		achieved = false
 	}
 end
 
@@ -34,8 +34,11 @@ LIB_APERTURECONTINUED.ACHIEVEMENTS:AddAchievement("buttonmaniac", "Buttonmaniac"
 LIB_APERTURECONTINUED.ACHIEVEMENTS:AddAchievement("good_idea", "Ooh, I have an idea")
 
 local function UpdateAchievementMenu()
-	for k,v in pairs(TA_DAchivmentPanels) do
-		if LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO[k] and LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO[k].achieved then
+	for k, v in pairs(TA_DAchivmentPanels) do
+		if
+			LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO[k] and
+				LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO[k].achieved
+		 then
 			v.item:SetBackgroundColor(Color(255, 255, 255))
 			v.bg_image:SetImage("aperture/achievement/ach_background_achived")
 			v.image:SetImageColor(Color(50, 50, 50, 255))
@@ -52,22 +55,22 @@ if CLIENT then
 			achDat:Close()
 			if str then
 				local achKeys = string.Explode(" ", str)
-				for k,v in pairs(achKeys) do
+				for k, v in pairs(achKeys) do
 					if LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO[v] then
 						LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO[v].achieved = true
 					end
 				end
 			end
-			
+
 			UpdateAchievementMenu()
 		end
 	else
-		file.Write("aperture_achievements.dat", "") 
+		file.Write("aperture_achievements.dat", "")
 	end
 end
 
 local function BuildAchievementMenu(panel)
-	for k,info in pairs(LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO) do
+	for k, info in pairs(LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO) do
 		local item = vgui.Create("DPanel", panel)
 		item:Dock(TOP)
 		item:SetPaintBackground(true)
@@ -78,7 +81,7 @@ local function BuildAchievementMenu(panel)
 			item:SetBackgroundColor(Color(200, 200, 200))
 		end
 		panel:AddItem(item)
-		
+
 		-- achievement background image
 		local bg_image = vgui.Create("DImage", item)
 		bg_image:SetPos(5, 5)
@@ -119,44 +122,70 @@ local function BuildAchievementMenu(panel)
 	end
 end
 
-hook.Add("PopulateToolMenu", "AddApertureAchiementMenu", function()
-  spawnmenu.AddToolMenuOption("Aperture", "Achievements", "ApertureAchievements", "Achievements", "", "", BuildAchievementMenu, {})
-end)
+hook.Add(
+	"PopulateToolMenu",
+	"AddApertureAchiementMenu",
+	function()
+		spawnmenu.AddToolMenuOption(
+			"Aperture",
+			"Achievements",
+			"ApertureAchievements",
+			"Achievements",
+			"",
+			"",
+			BuildAchievementMenu,
+			{}
+		)
+	end
+)
 
 local function SaveAchievementProgress()
 	local strDat = ""
-	for k,info in pairs(LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO) do
-		if info.achieved then strDat = strDat..k.." " end
+	for k, info in pairs(LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO) do
+		if info.achieved then
+			strDat = strDat .. k .. " "
+		end
 	end
-	file.Write("aperture_achievements.dat", strDat) 
+	file.Write("aperture_achievements.dat", strDat)
 	UpdateAchievementMenu()
 end
 
 function LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(ply, achInx)
-	if CLIENT then return end
-	if not IsValid(ply) then return end
-	
+	if CLIENT then
+		return
+	end
+	if not IsValid(ply) then
+		return
+	end
+
 	net.Start("TA:NW_AchievedAchievement")
-		net.WriteString(achInx)
+	net.WriteString(achInx)
 	net.Send(ply)
 end
 
 local function CreateAchievementNotification(achInx)
 	local achInfo = LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO[achInx]
-	if not achInfo then return end
+	if not achInfo then
+		return
+	end
 	local ply = LocalPlayer()
 	table.insert(LIB_APERTURECONTINUED.ACHIEVEMENTS.NOTIFICATIONS, {achInfo = achInfo, startCurtime = CurTime()})
 	ply:EmitSound("garrysmod/save_load1.wav")
 end
 
-net.Receive("TA:NW_AchievedAchievement", function(len, pl)
-	local achInx = net.ReadString()
-	-- if achievement allready achived skipping it
-	if LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO[achInx].achieved then return end
-	CreateAchievementNotification(achInx)
-	LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO[achInx].achieved = true
-	SaveAchievementProgress()
-end)
+net.Receive(
+	"TA:NW_AchievedAchievement",
+	function(len, pl)
+		local achInx = net.ReadString()
+		-- if achievement allready achived skipping it
+		if LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO[achInx].achieved then
+			return
+		end
+		CreateAchievementNotification(achInx)
+		LIB_APERTURECONTINUED.ACHIEVEMENTS.ACHIEVEMENTS_INFO[achInx].achieved = true
+		SaveAchievementProgress()
+	end
+)
 
 local AchivmentHeight = 100
 local AchivmentWidth = 300
@@ -168,48 +197,58 @@ local TextXOffset = 10
 local TextYOffset = 10
 local AchievmentTime = 4
 
-hook.Add("PostDrawHUD", "TA:AchievmentNotifications", function()	
-	if not LIB_APERTURECONTINUED.ACHIEVEMENTS.NOTIFICATIONS then return end
-	
-	local itter = 0
-	for k,v in pairs(LIB_APERTURECONTINUED.ACHIEVEMENTS.NOTIFICATIONS) do
-		local time = (CurTime() - v.startCurtime)
-		local mult = 0
-		if time <= 1 then mult = time 
-		elseif time <= (1 + AchievmentTime) then mult = 1
-		else mult = 1 - (time - (1 + AchievmentTime)) end
-		
-		-- removing notification
-		if time > (2 + AchievmentTime) then
-			LIB_APERTURECONTINUED.ACHIEVEMENTS.NOTIFICATIONS[k] = nil
+hook.Add(
+	"PostDrawHUD",
+	"TA:AchievmentNotifications",
+	function()
+		if not LIB_APERTURECONTINUED.ACHIEVEMENTS.NOTIFICATIONS then
+			return
 		end
-		
-		local panelX = ScrW() - mult * AchivmentWidth
-		local panelY = itter * (AchivmentHeight + 5)
-		-- shadow
-		surface.SetDrawColor(0, 0, 0, 100)
-		surface.DrawRect(panelX - ShadowX, panelY + ShadowY, AchivmentWidth, AchivmentHeight ) 
-		-- achievement background
-		surface.SetDrawColor(200, 200, 200)
-		surface.DrawRect(panelX, panelY, AchivmentWidth, AchivmentHeight)
-		-- image background
-		surface.SetDrawColor(255, 255, 255)
-		surface.SetMaterial(Material("aperture/achievement/ach_background_achived"))
-		surface.DrawTexturedRect(panelX + ImgXOffset, panelY + AchivmentHeight / 2 - ImgSize / 2, ImgSize, ImgSize)
-		-- image
-		surface.SetDrawColor(50, 50, 50)
-		surface.SetMaterial(Material(v.achInfo.img))
-		surface.DrawTexturedRect(panelX + ImgXOffset, panelY + AchivmentHeight / 2 - ImgSize / 2, ImgSize, ImgSize)
-		-- text
-		surface.SetTextColor(25, 25, 25)
-		local _, txtHeight = surface.GetTextSize("")
-		surface.SetTextPos(panelX + ImgXOffset + ImgSize + TextXOffset, panelY + TextYOffset)
-		surface.DrawText(v.achInfo.name)
-		
-		itter = itter + 1
-	end
-	-- local panelX = 0
-	-- local panelY = 0
+
+		local itter = 0
+		for k, v in pairs(LIB_APERTURECONTINUED.ACHIEVEMENTS.NOTIFICATIONS) do
+			local time = (CurTime() - v.startCurtime)
+			local mult = 0
+			if time <= 1 then
+				mult = time
+			elseif time <= (1 + AchievmentTime) then
+				mult = 1
+			else
+				mult = 1 - (time - (1 + AchievmentTime))
+			end
+
+			-- removing notification
+			if time > (2 + AchievmentTime) then
+				LIB_APERTURECONTINUED.ACHIEVEMENTS.NOTIFICATIONS[k] = nil
+			end
+
+			local panelX = ScrW() - mult * AchivmentWidth
+			local panelY = itter * (AchivmentHeight + 5)
+			-- shadow
+			surface.SetDrawColor(0, 0, 0, 100)
+			surface.DrawRect(panelX - ShadowX, panelY + ShadowY, AchivmentWidth, AchivmentHeight)
+			-- achievement background
+			surface.SetDrawColor(200, 200, 200)
+			surface.DrawRect(panelX, panelY, AchivmentWidth, AchivmentHeight)
+			-- image background
+			surface.SetDrawColor(255, 255, 255)
+			surface.SetMaterial(Material("aperture/achievement/ach_background_achived"))
+			surface.DrawTexturedRect(panelX + ImgXOffset, panelY + AchivmentHeight / 2 - ImgSize / 2, ImgSize, ImgSize)
+			-- image
+			surface.SetDrawColor(50, 50, 50)
+			surface.SetMaterial(Material(v.achInfo.img))
+			surface.DrawTexturedRect(panelX + ImgXOffset, panelY + AchivmentHeight / 2 - ImgSize / 2, ImgSize, ImgSize)
+			-- text
+			surface.SetTextColor(25, 25, 25)
+			local _,
+				txtHeight = surface.GetTextSize("")
+			surface.SetTextPos(panelX + ImgXOffset + ImgSize + TextXOffset, panelY + TextYOffset)
+			surface.DrawText(v.achInfo.name)
+
+			itter = itter + 1
+		end
+		-- local panelX = 0
+		-- local panelY = 0
 		-- -- -- image background
 		-- -- surface.SetDrawColor(255, 255, 255)
 		-- -- surface.SetMaterial(Material("aperture/achievement/ach_background_achived"))
@@ -218,5 +257,5 @@ hook.Add("PostDrawHUD", "TA:AchievmentNotifications", function()
 		-- surface.SetDrawColor(50, 50, 50)
 		-- surface.SetMaterial(Material("aperture/achievement/cake"))
 		-- surface.DrawTexturedRect(panelX + ImgXOffset, panelY + AchivmentHeight / 2 - ImgSize / 2, ImgSize, ImgSize)
-end)
-
+	end
+)

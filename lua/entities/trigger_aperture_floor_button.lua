@@ -1,7 +1,7 @@
 DEFINE_BASECLASS("base_brush")
 
-ENT.Spawnable		= false
-ENT.AdminOnly		= false
+ENT.Spawnable = false
+ENT.AdminOnly = false
 
 ENT.IsPortalButtonTrigger = true
 ENT.IsPortalButtonEnt = true
@@ -22,41 +22,59 @@ local math = math
 local ents = ents
 local util = util
 
-if CLIENT then return end
+if CLIENT then
+	return
+end
 
 function ENT:Initialize()
-	self:PhysicsInit( SOLID_NONE )
-	self:SetMoveType( MOVETYPE_NONE )
-	self:SetSolid( SOLID_BBOX )
-	
-	self:SetNoDraw( true )
-	self:SetNotSolid( true )
-	
+	self:PhysicsInit(SOLID_NONE)
+	self:SetMoveType(MOVETYPE_NONE)
+	self:SetSolid(SOLID_BBOX)
+
+	self:SetNoDraw(true)
+	self:SetNotSolid(true)
+
 	self.DoNotDuplicate = true
 	self.Parent = self:GetParent()
-	
-	if not IsValid( self.Parent ) then
+
+	if not IsValid(self.Parent) then
 		self:Remove()
 	end
-	
+
 	self.InTrigger = {}
 	self.CheckTrace = {}
 	self.CheckTraceParams = {}
 
 	self.CheckTraceParams.output = self.CheckTrace
-	self.CheckTraceParams.filter = function( ent )
-		if ( not IsValid( self ) ) then return false end
-		if ( not IsValid( ent ) ) then return false end
+	self.CheckTraceParams.filter = function(ent)
+		if (not IsValid(self)) then
+			return false
+		end
+		if (not IsValid(ent)) then
+			return false
+		end
 
 		local Parent = self.Parent
-		if ( not IsValid( Parent ) ) then return false end
+		if (not IsValid(Parent)) then
+			return false
+		end
 
-		if ( ent == self ) then return false end
-		if self.InTrigger[ent] then return false end
-		if Parent:Filter( ent ) then return false end
-		if ( ent == Parent ) then return true end
-		if ( ent:IsWorld() ) then return true end
-		
+		if (ent == self) then
+			return false
+		end
+		if self.InTrigger[ent] then
+			return false
+		end
+		if Parent:Filter(ent) then
+			return false
+		end
+		if (ent == Parent) then
+			return true
+		end
+		if (ent:IsWorld()) then
+			return true
+		end
+
 		return true
 	end
 end
@@ -68,7 +86,7 @@ end
 function ENT:OnRemove()
 	self:Reset()
 
-	if IsValid( self.Parent ) then
+	if IsValid(self.Parent) then
 		self.Parent:Remove()
 	end
 end
@@ -79,7 +97,6 @@ local function Box(min, max)
 		Vector(min.x, min.y, max.z),
 		Vector(min.x, max.y, min.z),
 		Vector(min.x, max.y, max.z),
-
 		Vector(max.x, min.y, min.z),
 		Vector(max.x, min.y, max.z),
 		Vector(max.x, max.y, min.z),
@@ -90,39 +107,39 @@ local function Box(min, max)
 end
 
 function ENT:Reset()
-	for k,v in pairs(self.InTrigger or {}) do
+	for k, v in pairs(self.InTrigger or {}) do
 		if IsValid(k) then
-		 return
+			return
 		end
 
-		self:EndTouch( k )
+		self:EndTouch(k)
 	end
 
 	self.InTrigger = {}
 end
 
-function ENT:SetBounds( minpos, maxpos )
-	self:PhysicsInit( SOLID_NONE )
-	self:SetMoveType( MOVETYPE_NONE )
-	self:SetSolid( SOLID_BBOX )
+function ENT:SetBounds(minpos, maxpos)
+	self:PhysicsInit(SOLID_NONE)
+	self:SetMoveType(MOVETYPE_NONE)
+	self:SetSolid(SOLID_BBOX)
 
-	self:SetCollisionBounds( minpos, maxpos )
-	self:SetNotSolid( true )
-	
+	self:SetCollisionBounds(minpos, maxpos)
+	self:SetNotSolid(true)
+
 	self.minpos = minpos
 	self.maxpos = maxpos
 end
 
-function ENT:DoCheckTrace( endpos )
+function ENT:DoCheckTrace(endpos)
 	self.CheckTraceParams.start = self:GetPos()
 	self.CheckTraceParams.endpos = endpos
-	
-	util.TraceLine( self.CheckTraceParams )	
+
+	util.TraceLine(self.CheckTraceParams)
 	return self.CheckTrace.Hit
 end
 
 function ENT:CleanUpList()
-	for k,v in pairs(self.InTrigger or {}) do
+	for k, v in pairs(self.InTrigger or {}) do
 		if not IsValid(k) then
 			return
 		end
@@ -131,20 +148,32 @@ function ENT:CleanUpList()
 	end
 end
 
-function ENT:Filter( ent )
-	if ( not IsValid( ent ) ) then return false end
-	if ( not IsValid( self ) ) then return false end
+function ENT:Filter(ent)
+	if (not IsValid(ent)) then
+		return false
+	end
+	if (not IsValid(self)) then
+		return false
+	end
 
 	local Parent = self.Parent
-	if ( not IsValid( Parent ) ) then return false end
-	if ( not ent:IsPlayer() ) then return false end
+	if (not IsValid(Parent)) then
+		return false
+	end
+	if (not ent:IsPlayer()) then
+		return false
+	end
 
 	return true
 end
 
-function ENT:StartTouch( ent )
-	if not IsValid(self.Parent) then return end
-	if not self.Parent.Active then return end
+function ENT:StartTouch(ent)
+	if not IsValid(self.Parent) then
+		return
+	end
+	if not self.Parent.Active then
+		return
+	end
 
 	--local ang = self:GetAngles()
 	--local tab = Box(self.minpos, self.maxpos)
@@ -152,11 +181,17 @@ function ENT:StartTouch( ent )
 	--	debugoverlay.Cross( self:LocalToWorld( v ), 3, 0.2, color_white, false )
 	--end
 
-	if self.InTrigger[ent] then return end
-	if not self:Filter( ent ) then return end
+	if self.InTrigger[ent] then
+		return
+	end
+	if not self:Filter(ent) then
+		return
+	end
 
 	local tr = self:GetTouchTrace()
-	if self:DoCheckTrace( tr.HitPos ) then return end
+	if self:DoCheckTrace(tr.HitPos) then
+		return
+	end
 
 	--debugoverlay.Cross( self.CheckTrace.HitPos, 3, 0.2, Color(255,255,0), false )
 	--debugoverlay.Cross( self.CheckTrace.StartPos, 3, 0.2, Color(255,255,0), false )
@@ -164,33 +199,43 @@ function ENT:StartTouch( ent )
 	self:CleanUpList()
 
 	local set = false
-	for k,v in pairs(self.InTrigger or {}) do
-		self.Parent:TurnON( k )
+	for k, v in pairs(self.InTrigger or {}) do
+		self.Parent:TurnON(k)
 		set = true
 		break
 	end
 	self.InTrigger[ent] = true
 
-	if set then return end
-	self.Parent:TurnON( ent )
+	if set then
+		return
+	end
+	self.Parent:TurnON(ent)
 end
 
-function ENT:EndTouch( ent )
-	if not IsValid(self.Parent) then return end
-	if not self.Parent.Active then return end
+function ENT:EndTouch(ent)
+	if not IsValid(self.Parent) then
+		return
+	end
+	if not self.Parent.Active then
+		return
+	end
 
-	if not self.InTrigger[ent] then return end
-	if not self:Filter( ent ) then return end
+	if not self.InTrigger[ent] then
+		return
+	end
+	if not self:Filter(ent) then
+		return
+	end
 
 	self.InTrigger[ent] = nil
 	self:CleanUpList()
 
-	for k,v in pairs(self.InTrigger or {}) do
-		self.Parent:TurnON( k )
+	for k, v in pairs(self.InTrigger or {}) do
+		self.Parent:TurnON(k)
 		return
 	end
 end
 
-function ENT:Touch( ent )
-	self:StartTouch( ent )
+function ENT:Touch(ent)
+	self:StartTouch(ent)
 end

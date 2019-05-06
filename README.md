@@ -57,6 +57,4 @@ and all of those who supported the workshop version and continue to support this
 ## installing
 Simply clone or downlaod this repositiory and place the entirety of it's contents in a folder inside your Garry's mod addons folder.
 
-If you have issues, please run this command in your console and try again: "menu_cleanupgmas"
-
-
+If you have issues, please see the self-fix guide in the wiki.

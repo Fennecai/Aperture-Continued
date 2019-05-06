@@ -277,10 +277,10 @@ function ENT:LaunchEntity(entity)
 	local velocity = self:GetLaunchVector() + velOffset
 
 	if self:GetModel() == "models/portal_custom/faithplate_slim.mdl" then
-		self:PlaySequence("launch_up", 1.0)
 		--print("Please disregaurd any recent error message just now about an animation sequence not playing or whatever; this is not a bug.")
+		self:PlaySequence("launch_up", 1.0)
 	else
-	self:PlaySequence("straightup",1.0)
+		self:PlaySequence("straightup", 1.0)
 	end
 	sound.Play("TA:CatapultLaunch", self:LocalToWorld(Vector(0, 0, 100)), 75, 100, 1)
 

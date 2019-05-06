@@ -3,20 +3,20 @@
 	APERTURE API MAIN
 	
 ]]
-AddCSLuaFile( )
+AddCSLuaFile()
 
 LIB_APERTURECONTINUED = {}
 
 -- Loading sounds
 local paint_types = file.Find("sounds/*.lua", "LUA")
-for _,plugin in ipairs(paint_types) do
+for _, plugin in ipairs(paint_types) do
 	include("sounds/" .. plugin)
 end
 
 -- Loading entities data
 local entities_data = file.Find("aperture/entities_data/*.lua", "LUA")
-for _,plugin in ipairs(entities_data) do
-	include("aperture/entities_data/"..plugin)
+for _, plugin in ipairs(entities_data) do
+	include("aperture/entities_data/" .. plugin)
 end
 
 -- Loading math lib
@@ -39,30 +39,34 @@ include("aperture/paint.lua")
 include("aperture/buttons.lua")
 
 -- Funnel
-LIB_APERTURECONTINUED.FUNNEL_COLOR 			= Color(0, 150, 255)
-LIB_APERTURECONTINUED.FUNNEL_REVERSE_COLOR 	= Color(255, 150, 0)
-LIB_APERTURECONTINUED.FUNNEL_MOVE_SPEED 		= 173
+LIB_APERTURECONTINUED.FUNNEL_COLOR = Color(0, 150, 255)
+LIB_APERTURECONTINUED.FUNNEL_REVERSE_COLOR = Color(255, 150, 0)
+LIB_APERTURECONTINUED.FUNNEL_MOVE_SPEED = 173
 LIB_APERTURECONTINUED.GEL_MAXSIZE = 128
 LIB_APERTURECONTINUED.GEL_MINSIZE = 32
 
 -- Fizzler
-LIB_APERTURECONTINUED.DISSOLVE_SPEED 	= 150
-LIB_APERTURECONTINUED.DISSOLVE_ENTITIES 	= { }
+LIB_APERTURECONTINUED.DISSOLVE_SPEED = 150
+LIB_APERTURECONTINUED.DISSOLVE_ENTITIES = {}
 
 -- Diversity Vent
-LIB_APERTURECONTINUED.DIVVENT_ENTITIES = { }
+LIB_APERTURECONTINUED.DIVVENT_ENTITIES = {}
 
 LIB_APERTURECONTINUED.FALL_BOOTS_LEG_SIZE = 10
 
 function LIB_APERTURECONTINUED:GetAIDisabled()
 	local conVar = GetConVar("ai_disabled")
-	if not conVar then return false end
+	if not conVar then
+		return false
+	end
 	return tobool(conVar:GetInt())
 end
 
 function LIB_APERTURECONTINUED:GetAIIgnorePlayers()
 	local conVar = GetConVar("ai_ignoreplayers")
-	if not conVar then return false end
+	if not conVar then
+		return false
+	end
 	return tobool(conVar:GetInt())
 end
 
@@ -81,7 +85,9 @@ function LIB_APERTURECONTINUED:JumperBootsResizeLegs(ply, size)
 	ply:ManipulateBoneScale(prToe0, Vector(1, 1, 1) / size)
 	ply:ManipulateBoneScale(plToe0, Vector(1, 1, 1) / size)
 
-	if not IsValid(ent) then return end
+	if not IsValid(ent) then
+		return
+	end
 	local rCalf = ent:LookupBone("ValveBiped.Bip01_R_Calf")
 	local lCalf = ent:LookupBone("ValveBiped.Bip01_L_Calf")
 	local rFoot = ent:LookupBone("ValveBiped.Bip01_R_Foot")
@@ -97,11 +103,13 @@ function LIB_APERTURECONTINUED:JumperBootsResizeLegs(ply, size)
 end
 
 function LIB_APERTURECONTINUED:DissolveEnt(ent)
-	if ent.IsDissolving then return end
+	if ent.IsDissolving then
+		return
+	end
 	local phys = ent:GetPhysicsObject()
 	ent:SetSolid(SOLID_NONE)
 	ent.IsDissolving = true
-	
+
 	if phys:GetVelocity():Length() < 10 then
 		phys:SetVelocity(Vector(0, 0, 10) + VectorRand() * 2)
 		phys:AddAngleVelocity(VectorRand() * 100)
@@ -111,54 +119,72 @@ function LIB_APERTURECONTINUED:DissolveEnt(ent)
 	phys:EnableGravity(false)
 	ent:EmitSound("TA:FizzlerDissolve")
 	-- Calling fizzle event
-	if ent.OnFizzle then ent:OnFizzle() end
+	if ent.OnFizzle then
+		ent:OnFizzle()
+	end
 	table.insert(LIB_APERTURECONTINUED.DISSOLVE_ENTITIES, ent)
 end
 
 function LIB_APERTURECONTINUED:IsValidEntity(ent)
-	if not IsValid(ent) then return false end
+	if not IsValid(ent) then
+		return false
+	end
 	return true
 end
 
 function LIB_APERTURECONTINUED:IsValidPhysicsEntity(ent)
-	if not IsValid(ent) then return false end
-	if not IsValid(ent:GetPhysicsObject()) then return false end
+	if not IsValid(ent) then
+		return false
+	end
+	if not IsValid(ent:GetPhysicsObject()) then
+		return false
+	end
 	return true
 end
 
 function LIB_APERTURECONTINUED:IsValidAliveEntity(ent)
-	if not IsValid(ent) then return false end
-	if not (ent:IsPlayer() and ent:Alive() or ent:IsNPC()) then return end
+	if not IsValid(ent) then
+		return false
+	end
+	if not (ent:IsPlayer() and ent:Alive() or ent:IsNPC()) then
+		return
+	end
 	return true
 end
 
 function LIB_APERTURECONTINUED:IsValidHealthEntity(ent)
-	if not IsValid(ent) then return false end
-	if not ent:Health() then return end
+	if not IsValid(ent) then
+		return false
+	end
+	if not ent:Health() then
+		return
+	end
 	return true
 end
 
-hook.Add( "Initialize", "TA:Initialize", function()
-	if SERVER then
-		util.AddNetworkString("TA:NW_PaintCamera")
-		util.AddNetworkString("TA:DivventFilterNetwork")
-		util.AddNetworkString("TA:NW_AchievedAchievement")
+hook.Add(
+	"Initialize",
+	"TA:Initialize",
+	function()
+		if SERVER then
+			util.AddNetworkString("TA:NW_PaintCamera")
+			util.AddNetworkString("TA:DivventFilterNetwork")
+			util.AddNetworkString("TA:NW_AchievedAchievement")
+		end
+
+		if CLIENT then
+		end
 	end
-	
-	if CLIENT then
-	end
-end)
+)
 
 local function HandleEntitiesInDivvent(ent, flow, inx, info)
-	if not IsValid(ent) 
-		or not IsValid(info.vent) 
-		or ent:GetMoveType() == MOVETYPE_NOCLIP then
+	if not IsValid(ent) or not IsValid(info.vent) or ent:GetMoveType() == MOVETYPE_NOCLIP then
 		LIB_APERTURECONTINUED.DIVVENT_ENTITIES[ent] = nil
 		return
 	end
 
 	local flowpoint = flow[inx]
-	
+
 	if flowpoint ~= Vector() then
 		local physObj = ent:GetPhysicsObject()
 		local centerPos = ent:LocalToWorld(physObj:GetMassCenter())
@@ -167,7 +193,7 @@ local function HandleEntitiesInDivvent(ent, flow, inx, info)
 			LIB_APERTURECONTINUED.DIVVENT_ENTITIES[ent] = nil
 			return
 		end
-		
+
 		local mass = physObj:GetMass()
 		local dirN = (flowpoint - centerPos):GetNormalized()
 		if ent:IsPlayer() or ent:IsNPC() then
@@ -177,7 +203,7 @@ local function HandleEntitiesInDivvent(ent, flow, inx, info)
 			local velvec = dirN * 100 - physObj:GetVelocity() / 10
 			physObj:AddVelocity(velvec)
 		end
-		
+
 		if flowpoint:Distance(centerPos) < 30 then
 			info.index = inx + 1
 			if (inx + 1) > #flow then
@@ -193,64 +219,107 @@ local function HandleDissolvedEntities(ent, index)
 		LIB_APERTURECONTINUED.DISSOLVE_ENTITIES[index] = nil
 		return
 	end
-	
-	if not ent.TA_Dissovle then ent.TA_Dissovle = 0 end
+
+	if not ent.TA_Dissovle then
+		ent.TA_Dissovle = 0
+	end
 	ent.TA_Dissovle = ent.TA_Dissovle + 1
-	
+
 	-- Turning entity into black and then fadeout alpha
-	local colorBlack = (math.max(0, LIB_APERTURECONTINUED.DISSOLVE_SPEED - ent.TA_Dissovle * 1.75) / LIB_APERTURECONTINUED.DISSOLVE_SPEED) * 255
-	local alpha = math.max(0, ent.TA_Dissovle - LIB_APERTURECONTINUED.DISSOLVE_SPEED / 1.1) / (LIB_APERTURECONTINUED.DISSOLVE_SPEED - LIB_APERTURECONTINUED.DISSOLVE_SPEED / 1.1)
+	local colorBlack =
+		(math.max(0, LIB_APERTURECONTINUED.DISSOLVE_SPEED - ent.TA_Dissovle * 1.75) / LIB_APERTURECONTINUED.DISSOLVE_SPEED) *
+		255
+	local alpha =
+		math.max(0, ent.TA_Dissovle - LIB_APERTURECONTINUED.DISSOLVE_SPEED / 1.1) /
+		(LIB_APERTURECONTINUED.DISSOLVE_SPEED - LIB_APERTURECONTINUED.DISSOLVE_SPEED / 1.1)
 	alpha = 255 - alpha * 255
 	ent:SetColor(Color(colorBlack, colorBlack, colorBlack, alpha))
-	if alpha < 255 then ent:SetRenderMode(RENDERMODE_TRANSALPHA) end
+	if alpha < 255 then
+		ent:SetRenderMode(RENDERMODE_TRANSALPHA)
+	end
 
 	local effectdata = EffectData()
 	effectdata:SetEntity(ent)
 	util.Effect("fizzler_dissolve", effectdata)
-	
+
 	if ent.TA_Dissovle >= LIB_APERTURECONTINUED.DISSOLVE_SPEED then
 		LIB_APERTURECONTINUED.DISSOLVE_ENTITIES[index] = nil
 		ent:Remove()
 	end
 end
 
-hook.Add("Think", "TA:Think", function()	
-	-- Handling dissolved entities
-	for k,v in pairs(LIB_APERTURECONTINUED.DISSOLVE_ENTITIES) do
-		HandleDissolvedEntities(v, k)
+hook.Add(
+	"Think",
+	"TA:Think",
+	function()
+		-- Handling dissolved entities
+		for k, v in pairs(LIB_APERTURECONTINUED.DISSOLVE_ENTITIES) do
+			HandleDissolvedEntities(v, k)
+		end
+
+		for k, v in pairs(LIB_APERTURECONTINUED.DIVVENT_ENTITIES) do
+			HandleEntitiesInDivvent(k, v.flow, v.index, v)
+		end
 	end
-	
-	for k,v in pairs(LIB_APERTURECONTINUED.DIVVENT_ENTITIES) do
-		HandleEntitiesInDivvent(k, v.flow, v.index, v)
+)
+
+hook.Add(
+	"PostDrawTranslucentRenderables",
+	"TA:RenderObjects",
+	function()
+		-- Making render fullbright
+		for k, v in pairs(ents.FindByClass("ent_tractor_beam")) do
+			v:Drawing()
+		end
+		for k, v in pairs(ents.FindByClass("ent_portal_floor_turret")) do
+			v:Drawing()
+		end
+		for k, v in pairs(ents.FindByClass("ent_portal_laser_emitter")) do
+			v:Drawing()
+		end
+		for k, v in pairs(ents.FindByClass("ent_wall_projector")) do
+			v:Drawing()
+		end
+		for k, v in pairs(ents.FindByClass("ent_portal_fizzler")) do
+			v:Drawing()
+		end
+		for k, v in pairs(ents.FindByClass("ent_laser_field")) do
+			v:Drawing()
+		end
+		for k, v in pairs(ents.FindByClass("npc_portal_turret_floor")) do
+			v:Drawing()
+		end
+		for k, v in pairs(ents.FindByClass("npc_portal_rocket_turret")) do
+			v:Drawing()
+		end
 	end
-end )
+)
 
-
-hook.Add("PostDrawTranslucentRenderables", "TA:RenderObjects", function()
-	-- Making render fullbright
-	for k,v in pairs(ents.FindByClass("ent_tractor_beam")) do v:Drawing() end
-	for k,v in pairs(ents.FindByClass("ent_portal_floor_turret")) do v:Drawing() end
-	for k,v in pairs(ents.FindByClass("ent_portal_laser_emitter")) do v:Drawing() end
-	for k,v in pairs(ents.FindByClass("ent_wall_projector")) do v:Drawing() end
-	for k,v in pairs(ents.FindByClass("ent_portal_fizzler")) do v:Drawing() end
-	for k,v in pairs(ents.FindByClass("ent_laser_field")) do v:Drawing() end
-	for k,v in pairs(ents.FindByClass("npc_portal_turret_floor")) do v:Drawing() end
-	for k,v in pairs(ents.FindByClass("npc_portal_rocket_turret")) do v:Drawing() end
-end)
-
-hook.Add("PhysgunPickup", "TA:DisablePhysgunPickup", function(ply, ent)
-	if ent.TA_Untouchable then return false end
-end)
-
-hook.Add("GetFallDamage", "TA:GetFallDamage", function(ply, speed)
-	if ply:GetNWBool("TA:ItemJumperBoots") then
-		ply:EmitSound("TA:PlayerLand")
-		
-		if speed >= 3500 then LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(ply, "fall_survive") end
-		return 0
+hook.Add(
+	"PhysgunPickup",
+	"TA:DisablePhysgunPickup",
+	function(ply, ent)
+		if ent.TA_Untouchable then
+			return false
+		end
 	end
-	return
-end)
+)
+
+hook.Add(
+	"GetFallDamage",
+	"TA:GetFallDamage",
+	function(ply, speed)
+		if ply:GetNWBool("TA:ItemJumperBoots") then
+			ply:EmitSound("TA:PlayerLand")
+
+			if speed >= 3500 then
+				LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(ply, "fall_survive")
+			end
+			return 0
+		end
+		return
+	end
+)
 
 local function ResetingFallboots(ply)
 	if ply:GetNWBool("TA:ItemJumperBoots") then
@@ -263,13 +332,17 @@ local function ResetingFallboots(ply)
 	end
 end
 
-hook.Add("DoPlayerDeath", "TA:DoPlayerDeath", function(ply, attacker, dmg)
-	ResetingFallboots(ply)
-end)
+hook.Add(
+	"DoPlayerDeath",
+	"TA:DoPlayerDeath",
+	function(ply, attacker, dmg)
+		ResetingFallboots(ply)
+	end
+)
 
 local function Clear()
 	LIB_APERTURECONTINUED.DISSOLVE_ENTITIES = {}
-	for k,v in pairs(player.GetAll()) do
+	for k, v in pairs(player.GetAll()) do
 		ResetingFallboots(v)
 	end
 end
@@ -277,9 +350,14 @@ end
 hook.Add("PostCleanupMap", "TA:PostCleanupMap", Clear)
 
 local function AllowPickup(ply, ent)
-	if ent:IsPlayerHolding() and IsValid(ent) and ent:GetNWInt("TA:PaintType") and ent:GetNWInt("TA:PaintType") == PORTAL_PAINT_STICKY then
+	if
+		ent:IsPlayerHolding() and IsValid(ent) and ent:GetNWInt("TA:PaintType") and
+			ent:GetNWInt("TA:PaintType") == PORTAL_PAINT_STICKY
+	 then
 		local constrain = constraint.Find(ent, Entity(0), "Weld", 0, 0)
-		if constrain then constrain:Remove() end
+		if constrain then
+			constrain:Remove()
+		end
 	end
 end
 
@@ -289,17 +367,21 @@ hook.Add("GravGunOnPickedUp", "TA:AllowPlayerPickupGrav", AllowPickup)
 local function EntityTakeDamage(target, dmg)
 	local attacker = dmg:GetAttacker()
 	local damage = dmg:GetDamage()
-	
-	if attacker:GetClass() == "portal_rocket_turret_missile" 
-		and IsValid(attacker.OriginalTarget) and attacker.OriginalTarget:IsPlayer() and attacker ~= target
-		and (target:IsPlayer() and target:Alive() or target:IsNPC()) 
-		and damage > target:Health()
-		and attacker.OriginalTarget:GetPos():Distance(target:GetPos()) > 300 then
-		
-			LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(attacker.OriginalTarget, "not_for_you")
+
+	if
+		attacker:GetClass() == "portal_rocket_turret_missile" and IsValid(attacker.OriginalTarget) and
+			attacker.OriginalTarget:IsPlayer() and
+			attacker ~= target and
+			(target:IsPlayer() and target:Alive() or target:IsNPC()) and
+			damage > target:Health() and
+			attacker.OriginalTarget:GetPos():Distance(target:GetPos()) > 300
+	 then
+		LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(attacker.OriginalTarget, "not_for_you")
 	end
-	if attacker:GetModel() == "models/portal_custom/metal_box_custom.mdl" and attacker:GetSkin() == 1 
-		and target:IsPlayer() and damage > target:Health() then
+	if
+		attacker:GetModel() == "models/portal_custom/metal_box_custom.mdl" and attacker:GetSkin() == 1 and target:IsPlayer() and
+			damage > target:Health()
+	 then
 		LIB_APERTURECONTINUED.ACHIEVEMENTS:AchievAchievement(target, "love_kill")
 	end
 end

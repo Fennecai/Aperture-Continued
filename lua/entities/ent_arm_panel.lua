@@ -66,9 +66,8 @@ if CLIENT then
 		local root = self:GetBonePosition(rootBone)
 
 		local lroot = self:WorldToLocal(root)
-		local lpos, lang =
-			self:WorldToLocal(panel:LocalToWorld(Vector(-25, 0, -13))),
-			self:WorldToLocalAngles(panel:GetAngles())
+		local lpos,
+			lang = self:WorldToLocal(panel:LocalToWorld(Vector(-25, 0, -13))), self:WorldToLocalAngles(panel:GetAngles())
 		local d1 = lroot:Distance(lpos)
 		local angle = (Vector(lpos.x, 0, lpos.z) - Vector(lroot.x, 0, lroot.z)):Angle()
 
@@ -132,9 +131,6 @@ function ENT:CleatePlate()
 			constraint.NoCollide(ent, v.Paneltop, 0, 0)
 		end
 	end
-
-
-
 end
 
 function ENT:Initialize()
