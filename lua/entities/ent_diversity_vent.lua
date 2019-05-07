@@ -7,6 +7,8 @@ ENT.PrintName = "Pneumatic Diversity Vent"
 ENT.IsAperture = true
 ENT.IsConnectable = true
 
+ENT.debugmode = false
+
 local SUCK_RADIUS = 150
 
 if WireAddon then
@@ -199,8 +201,8 @@ function CalculateFlows(ent, index, ignore, startent, checkEntFilter, onePath)
      if IsValid(startent) then
           ignore[startent:EntIndex() .. "|" .. 1] = true
      end
-     if ignore[ent:GetEntIndex() .. "|" .. index] == true then --ignore[ent:EntIndex() .. "|" .. index] then
-          return {1}
+     if ignore[ent:EntIndex() .. "|" .. index] then
+          return {}
      end
 
      ignore[ent:EntIndex() .. "|" .. index] = true
@@ -246,9 +248,6 @@ function ENT:Initialize()
                return
           end
           self.Inputs = Wire_CreateInputs(self, {"Enable"})
-     end
-
-     if CLIENT then
      end
 end
 
