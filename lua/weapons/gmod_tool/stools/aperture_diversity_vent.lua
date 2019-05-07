@@ -1005,9 +1005,7 @@ list.Set("DiversityVentModels", "models/aperture/vactube_90deg_03.mdl", {})
 list.Set("DiversityVentModels", "models/aperture/vactube_90deg_04.mdl", {})
 list.Set("DiversityVentModels", "models/aperture/vactube_90deg_05.mdl", {})
 list.Set("DiversityVentModels", "models/aperture/vactube_90deg_06.mdl", {})
---danger
-list.Set("DiversityVentModels", "models/aperture/vactube_tjunction.mdl", {})
-list.Set("DiversityVentModels", "models/aperture/vactube_crossroads.mdl", {})
---danger
+-- list.Set("DiversityVentModels", "models/aperture/vactube_tjunction.mdl", {})
+-- list.Set("DiversityVentModels", "models/aperture/vactube_crossroads.mdl", {})
 list.Set("DiversityVentModels", "models/portal_custom/clear_tube_straight.mdl", {})
 list.Set("DiversityVentModels", "models/portal_custom/clear_tube_90deg.mdl", {})

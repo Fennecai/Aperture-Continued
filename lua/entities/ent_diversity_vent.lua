@@ -195,31 +195,17 @@ function CalculateFlows(ent, index, ignore, startent, checkEntFilter, onePath)
 
      local ent = ent and ent or startent:GetNWEntity("TA:ConnectedPipe:1")
      local index = index and index or startent:GetNWInt("TA:ConnectedPipeInx:1")
-     local ignore = ignore or {{"", false}}
+     local ignore = ignore and ignore or {}
      if IsValid(startent) then
-          --ignore[startent:EntIndex() .. "|" .. 1] = true
-          SetIgnore(startent:EntIndex() .. "|" .. 1, ignore, true)
+          ignore[startent:EntIndex() .. "|" .. 1] = true
      end
-     if GetIgnore(ent:EntIndex() .. "|" .. index, ignore) then --ignore[ent:EntIndex() .. "|" .. index] then
-          return {1}
+     if ignore[ent:EntIndex() .. "|" .. index] then
+          return {}
      end
-     SetIgnore(ent:EntIndex() .. "|" .. index, ignore, true)
-     --ignore[ent:EntIndex() .. "|" .. index] = true
+     ignore[ent:EntIndex() .. "|" .. index] = true
+
      local info = ent:GetModelFlowData()
      return CalcPipeFlow(info, index, ent, nil, ignore, checkEntFilter, onePath)
-end
-
-function SetIgnore(instring, ignoretable, truefalse)
-     table.insert(ignoretable, table.maxn(ignoretable), ignoretable)
-end
-
-function GetIgnore(instring, ignoretable)
-     for k, v in pairs(ignoretable) do
-          if v == instring then
-               return true
-          end
-     end
-     return false
 end
 
 function CalculateFlow(flowstbl)
