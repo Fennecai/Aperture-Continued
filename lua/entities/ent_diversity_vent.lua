@@ -302,16 +302,16 @@ function ENT:HandleEntities(ent, portalable, fromportal)
      LIB_APERTURECONTINUED.DIVVENT_ENTITIES[ent] = {flow = flow, vent = self, index = 1}
 end
 
--- no more client side
-if CLIENT then
-     return
-end
+--no more client side
+-- if CLIENT then
+--      return
+-- end
 
 function ENT:UpdatePipe(updateConnected)
 end
 
 function ENT:Think()
-     self:NextThink(CurTime() + 0.1)
+     self:NextThink(CurTime() + 0.001)
      -- skip if disabled
      if not self:GetEnable() then
           return
