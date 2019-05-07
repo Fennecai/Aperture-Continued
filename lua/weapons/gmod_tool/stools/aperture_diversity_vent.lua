@@ -8,6 +8,7 @@ TOOL.ClientConVar["keyenable"] = "45"
 TOOL.ClientConVar["startenabled"] = "0"
 TOOL.ClientConVar["toggle"] = "0"
 TOOL.ClientConVar["count"] = "1"
+TOOL.ClientConVar["debug"] = "0"
 
 local HEIGHT_FROM_FLOOR = 200
 local CONNTECTION_POINT_MATERIAL = Material("sprites/sent_ball")
@@ -920,6 +921,9 @@ function TOOL:DrawHUD()
 	end
 
 	cam.Start3D()
+
+	local debugmode = self:GetClientNumber("debug")
+
 	if flows then
 		for k, v in pairs(flows) do
 			DrawPipesFlow(v)
@@ -928,13 +932,16 @@ function TOOL:DrawHUD()
 
 	for k, v in pairs(entities) do
 		local model = v:GetModel()
+
 		if GetFilterableModelData(model) then
 			local lcenter = GetFilterableModelData(model)
 			local color = vpointType == POINT_TYPE_FILTER and Color(0, 200, 255) or Color(0, 0, 255)
 
 			if vpointType ~= POINT_TYPE_FILTER or vpointType == POINT_TYPE_FILTER and vent == v then
 				render.SetMaterial(CONNTECTION_POINT_MATERIAL)
-				render.DrawSprite(v:LocalToWorld(lcenter), 30, 30, color)
+				if debugmode == 0 then
+					render.DrawSprite(v:LocalToWorld(lcenter), 30, 30, color)
+				end
 			end
 
 			if vpointType == POINT_TYPE_FILTER and vent == v then
@@ -943,7 +950,9 @@ function TOOL:DrawHUD()
 					local coordWorld = v:LocalToWorld(coord.pos)
 
 					render.SetMaterial(CONNTECTION_POINT_MATERIAL)
-					render.DrawSprite(coordWorld, 20, 20, color)
+					if debugmode == 0 then
+						render.DrawSprite(coordWorld, 20, 20, color)
+					end
 				end
 
 				break
@@ -962,13 +971,44 @@ function TOOL:DrawHUD()
 						end
 
 						render.SetMaterial(CONNTECTION_POINT_MATERIAL)
-						render.DrawSprite(coordWorld, 20, 20, color)
+						if debugmode == 0 then
+							render.DrawSprite(coordWorld, 20, 20, color)
+						end
 					end
 				end
 			end
 		end
+
+		if debugmode == 1 then
+			DrawDebugSprites(k, v)
+		end
 	end
+
 	cam.End3D()
+end
+
+function DrawDebugSprites(k, v)
+	local postoggle = postoggle or 1
+	local model = v:GetModel()
+	local tbl = GetModelConnectionData(model)
+	for inx, coord in pairs(tbl) do
+		local coordWorld = v:LocalToWorld(coord.pos)
+		local color = Color(255, 255, 255)
+
+		if postoggle == 2 then
+			color = Color(244, 182, 66)
+			render.SetMaterial(Material("sprites/key_" .. inx))
+			render.DrawSprite(coordWorld + Vector(-15, 0, 0), 20, 20, color)
+			render.DrawLine(coordWorld, coordWorld + Vector(-15, 0, 0), color, true)
+			postoggle = 1
+		else
+			color = Color(66, 134, 244)
+			render.SetMaterial(Material("sprites/key_" .. inx))
+			render.DrawSprite(coordWorld + Vector(15, 0, 0), 20, 20, color)
+			render.DrawLine(coordWorld, coordWorld + Vector(15, 0, 0), color, true)
+			postoggle = 2
+		end
+	end
 end
 
 local ConVarsDefault = TOOL:BuildConVarList()
@@ -984,6 +1024,7 @@ function TOOL.BuildCPanel(CPanel)
 		"CheckBox",
 		{Label = "#tool.aperture_diversity_vent.ignorealive", Command = "aperture_diversity_vent_ignorealive", Help = 1}
 	)
+
 	CPanel:AddControl(
 		"CheckBox",
 		{Label = "#tool.aperture_diversity_vent.startenabled", Command = "aperture_diversity_vent_startenabled", Help = 1}
@@ -996,6 +1037,8 @@ function TOOL.BuildCPanel(CPanel)
 		"CheckBox",
 		{Label = "#tool.aperture_diversity_vent.toggle", Command = "aperture_diversity_vent_toggle"}
 	)
+
+	CPanel:AddControl("CheckBox", {Label = "Show Connection Point Indexes", Command = "aperture_diversity_vent_debug"})
 end
 
 list.Set("DiversityVentModels", "models/aperture/vactube_128_straight.mdl", {})
