@@ -189,7 +189,7 @@ local function CalcPipeFlow(info, inx, ent, pointIgnore, ignore, checkEntFilter,
      -- end
      return returnDat
 end
-
+local tempPipeLoopBlock = 0
 function CalculateFlows(ent, index, ignore, startent, checkEntFilter, onePath)
      if IsValid(startent) and not IsValid(startent:GetNWEntity("TA:ConnectedPipe:1")) then
           return
@@ -198,16 +198,37 @@ function CalculateFlows(ent, index, ignore, startent, checkEntFilter, onePath)
      local ent = ent and ent or startent:GetNWEntity("TA:ConnectedPipe:1")
      local index = index and index or startent:GetNWInt("TA:ConnectedPipeInx:1")
      local ignore = ignore or {{"", false}}
-     if IsValid(startent) then
-          ignore[startent:EntIndex() .. "|" .. 1] = true
-     end
-     if ignore[ent:EntIndex() .. "|" .. index] then
-          return {}
-     end
 
-     ignore[ent:EntIndex() .. "|" .. index] = true
-     local info = ent:GetModelFlowData()
-     return CalcPipeFlow(info, index, ent, nil, ignore, checkEntFilter, onePath)
+     -- Breaking loop
+     if tempPipeLoopBlock >= 5 then
+          tempPipeLoopBlock = 0
+          return {}
+     else
+          tempPipeLoopBlock = tempPipeLoopBlock + 1
+
+          if IsValid(startent) then
+               ignore[startent:EntIndex() .. "|" .. 1] = true
+          end
+          if ignore[ent:EntIndex() .. "|" .. index] then
+               ignore = {{"", false}}
+               return {}
+          end
+
+          local ignorecount = 0
+          for k, v in pairs(ignore) do
+               if k == true then
+                    ignorecount = ignorecount + 1
+               end
+          end
+          if ignorecount == table.maxn(ignore) then
+               return {}
+          end
+
+          ignore[ent:EntIndex() .. "|" .. index] = true
+
+          local info = ent:GetModelFlowData()
+          return CalcPipeFlow(info, index, ent, nil, ignore, checkEntFilter, onePath)
+     end
 end
 
 function CalculateFlow(flowstbl)
@@ -296,6 +317,8 @@ function ENT:HandleEntities(ent, portalable, fromportal)
      if IsValid(fromportal) then
           table.insert(flow, fromportal:LocalToWorld(Vector(-(ent:GetModelScale() + 40), 0, 0)))
      else
+          -- Reseting loop counter
+          tempPipeLoopBlock = 0
           flow = CalculateFlows(nil, nil, nil, self, ent, true)
      end
 
