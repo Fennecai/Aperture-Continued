@@ -1,7 +1,7 @@
 AddCSLuaFile()
 
 if not LIB_APERTURECONTINUED then
-     error("Error: Aperture lib does not exit!!!")
+     error("Error: Aperture lib does not exist or could not be found.")
      return
 end
 
