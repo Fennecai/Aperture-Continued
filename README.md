@@ -55,6 +55,11 @@ and all of those who supported the workshop version and continue to support this
 
 
 ## installing
-Simply clone or downlaod this repositiory and place the entirety of it's contents in a folder inside your Garry's mod addons folder.
 
-If you have issues, please see the self-fix guide in the wiki.
+use this installer:
+https://github.com/Fennecai/Aperture-Continued-Installer
+
+Alternatively; Simply clone or downlaod this repositiory and place the entirety of it's contents in a folder inside your Garry's mod addons folder named "Aperture-Continued-master"
+
+If you have issues, please see the self-fix guide in the wiki:
+https://github.com/Fennecai/Aperture-Continued/wiki/The-bug-fix-self-service-guide
