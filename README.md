@@ -4,12 +4,13 @@ Aperture Continued is an actively supported, up-to-date addon for Garry's mod th
 
 Unlike this addon's predecessor "The aperture", which you may find copies of on the steam workshop, this is still in active development, and as such, new features and bug fixes roll out with every new update.
 
-## Featured Bug fixes
-* fixed light bridge flares incompatible with other addons, and not rendering correctly anyways
-* fixed faith plates ghosting wrong and tool options failing to load, and faithplates can now be adjusted again
-* fixed paint droppers having an invalid flow type option by default which caused them to have really bad issues
-* fixed crushers being weird when double sided
-* and many,many more! 
+
+## Installation
+
+use this installer:
+https://github.com/Fennecai/Aperture-Continued-Installer
+
+Alternatively; Simply clone or downlaod this repositiory and place the entirety of it's contents in a folder inside your Garry's mod addons folder named "Aperture-Continued-master"
 
 ## Features
 1. the best Portal gun addon is included as part of this addon with additional updates and bugfixes (coming soon; its mostly just a straight copy atm. with minor edits)
@@ -53,13 +54,8 @@ Anonymous - Dr. breen voice actor for secret radio message
 
 and all of those who supported the workshop version and continue to support this as well! :)
 
-
-## installing
-
-use this installer:
-https://github.com/Fennecai/Aperture-Continued-Installer
-
-Alternatively; Simply clone or downlaod this repositiory and place the entirety of it's contents in a folder inside your Garry's mod addons folder named "Aperture-Continued-master"
+## Troubleshooting
 
 If you have issues, please see the self-fix guide in the wiki:
 https://github.com/Fennecai/Aperture-Continued/wiki/The-bug-fix-self-service-guide
+
