@@ -1,8 +1,8 @@
 # Aperture: continued
 
-Aperture Continued is an actively supported, up-to-date addon for Garry's mod that adds various items and gameplay mechanics from the Portal franchise into Garry's mod.
+Aperture Continued is (well, was) an actively supported, up-to-date addon for Garry's mod that adds various items and gameplay mechanics from the Portal franchise into Garry's mod.
 
-Unlike this addon's predecessor "The aperture", which you may find copies of on the steam workshop, this is still in active development, and as such, new features and bug fixes roll out with every new update.
+Unlike this addon's predecessor "The aperture", which you may find copies of on the steam workshop, this is the most up-to-date version of the addon.
 
 ## Featured Bug fixes
 * fixed light bridge flares incompatible with other addons, and not rendering correctly anyways
@@ -12,7 +12,7 @@ Unlike this addon's predecessor "The aperture", which you may find copies of on 
 * and many,many more! 
 
 ## Features
-1. the best Portal gun addon is included as part of this addon with additional updates and bugfixes (coming soon; its mostly just a straight copy atm. with minor edits)
+1. the best Portal gun addon is included as part of this addon with additional updates and bugfixes (well tbh its mostly just a straight copy with minor edits)
 2. Wiremod compatability
 3. Faith plates in 2 variants, which you can configure the near-exact target of
 4. radios that have a 1/20 chance of playing a never-before-heard message from Dr. breen (no, really.)
@@ -52,6 +52,10 @@ Anonymous - Dr. breen voice actor for secret radio message
 
 
 and all of those who supported the workshop version and continue to support this as well! :)
+
+
+## Workshop rules compliance update
+Due to compliance required by steam workshop TOS; all non-customized portal content will be removed form this and the workshop version very soon.
 
 
 ## installing
