@@ -307,7 +307,7 @@ function OverridedShootPortal(self, type)
 							(trace.MatType == MAT_CONCRETE or trace.MatType == MAT_DIRT)) and
 						validpos and
 						validnormang or
-						cellInfo and cellInfo.paintType == PORTAL_PAINT_PORTAL or
+						cellInfo and cellInfo.paintType == PORTAL_PAINT_PORTAL and validpos or
 						trace.Entity:GetClass() == "env_portal_wall"
 				 then
 					--Wait until our ball lands, if it's enabled.
