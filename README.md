@@ -1,6 +1,6 @@
 # Aperture: continued
 
-Aperture Continued is an actively supported, up-to-date addon for Garry's mod that adds various items and gameplay mechanics from the Portal franchise into Garry's mod.
+Aperture Continued is (edit: was) an actively supported, up-to-date addon for Garry's mod that adds various items and gameplay mechanics from the Portal franchise into Garry's mod.
 
 Unlike this addon's predecessor "The aperture", which you may find copies of on the steam workshop, this is still in active development, and as such, new features and bug fixes roll out with every new update.
 
