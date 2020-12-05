@@ -110,6 +110,7 @@ if CLIENT then
 				["$alphatestreference"] = "0.06",
 				["$envmapmask"] = "aperture/paint/blob_surface_normal",
 				["$envmapsaturation"] = "[.02 .02 .02]",
+				["$normalmapalphaenvmapmask"] = "1",
 				["$phong"] = "1",
 				["$phongexponent"] = "16",
 				["$phongboost"] = "1",

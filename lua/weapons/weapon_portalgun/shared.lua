@@ -475,10 +475,10 @@ function SWEP:IsPosionValid(pos, normal, minwallhits, dosecondcheck)
 		HHits = HHits + 1
 	end
 
-	if dosecondcheck then
-		return self:IsPosionValid(BetterPos, normal, 2, false)
-	elseif (HHits >= minwallhits or VHits >= minwallhits) then
+	if (HHits >= minwallhits or VHits >= minwallhits) then
 		return false, false
+	elseif dosecondcheck then
+		return self:IsPosionValid(BetterPos, normal, 2, false)
 	else
 		return BetterPos, normAng
 	end

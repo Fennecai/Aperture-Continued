@@ -353,16 +353,17 @@ function ENT:Think()
      return true
 end
 
-numpad.Register(
-     "DiversityVent_Enable",
-     function(pl, ent, keydown)
-          if not IsValid(ent) then
-               return false
-          end
-          ent:EnableEX(keydown)
-          return true
-     end
-)
+-- this makes an error, probably because it only works with server side (?)
+--numpad.Register(
+--     "DiversityVent_Enable",
+--     function(pl, ent, keydown)
+--          if not IsValid(ent) then
+--               return false
+--          end
+--          ent:EnableEX(keydown)
+--          return true
+--     end
+--)
 function ENT:OnRemove()
      self:StopSound("TA:TubeSuck")
 end
